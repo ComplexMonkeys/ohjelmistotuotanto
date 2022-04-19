@@ -5,6 +5,7 @@ import org.mokkivaraus.Mokki;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 public class muokkaaMokkiIkkunaController {
 
@@ -42,7 +43,8 @@ public class muokkaaMokkiIkkunaController {
 
     @FXML
     void btPeruutaAction(ActionEvent event) {
-
+    Stage stage = (Stage) btPeruuta.getScene().getWindow();
+    stage.close();
     }
 
     @FXML
