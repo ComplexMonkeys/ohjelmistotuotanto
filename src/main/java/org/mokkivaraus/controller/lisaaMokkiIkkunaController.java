@@ -4,14 +4,17 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
+import org.mokkivaraus.Mokinvaraus;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class lisaaMokkiIkkunaController {
-
+    
     @FXML
     private Button btPeruuta;
 
@@ -50,17 +53,15 @@ public class lisaaMokkiIkkunaController {
 
     @FXML
     void btTallennaAction(ActionEvent event) throws Exception {
-
         if (tfAlue.getText() != "" && tfHenkilomaara.getText() != "" && tfHinta.getText() != ""
                 && tfKuvaus.getText() != "" && tfNimi.getText() != "" && tfOsoite.getText() != ""
                 && tfPostinumero.getText() != "" && tfVarustelu.getText() != "") {
 
+            Connection con = DriverManager.getConnection(
+                    // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
+                    "jdbc:mysql://localhost:3306/vn", "employee", "password");
             try {
-                Connection con = DriverManager.getConnection(
-                        // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
-                        "jdbc:mysql://localhost:3306/vn", "employee", "password");
                 Statement stmt = con.createStatement();
-
                 // Haetaan tiedot tekstikentistä ja muutetaan oikeisiin muotoihin.
                 int alueenid = Integer.parseInt(tfAlue.getText());
                 String postinro = tfPostinumero.getText();
@@ -76,13 +77,14 @@ public class lisaaMokkiIkkunaController {
                         "INSERT INTO mokki (alue_id, postinro, mokkinimi, katuosoite, hinta, kuvaus, henkilomaara, varustelu) VALUES ('"
                                 + alueenid + "','" + postinro + "','" + nimi + "','" + osoite + "','" + hinta + "','"
                                 + kuvaus + "','" + maara + "','" + varustelu + "');");
-                // Yhteys tietokantaan suljetaan.
-                con.close();
                 // TODO: Lisää tähän tvmokit listan päivitys jos mahdollista?
-
+                
                 // Nappaa poikkeukset ja tulostaa ne.
             } catch (Exception e) {
                 System.out.println(e);
+            } finally {
+                // Yhteys tietokantaan suljetaan.
+                con.close();
             }
             Stage stage = (Stage) btTallenna.getScene().getWindow();
             stage.close();
