@@ -67,6 +67,14 @@ public class mokitIkkunaController implements Initializable {
 
     Mokki valittu;
 
+    public void paivitaLista(){
+        try {
+            tvmokit.getItems().setAll(haeLista());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     // Painiketta painaessa ohjelma hakee seuraavan ikkunan fxml-tiedoston, avaa
     // uuden ikkunan sen pohjalta ja piilottaa nykyisen ikkunan
     // IOException: Jostakin syystä tiedostoa lisaaMokkiIkkuna.fxml ei löydy.
@@ -105,7 +113,7 @@ public class mokitIkkunaController implements Initializable {
 
     @FXML
     void btPaivitaAction(ActionEvent event) {
-        tvmokit.getItems().setAll(haeLista());
+        paivitaLista();
     }
 
     @FXML
@@ -114,16 +122,20 @@ public class mokitIkkunaController implements Initializable {
         try {
             // Asettaa mokki muuttujaan valitun mökin.
             Mokki mokki = tvmokit.getSelectionModel().getSelectedItem();
-            // SQL komento joka poistaa valitun mökin.
-            Statement stmt = con.createStatement();
-            stmt.executeUpdate("DELETE FROM mokki WHERE mokki_id = " + mokki.getMokki_id() + ";");
+            try (// SQL komento joka poistaa valitun mökin.
+            Statement stmt = con.createStatement()) {
+                stmt.executeUpdate("DELETE FROM mokki WHERE mokki_id = " + mokki.getMokki_id() + ";");
+            }
             con.close();
             // Päivittää listan poiston tapahduttua.
-            tvmokit.getItems().setAll(haeLista());
+            paivitaLista();
         }
         // Nappaa SQL poikkeukset ja tulostaa ne.
         catch (SQLException e) {
             System.out.print(e);
+        }
+        finally {
+            con.close();
         }
     }
 
@@ -137,7 +149,11 @@ public class mokitIkkunaController implements Initializable {
         cMokkiId.setCellValueFactory(new PropertyValueFactory<Mokki, Integer>("mokki_id"));
         cMokkiNimi.setCellValueFactory(new PropertyValueFactory<Mokki, String>("mokkinimi"));
 
-        tvmokit.getItems().setAll(haeLista());
+        try {
+            tvmokit.getItems().setAll(haeLista());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         tvmokit.setRowFactory(tv -> {
             TableRow<Mokki> row = new TableRow<>();
@@ -154,13 +170,11 @@ public class mokitIkkunaController implements Initializable {
     }
 
     // haeLista-metodi, joka luo listan olioista näytettäväksi taulukkoon.
-    private List<Mokki> haeLista() {
+    private List<Mokki> haeLista() throws SQLException{
         List<Mokki> lista = new ArrayList<>();
-
+        // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
         try {
-            Connection con = DriverManager.getConnection(
-                    // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
-                    "jdbc:mysql://localhost:3306/vn", "employee", "password");
             Statement stmt = con.createStatement();
             // Määrittää SQL komennon ja lähettää sen tietokannalle.
             ResultSet rs = stmt.executeQuery("select * from mokki");
@@ -170,11 +184,13 @@ public class mokitIkkunaController implements Initializable {
                         rs.getString(5), rs.getDouble(6), rs.getString(7), rs.getInt(8), rs.getString(9));
                 lista.add(tempmokki);
             }
-            // Yhteys tietokantaan suljetaan.
-            con.close();
             // Nappaa poikkeukset ja tulostaa ne.
         } catch (Exception e) {
             System.out.println(e);
+        }
+        finally{
+            // Yhteys tietokantaan suljetaan.
+            con.close();
         }
         return lista;
 
