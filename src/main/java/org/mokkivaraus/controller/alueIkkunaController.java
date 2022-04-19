@@ -46,6 +46,9 @@ public class alueIkkunaController implements Initializable{
     private Button btPoista;
 
     @FXML
+    private Button btPaluu;
+
+    @FXML
     private TableColumn<Alue, Integer> cAlueId;
 
     @FXML
@@ -87,6 +90,11 @@ public class alueIkkunaController implements Initializable{
     @FXML
     void btPoistaAction(ActionEvent event) {
 
+    }
+
+    @FXML
+    void btPaluuAction(){
+        
     }
 
     @Override

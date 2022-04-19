@@ -3,28 +3,26 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 
-<TitledPane fx:id="alueIkkuna" animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" text="aluehallinta" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mokkivaraus.controller.alueIkkunaController">
-  <content>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="403.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mokkivaraus.controller.alueIkkunaController">
+   <children>
+      <TableView fx:id="tvAlue" layoutX="228.0" layoutY="24.0" prefHeight="344.0" prefWidth="359.0">
+         <columns>
+            <TableColumn fx:id="cAlueId" prefWidth="117.0" text="alueen id" />
+            <TableColumn fx:id="cAlueNimi" prefWidth="240.0" text="alueen nimi" />
+         </columns>
+      </TableView>
+      <HBox fx:id="hbNapit" alignment="CENTER" layoutX="9.0" layoutY="331.0" prefHeight="37.0" prefWidth="219.0" spacing="15.0">
          <children>
-            <TableView fx:id="tvAlue" layoutX="218.0" layoutY="14.0" prefHeight="344.0" prefWidth="359.0">
-              <columns>
-                <TableColumn fx:id="cAlueId" prefWidth="117.0" text="alueen id" />
-                <TableColumn fx:id="cAlueNimi" prefWidth="240.0" text="alueen nimi" />
-              </columns>
-            </TableView>
-            <HBox fx:id="hbNapit" alignment="CENTER" layoutX="-1.0" layoutY="321.0" prefHeight="37.0" prefWidth="219.0" spacing="15.0">
-               <children>
-                  <Button fx:id="btLisaa" mnemonicParsing="false" onAction="#btLisaaAction" text="Lisää" />
-                  <Button fx:id="btMuokkaa" disable="true" mnemonicParsing="false" onAction="#btMuokkaAction" text="Muokkaa" />
-                  <Button fx:id="btPoista" disable="true" mnemonicParsing="false" onAction="#btPoistaAction" text="Poista" />
-               </children>
-            </HBox>
-            <Button fx:id="btPaivita" layoutX="149.0" layoutY="14.0" mnemonicParsing="false" onAction="#btPaivitaAction" text="Päivitä" />
-         </children></AnchorPane>
-  </content>
-</TitledPane>
+            <Button fx:id="btLisaa" mnemonicParsing="false" onAction="#btLisaaAction" text="Lisää" />
+            <Button fx:id="btMuokkaa" disable="true" mnemonicParsing="false" onAction="#btMuokkaAction" text="Muokkaa" />
+            <Button fx:id="btPoista" disable="true" mnemonicParsing="false" onAction="#btPoistaAction" text="Poista" />
+         </children>
+      </HBox>
+      <Button fx:id="btPaivita" layoutX="159.0" layoutY="24.0" mnemonicParsing="false" onAction="#btPaivitaAction" text="Päivitä" />
+      <Button fx:id="btPaluu" layoutX="527.0" layoutY="373.0" mnemonicParsing="false" onAction="#btPaluuAction" text="Paluu" />
+   </children>
+</Pane>
