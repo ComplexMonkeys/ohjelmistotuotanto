@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<TitledPane fx:id="alkuIkkuna" animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" text="Mökkivarausohjelma" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mokkivaraus.controller.alkuIkkunaController">
-  <content>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-         <children>
-            <VBox alignment="CENTER" layoutX="217.0" layoutY="50.0" prefHeight="250.0" prefWidth="178.0" spacing="5.0">
-               <children>
-                  <Button fx:id="btMokit" alignment="CENTER" mnemonicParsing="false" onAction="#btMokitAction" text="Mökkihallinta" />
-                  <Button fx:id="btAlue" mnemonicParsing="false" onAction="#btAlueAction" text="Aluehallinta" />
-               </children>
-            </VBox>
-         </children></AnchorPane>
-  </content>
-</TitledPane>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="10.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mokkivaraus.controller.alkuIkkunaController">
+   <children>
+      <Button fx:id="btMokit" mnemonicParsing="false" onAction="#btMokitAction" text="Mökkihallinta" textAlignment="CENTER" />
+      <Button fx:id="btAlue" mnemonicParsing="false" onAction="#btAlueAction" text="Aluehallinta" />
+   </children>
+</VBox>
