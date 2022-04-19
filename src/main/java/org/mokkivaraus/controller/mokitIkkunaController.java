@@ -92,7 +92,8 @@ public class mokitIkkunaController implements Initializable {
         }
 
         muokkaaMokkiIkkunaController controller = loader.getController();
-        controller.initdata(valittu.getMokki_id());
+        controller.initdata(valittu.getMokki_id(), valittu.getAlue_id(), valittu.getKuvaus(), valittu.getVarustelu(), 
+        valittu.getMokkinimi(), valittu.getPostinro(), valittu.getKatuosoite(), valittu.getHenkilomaara(), valittu.getHinta());
         stage.setTitle("Muokkaa mökkiä");
 
         stage.show();

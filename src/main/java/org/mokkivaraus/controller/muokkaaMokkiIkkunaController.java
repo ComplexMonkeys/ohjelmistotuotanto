@@ -1,5 +1,6 @@
 package org.mokkivaraus.controller;
 
+
 import org.mokkivaraus.Mokki;
 import javafx.event.*;
 import javafx.fxml.*;
@@ -46,11 +47,17 @@ public class muokkaaMokkiIkkunaController {
 
     @FXML
     void btTallennaAction(ActionEvent event) {
-
     }
 
-    public void initdata(int mokki_id) {
-        tfNimi.setText(Integer.toString(mokki_id));
+    public void initdata(int mokki_id, int alueenid, String kuvaus, String varustelu, String nimi, String postinro, String osoite, int henkilomaara, double hinta) {
+        tfNimi.setText(nimi);
+        tfAlue.setText(Integer.toString(alueenid));
+        tfVarustelu.setText(varustelu);
+        tfOsoite.setText(osoite);
+        tfKuvaus.setText(kuvaus);
+        tfPostinumero.setText(postinro);
+        tfHinta.setText(Double.toString(hinta));
+        tfHenkilomaara.setText(Integer.toString(henkilomaara));
     }
 
 }
