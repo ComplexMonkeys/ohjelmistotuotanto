@@ -2,9 +2,15 @@ package org.mokkivaraus.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import com.mysql.cj.protocol.Resultset;
+import com.mysql.cj.xdevapi.Statement;
 
 import org.mokkivaraus.Alue;
 import org.mokkivaraus.Mokinvaraus;
@@ -62,7 +68,7 @@ public class alueIkkunaController implements Initializable{
         try {
             root = FXMLLoader.load(Mokinvaraus.class.getResource("lisaaAlueIkkuna.fxml"));
             Stage stage = new Stage();
-            stage.setTitle("My New Stage Title");
+            stage.setTitle("Lisää alue");
             stage.setScene(new Scene(root));
             stage.show();
         }
@@ -111,8 +117,21 @@ public class alueIkkunaController implements Initializable{
     public List<Alue> haeLista(){
         List<Alue> lista = new ArrayList<>();
         
-        //todo : tee lista
-
+        try{
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/vn", "employee", "password");
+                java.sql.Statement stmt = con.createStatement();
+                
+                ResultSet rs = stmt.executeQuery("SELECT * FROM alue");
+            
+                while(rs.next()) {
+                    Alue tempalue = new Alue(rs.getInt(1),rs.getString(2));
+                    lista.add(tempalue);
+                }
+                con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         return lista;
     }
 

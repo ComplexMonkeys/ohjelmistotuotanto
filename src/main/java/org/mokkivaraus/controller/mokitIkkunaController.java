@@ -45,6 +45,9 @@ public class mokitIkkunaController implements Initializable {
     private Button btPoista;
 
     @FXML
+    private Button btPaluu;
+
+    @FXML
     private HBox hbNapit;
 
     @FXML
@@ -85,7 +88,7 @@ public class mokitIkkunaController implements Initializable {
         try {
             root = FXMLLoader.load(Mokinvaraus.class.getResource("lisaaMokkiIkkuna.fxml"));
             Stage stage = new Stage();
-            stage.setTitle("My New Stage Title");
+            stage.setTitle("Lisää mökki");
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
@@ -95,7 +98,6 @@ public class mokitIkkunaController implements Initializable {
 
     @FXML
     void btMuokkaAction(ActionEvent event) {
-        // https://www.youtube.com/watch?v=V9nDH2iBJSM
         FXMLLoader loader = new FXMLLoader(Mokinvaraus.class.getResource("muokkaaMokkiIkkuna.fxml"));
         Stage stage = new Stage();
         try {
@@ -107,6 +109,7 @@ public class mokitIkkunaController implements Initializable {
 
         muokkaaMokkiIkkunaController controller = loader.getController();
         controller.initdata(valittu.getMokki_id());
+        stage.setTitle("Muokkaa mökkiä");
 
         stage.show();
     }
@@ -137,6 +140,11 @@ public class mokitIkkunaController implements Initializable {
         finally {
             con.close();
         }
+    }
+
+    @FXML
+    public void btPaluuAction(){
+        // TODO: Paluu-napin toiminnallisuus
     }
 
     // initialize-metodi, joka suoritetaan kun ikkuna avataan. Alustaa sarakkeet
