@@ -9,6 +9,7 @@ import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
@@ -74,8 +75,29 @@ public class alueIkkunaController implements Initializable{
     }
 
     @FXML
-    void btPoistaAction(ActionEvent event) {
-
+    void btPoistaAction(ActionEvent event) throws Exception{
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+        try {
+            // Asettaa mokki muuttujaan valitun mökin.
+            Alue alue = tvAlue.getSelectionModel().getSelectedItem();
+            try (// SQL komento joka poistaa valitun mökin.
+            Statement stmt = con.createStatement()) {
+                stmt.executeUpdate("DELETE FROM alue WHERE alue_id = " + alue.getAlueID() + ";");
+            }
+            con.close();
+            // Päivittää listan poiston tapahduttua.
+            // paivitaLista();
+        }
+        // Nappaa SQL poikkeukset ja tulostaa ne.
+        catch (SQLIntegrityConstraintViolationException integrityE){
+            Alert constraitAlert = new Alert(AlertType.ERROR);
+            constraitAlert.setHeaderText("Aluetta ei voida poistaa!");
+            constraitAlert.setContentText("Aluetta ei voida poistaa, koska sille on asetettu mökkejä.");
+            constraitAlert.showAndWait();
+        }
+        finally {
+            con.close();
+        }
     }
 
     @Override
