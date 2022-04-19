@@ -87,7 +87,6 @@ public class mokitIkkunaController implements Initializable {
 
     @FXML
     void btMuokkaAction(ActionEvent event) {
-        // https://www.youtube.com/watch?v=V9nDH2iBJSM
         FXMLLoader loader = new FXMLLoader(Mokinvaraus.class.getResource("muokkaaMokkiIkkuna.fxml"));
         Stage stage = new Stage();
         try {
