@@ -52,6 +52,14 @@ public class alueIkkunaController implements Initializable{
 
     Alue valittu;
 
+    public void paivitaAluelista(){
+        try {
+            tvAlue.getItems().setAll(haeAluelista());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }	
+
     @FXML
     void btLisaaAction(ActionEvent event) {
         Parent root;
@@ -74,9 +82,12 @@ public class alueIkkunaController implements Initializable{
 
     @FXML
     void btPaivitaAction(ActionEvent event) {
-        tvAlue.getItems().setAll(haeLista());
+        try {
+            tvAlue.getItems().setAll(haeAluelista());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-
     @FXML
     void btPoistaAction(ActionEvent event) throws Exception{
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
@@ -113,9 +124,11 @@ public class alueIkkunaController implements Initializable{
         cAlueId.setCellValueFactory(new PropertyValueFactory<Alue, Integer>("alue_id"));
         cAlueNimi.setCellValueFactory(new PropertyValueFactory<Alue, String>("nimi"));
         
-
-        tvAlue.getItems().setAll(haeLista());
-
+        try{
+        tvAlue.getItems().setAll(haeAluelista());
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
         tvAlue.setRowFactory(tv -> {
             TableRow<Alue> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -130,7 +143,7 @@ public class alueIkkunaController implements Initializable{
         });
     }
 
-    public List<Alue> haeLista(){
+    public List<Alue> haeAluelista() throws SQLException{
         List<Alue> lista = new ArrayList<>();
         
         try{
