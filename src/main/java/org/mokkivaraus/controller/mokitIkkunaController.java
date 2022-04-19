@@ -45,6 +45,9 @@ public class mokitIkkunaController implements Initializable {
     private Button btPoista;
 
     @FXML
+    private Button btPaluu;
+
+    @FXML
     private HBox hbNapit;
 
     @FXML
@@ -124,6 +127,11 @@ public class mokitIkkunaController implements Initializable {
         catch (SQLException e) {
             System.out.print(e);
         }
+    }
+
+    @FXML
+    public void btPaluuAction(){
+        // TODO: Paluu-napin toiminnallisuus
     }
 
     // initialize-metodi, joka suoritetaan kun ikkuna avataan. Alustaa sarakkeet
