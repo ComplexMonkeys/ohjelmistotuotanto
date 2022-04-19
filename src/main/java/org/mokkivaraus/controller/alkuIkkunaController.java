@@ -32,6 +32,7 @@ public class alkuIkkunaController {
             root = FXMLLoader.load(Mokinvaraus.class.getResource("alueIkkuna.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
+            stage.setTitle("Aluehallinta");
             stage.show();
             ((Node) event.getSource()).getScene().getWindow().hide();
         }
@@ -49,6 +50,7 @@ public class alkuIkkunaController {
             root = FXMLLoader.load(Mokinvaraus.class.getResource("mokitIkkuna.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
+            stage.setTitle("Mökkien hallinta");
             stage.show();
             ((Node) event.getSource()).getScene().getWindow().hide();
         }

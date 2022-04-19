@@ -62,7 +62,7 @@ public class alueIkkunaController implements Initializable{
         try {
             root = FXMLLoader.load(Mokinvaraus.class.getResource("lisaaAlueIkkuna.fxml"));
             Stage stage = new Stage();
-            stage.setTitle("My New Stage Title");
+            stage.setTitle("Lisää alue");
             stage.setScene(new Scene(root));
             stage.show();
         }

@@ -80,7 +80,7 @@ public class mokitIkkunaController implements Initializable {
         try {
             root = FXMLLoader.load(Mokinvaraus.class.getResource("lisaaMokkiIkkuna.fxml"));
             Stage stage = new Stage();
-            stage.setTitle("My New Stage Title");
+            stage.setTitle("Lisää mökki");
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
@@ -101,6 +101,7 @@ public class mokitIkkunaController implements Initializable {
 
         muokkaaMokkiIkkunaController controller = loader.getController();
         controller.initdata(valittu.getMokki_id());
+        stage.setTitle("Muokkaa mökkiä");
 
         stage.show();
     }
