@@ -74,7 +74,7 @@ public class alueIkkunaController implements Initializable{
 
     @FXML
     void btPaivitaAction(ActionEvent event) {
-
+        tvAlue.getItems().setAll(haeLista());
     }
 
     @FXML
