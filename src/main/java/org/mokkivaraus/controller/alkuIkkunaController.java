@@ -1,18 +1,12 @@
 package org.mokkivaraus.controller;
 
-import java.io.IOException;
-
-import org.mokkivaraus.Mokinvaraus;
-
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TitledPane;
-import javafx.stage.Stage;
+import org.mokkivaraus.*;
+import javafx.event.*;
+import javafx.fxml.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.stage.*;
+import java.io.*;
 
 public class alkuIkkunaController {
 
