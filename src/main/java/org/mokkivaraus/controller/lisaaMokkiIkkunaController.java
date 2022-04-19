@@ -1,17 +1,10 @@
 package org.mokkivaraus.controller;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
-
-import org.mokkivaraus.Mokinvaraus;
-
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import java.sql.*;
+import javafx.event.*;
+import javafx.fxml.*;
+import javafx.scene.control.*;
+import javafx.stage.*;
 
 public class lisaaMokkiIkkunaController {
     
