@@ -9,9 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import com.mysql.cj.protocol.Resultset;
-import com.mysql.cj.xdevapi.Statement;
-
 import org.mokkivaraus.Alue;
 import org.mokkivaraus.Mokinvaraus;
 
