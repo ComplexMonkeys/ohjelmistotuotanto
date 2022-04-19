@@ -23,7 +23,8 @@ public class lisaaAlueIkkunaController {
 
     @FXML
     void btPeruutaAction(ActionEvent event) {
-
+        Stage stage = (Stage) btPeruuta.getScene().getWindow();
+        stage.close();
     }
 
     @FXML

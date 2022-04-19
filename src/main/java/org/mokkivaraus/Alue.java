@@ -17,4 +17,19 @@ public class Alue{
     public String getNimi(){
         return nimi;
     }
+    public String toString(){
+        return "Alue [alue_id =" + alue_id + ", nimi=" + nimi + "]";
+    }
+
+    public Alue(){
+
+    }
+
+// parametrillinen ALUSTAJA
+    public Alue(int alue_id,String nimi){
+    this.alue_id = alue_id;
+    this.nimi = nimi;
+    }
+
+
 }
