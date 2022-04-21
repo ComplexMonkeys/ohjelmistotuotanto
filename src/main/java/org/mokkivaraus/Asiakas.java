@@ -73,5 +73,9 @@ public String getPuhelinnro() {
 public void setPuhelinnro(String puhelinnro) {
     Puhelinnro = puhelinnro;
 }
-
+@Override
+public String toString(){
+    return "Asiakas [Asiakas_id=" + Asiakas_id + ",Postinro=" + Postinro + ",Etunimi=" + Etunimi + 
+    ",Sukunimi=" + Sukunimi + ",Lahiosoite=" + Lahiosoite + ",Email=" + Email + ",Puhelinnro=" + Puhelinnro + "]";
+}
 }
