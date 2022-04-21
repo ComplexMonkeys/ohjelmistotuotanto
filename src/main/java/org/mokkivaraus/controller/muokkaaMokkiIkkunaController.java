@@ -72,11 +72,11 @@ public class muokkaaMokkiIkkunaController {
             String kuvaus = tfKuvaus.getText();
             int maara = Integer.parseInt(tfHenkilomaara.getText());
             String varustelu = tfVarustelu.getText();
-            int mokkinumero = 4;
+            int mokkinumero = Integer.parseInt(labelId.getText());
             
     
             // Määrittää SQL komennon ja lähettää sen tietokannalle.
-            stmt.executeUpdate("UPDATE mokki set mokkinimi = '"+ nimi + "', katuosoite = '"+osoite+"', kuvaus = '"+kuvaus+"', henkilomaara = "+ maara +" , varustelu = '"+varustelu+"' WHERE mokki_id = '"+mokkinumero+"' ;");
+            stmt.executeUpdate("UPDATE mokki set mokkinimi = '"+ nimi + "', katuosoite = '"+osoite+"', kuvaus = '"+kuvaus+"', henkilomaara = "+ maara +" , hinta = "+ hinta +" , varustelu = '"+varustelu+"' WHERE mokki_id = '"+mokkinumero+"' ;");
         } catch (Exception e) {
             System.out.println(e);
         } finally {
