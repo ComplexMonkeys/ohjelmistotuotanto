@@ -92,12 +92,9 @@ public class alueIkkunaController implements Initializable{
 
     @FXML
     void btPaivitaAction(ActionEvent event) {
-        try {
-            tvAlue.getItems().setAll(haeAluelista());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        paivitaAluelista();
     }
+
     @FXML
     void btPoistaAction(ActionEvent event) throws Exception{
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
@@ -110,7 +107,7 @@ public class alueIkkunaController implements Initializable{
             }
             con.close();
             // Päivittää listan poiston tapahduttua.
-            // paivitaLista();
+            paivitaAluelista();
         }
         // Nappaa SQL poikkeukset ja tulostaa ne.
         catch (SQLIntegrityConstraintViolationException integrityE){
@@ -142,27 +139,28 @@ public class alueIkkunaController implements Initializable{
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb){
-        cAlueId.setCellValueFactory(new PropertyValueFactory<Alue, Integer>("alue_id"));
-        cAlueNimi.setCellValueFactory(new PropertyValueFactory<Alue, String>("nimi"));
-        
-        try{
-        tvAlue.getItems().setAll(haeAluelista());
-        } catch(SQLException e){
-            e.printStackTrace();
-        }
-        tvAlue.setRowFactory(tv -> {
-            TableRow<Alue> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (! row.isEmpty() && event.getButton() == MouseButton.PRIMARY){
-        
-                    valittu = row.getItem();
-                    btMuokkaa.setDisable(false);
-                    btPoista.setDisable(false);
-                }
+        public void initialize(URL url, ResourceBundle rb) {
+            cAlueId.setCellValueFactory(new PropertyValueFactory<Alue, Integer>("alue_id"));
+            cAlueNimi.setCellValueFactory(new PropertyValueFactory<Alue, String>("nimi"));
+    
+            try {
+                tvAlue.getItems().setAll(haeAluelista());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+    
+            tvAlue.setRowFactory(tv -> {
+                TableRow<Alue> row = new TableRow<>();
+                row.setOnMouseClicked(event -> {
+                    if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
+    
+                        valittu = row.getItem();
+                        btMuokkaa.setDisable(false);
+                        btPoista.setDisable(false);
+                    }
+                });
+                return row;
             });
-            return row;
-        });
     }
 
     public List<Alue> haeAluelista() throws SQLException{
