@@ -1,11 +1,18 @@
 package org.mokkivaraus.controller;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.layout.HBox;
+import org.mokkivaraus.*;
+import java.io.*;
+import java.net.*;
+import java.sql.*;
+import java.util.*;
+import javafx.event.*;
+import javafx.fxml.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.*;
+import javafx.scene.input.*;
+import javafx.scene.layout.*;
+import javafx.stage.*;
 
 public class palveluIkkunaController {
 
@@ -59,7 +66,19 @@ public class palveluIkkunaController {
 
     @FXML
     void btPaluuAction(ActionEvent event) {
-
+        Stage stage = (Stage) btPaluu.getScene().getWindow();
+        stage.close();
+        Parent root;
+        try {
+            root = FXMLLoader.load(Mokinvaraus.class.getResource("alkuIkkuna.fxml"));
+            Stage stage2 = new Stage();
+            stage2.setTitle("alkuikkuna");
+            stage2.setScene(new Scene(root));
+            stage2.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
