@@ -49,19 +49,43 @@ public class palveluIkkunaController {
     @FXML
     private TableView<Palvelu> tvPalvelut;
 
+    public void paivitaPalvelulista(){
+        try{
+            tvPalvelut.getItems().setAll(haePalvelulista());
+        }catch(SQLException e){
+                e.printStackTrace();
+            }
+        
+    }
+
     @FXML
     void btLisaaAction(ActionEvent event) {
-
+        Parent root;
+        try{
+            root = FXMLLoader.load(Mokinvaraus.class.getResource("lisaaPalveluIkkuna.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Lisää palvelu");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void btMuokkaAction(ActionEvent event) {
-
+        FXMLLoader loader = new FXMLLoader(Mokinvaraus.class.getResource("muokkaaPalveluIkkuna.fxml"));
+        Stage stage = new Stage();
+        try{
+            stage.setScene(new Scene(loader.load()));
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void btPaivitaAction(ActionEvent event) {
-
+        paivitaPalvelulista();
     }
 
     @FXML
