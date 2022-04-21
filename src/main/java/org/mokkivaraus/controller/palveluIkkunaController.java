@@ -32,22 +32,22 @@ public class palveluIkkunaController {
     private Button btPoista;
 
     @FXML
-    private TableColumn<?, ?> cAlue;
+    private TableColumn<Palvelu, Integer> cAlue;
 
     @FXML
-    private TableColumn<?, ?> cHinta;
+    private TableColumn<Palvelu, Double> cHinta;
 
     @FXML
-    private TableColumn<?, ?> cPalveluId;
+    private TableColumn<Palvelu, Integer> cPalveluId;
 
     @FXML
-    private TableColumn<?, ?> cPalveluNimi;
+    private TableColumn<Palvelu, String> cPalveluNimi;
 
     @FXML
     private HBox hbNapit;
 
     @FXML
-    private TableView<?> tvPalvelut;
+    private TableView<Palvelu> tvPalvelut;
 
     @FXML
     void btLisaaAction(ActionEvent event) {
@@ -82,8 +82,24 @@ public class palveluIkkunaController {
     }
 
     @FXML
-    void btPoistaAction(ActionEvent event) {
+    void btPoistaAction(ActionEvent event) throws Exception {
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+        try {
+            Palvelu palvelu = tvPalvelut.getSelectionModel().getSelectedItem();
+            try(
+                Statement stmt = con.createStatement()) {
+                    stmt.executeUpdate("DELETE FROM palvelu WHERE palvelu_id = " + palvelu.getPalvelu_id());
+                }
+                con.close();
 
+                //puuttuu listan paivitus
+             }
+             catch (SQLException e){
+                 System.out.println(e);
+             }
+             finally {
+                 con.close();
+             }
     }
 
 }
