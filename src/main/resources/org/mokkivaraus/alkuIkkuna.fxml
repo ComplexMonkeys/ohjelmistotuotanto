@@ -9,5 +9,6 @@
       <Button fx:id="btAlue" mnemonicParsing="false" onAction="#btAlueAction" text="Aluehallinta" />
       <Button fx:id="btAsiakas" mnemonicParsing="false" onAction="#btAsiakasAction" text="Asiakashallinta" />
       <Button fx:id="btPalvelu" mnemonicParsing="false" onAction="#btPalveluAction" text="Palveluhallinta" />
+      <Button fx:id="btVaraus" mnemonicParsing="false" onAction="#btVarausAction" text="Varaus" />
    </children>
 </VBox>
