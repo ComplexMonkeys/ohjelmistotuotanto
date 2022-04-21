@@ -26,6 +26,9 @@ public class alkuIkkunaController {
     private Button btPalvelu;
 
     @FXML
+    private Button btVaraus;
+
+    @FXML
     void btAlueAction(ActionEvent event) {
         Parent root;
         try {
@@ -89,5 +92,10 @@ public class alkuIkkunaController {
         catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void btVarausAction(ActionEvent event){
+
     }
 }
