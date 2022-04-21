@@ -39,6 +39,9 @@ public class muokkaaMokkiIkkunaController {
     @FXML
     private TextField tfVarustelu;
 
+    @FXML
+    private Label labelId;
+
     Mokki mokki;
 
     @FXML
