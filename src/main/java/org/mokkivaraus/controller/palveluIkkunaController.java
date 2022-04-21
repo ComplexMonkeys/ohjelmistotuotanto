@@ -92,7 +92,7 @@ public class palveluIkkunaController {
                 }
                 con.close();
 
-                //puuttuu listan paivitus
+                //TODO puuttuu listan paivitus
              }
              catch (SQLException e){
                  System.out.println(e);
@@ -100,6 +100,31 @@ public class palveluIkkunaController {
              finally {
                  con.close();
              }
+    }
+    private List<Palvelu> haePalvelulista() throws SQLException{
+        List<Palvelu> lista = new ArrayList<>();
+        // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+        try {
+            Statement stmt = con.createStatement();
+            // Määrittää SQL komennon ja lähettää sen tietokannalle.
+            ResultSet rs = stmt.executeQuery("select * from palvelu");
+            // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
+            while (rs.next()) {
+                Palvelu tempPalvelu = new Palvelu(rs.getInt(1),rs.getInt(2),rs.getString(3),
+                rs.getInt(4),rs.getString(5),rs.getDouble(6),rs.getDouble(7));
+                lista.add(tempPalvelu);
+            }
+            // Nappaa poikkeukset ja tulostaa ne.
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        finally{
+            // Yhteys tietokantaan suljetaan.
+            con.close();
+        }
+        return lista;
+
     }
 
 }
