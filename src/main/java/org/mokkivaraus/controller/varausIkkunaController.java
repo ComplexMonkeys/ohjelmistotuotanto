@@ -1,29 +1,17 @@
 package org.mokkivaraus.controller;
-
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.mokkivaraus.Mokinvaraus;
-import org.mokkivaraus.Varaus;
+import org.mokkivaraus.Mokki;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.stage.Stage;
+import java.io.*;
+import java.sql.*;
+import java.util.*;
+import javafx.event.*;
+import javafx.fxml.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.stage.*;
 
-public class varausIkkunaController {
+public class varausIkkunaController{
 
     @FXML
     private Button btPaluu;
@@ -35,16 +23,19 @@ public class varausIkkunaController {
     private Button btPaivita;
 
     @FXML
-    private TableColumn<Varaus, Integer> cAlue;
+    private TableView<Mokki> tvVaraus;
 
     @FXML
-    private TableColumn<Varaus, Integer> cHenkilomaara;
+    private TableColumn<Mokki, Integer> cAlue;
 
     @FXML
-    private TableColumn<Varaus, Integer> cMokkiId;
+    private TableColumn<Mokki, Integer> cHenkilomaara;
 
     @FXML
-    private TableColumn<Varaus, String> cMokkiNimi;
+    private TableColumn<Mokki, Integer> cMokkiId;
+
+    @FXML
+    private TableColumn<Mokki, String> cMokkiNimi;
 
     @FXML
     private DatePicker dpAloitus;
@@ -52,12 +43,12 @@ public class varausIkkunaController {
     @FXML
     private DatePicker dpLopetus;
 
-    @FXML
-    private TableView<Varaus> tvVaraus;
+    Mokki valittu;
+    
 
-    public void paivitaLista(){
+    public void paivitaLista() {
         try {
-            tvVaraus.getItems().setAll(haeVarausLista());
+            tvVaraus.getItems().setAll(haeMokkiLista());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -74,8 +65,7 @@ public class varausIkkunaController {
             stage2.setTitle("alkuikkuna");
             stage2.setScene(new Scene(root));
             stage2.show();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -99,30 +89,57 @@ public class varausIkkunaController {
     void dpLopetusAction(ActionEvent event) {
 
     }
-// haeLista-metodi, joka luo listan olioista näytettäväksi taulukkoon.
-private List<Varaus> haeVarausLista() throws SQLException{
-    List<Varaus> lista = new ArrayList<>();
-    // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
-    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
-    try {
-        Statement stmt = con.createStatement();
-        // Määrittää SQL komennon ja lähettää sen tietokannalle.
-        ResultSet rs = stmt.executeQuery("select * from varaus");
-        // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
-        while (rs.next()) {
-            Varaus tempvaraus = new Varaus(rs.getInt(1), rs.getInt(2), rs.getInt(3),
-                    rs.getString(4), rs.getString(5), rs.getString(6));
-            lista.add(tempvaraus);
-        }
-        // Nappaa poikkeukset ja tulostaa ne.
-    } catch (Exception e) {
-        System.out.println(e);
-    }
-    finally{
-        // Yhteys tietokantaan suljetaan.
-        con.close();
-    }
-    return lista;
 
-}
+    private List<Mokki> haeMokkiLista() throws SQLException {
+        List<Mokki> lista = new ArrayList<>();
+        // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+        try {
+            Statement stmt = con.createStatement();
+            // Määrittää SQL komennon ja lähettää sen tietokannalle.
+            ResultSet rs = stmt.executeQuery("select * from mokki");
+            // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
+            while (rs.next()) {
+                Mokki tempmokki = new Mokki(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
+                        rs.getString(5), rs.getDouble(6), rs.getString(7), rs.getInt(8), rs.getString(9));
+                lista.add(tempmokki);
+            }
+            // Nappaa poikkeukset ja tulostaa ne.
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            // Yhteys tietokantaan suljetaan.
+            con.close();
+        }
+        return lista;
+
+    }
+
+    /** 
+    // haeLista-metodi, joka luo listan olioista näytettäväksi taulukkoon.
+    private List<Varaus> haeVarausLista() throws SQLException {
+        List<Varaus> lista = new ArrayList<>();
+        // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+        try {
+            Statement stmt = con.createStatement();
+            // Määrittää SQL komennon ja lähettää sen tietokannalle.
+            ResultSet rs = stmt.executeQuery("select * from varaus");
+            // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
+            while (rs.next()) {
+                Varaus tempvaraus = new Varaus(rs.getInt(1), rs.getInt(2), rs.getInt(3),
+                        rs.getString(4), rs.getString(5), rs.getString(6));
+                lista.add(tempvaraus);
+            }
+            // Nappaa poikkeukset ja tulostaa ne.
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            // Yhteys tietokantaan suljetaan.
+            con.close();
+        }
+        return lista;
+        
+
+    }*/
 }
