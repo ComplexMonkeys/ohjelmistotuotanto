@@ -103,7 +103,7 @@ public class alueIkkunaController implements Initializable{
             Alue alue = tvAlue.getSelectionModel().getSelectedItem();
             try (// SQL komento joka poistaa valitun mökin.
             Statement stmt = con.createStatement()) {
-                stmt.executeUpdate("DELETE FROM alue WHERE alue_id = " + alue.getAlueID() + ";");
+                stmt.executeUpdate("DELETE FROM alue WHERE alue_id = " + alue.getAlue_id() + ";");
             }
             con.close();
             // Päivittää listan poiston tapahduttua.

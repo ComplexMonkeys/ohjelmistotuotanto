@@ -5,10 +5,10 @@ public class Alue{
     private String nimi;
 
 
-    public void setAlueID(int alue_id){
+    public void setAlue_id(int alue_id){
         this.alue_id = alue_id;
     }
-    public int getAlueID(){
+    public int getAlue_id(){
         return alue_id;
     }
     public void setNimi(String nimi){
