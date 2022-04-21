@@ -17,6 +17,7 @@
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
          </columnConstraints>
          <rowConstraints>
+            <RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="78.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="185.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
@@ -27,22 +28,24 @@
             <RowConstraints maxHeight="180.0" minHeight="10.0" prefHeight="130.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <TextField fx:id="tfAlue" GridPane.columnIndex="1" />
-            <TextField fx:id="tfPostinumero" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="tfNimi" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="tfOsoite" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="tfHinta" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="tfKuvaus" prefHeight="130.0" prefWidth="280.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField fx:id="tfHenkilomaara" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <TextField fx:id="tfVarustelu" prefHeight="130.0" prefWidth="280.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <Label text="Alueen id:" />
-            <Label text="Postinumero" GridPane.rowIndex="1" />
-            <Label text="Mökin nimi" GridPane.rowIndex="2" />
-            <Label text="Katuosoite" GridPane.rowIndex="3" />
-            <Label text="Hinta" GridPane.rowIndex="4" />
-            <Label text="Kuvaus" GridPane.rowIndex="5" />
-            <Label text="Max. henkilömäärä" GridPane.rowIndex="6" />
-            <Label text="Varustelu" GridPane.rowIndex="7" />
+            <TextField fx:id="tfAlue" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="tfPostinumero" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="tfNimi" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="tfOsoite" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="tfHinta" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="tfKuvaus" prefHeight="130.0" prefWidth="280.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="tfHenkilomaara" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <TextField fx:id="tfVarustelu" prefHeight="130.0" prefWidth="280.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <Label text="Alueen id:" GridPane.rowIndex="1" />
+            <Label text="Postinumero" GridPane.rowIndex="2" />
+            <Label text="Mökin nimi" GridPane.rowIndex="3" />
+            <Label text="Katuosoite" GridPane.rowIndex="4" />
+            <Label text="Hinta" GridPane.rowIndex="5" />
+            <Label text="Kuvaus" GridPane.rowIndex="6" />
+            <Label text="Max. henkilömäärä" GridPane.rowIndex="7" />
+            <Label text="Varustelu" GridPane.rowIndex="8" />
+            <Label text="Mokin ID:" />
+            <Label fx:id="labelId" text="Label" GridPane.columnIndex="1" />
          </children>
       </GridPane>
       <HBox alignment="CENTER" layoutX="433.0" layoutY="526.0" prefHeight="26.0" prefWidth="161.0" spacing="10.0">
