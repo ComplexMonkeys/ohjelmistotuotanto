@@ -21,7 +21,7 @@ private String Puhelinnro;
 public Asiakas(){
 }
 //parametrillinen alustaja
-Asiakas(int Asiakas_id,String Postinro,String Etunimi,String Sukunimi,
+public Asiakas(int Asiakas_id,String Postinro,String Etunimi,String Sukunimi,
 String Lahiosoite, String Email, String Puhelinnro){
 this.Asiakas_id = Asiakas_id;
 this.Postinro = Postinro;
