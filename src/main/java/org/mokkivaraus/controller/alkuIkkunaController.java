@@ -61,7 +61,18 @@ public class alkuIkkunaController {
 
     @FXML
     void btAsiakasAction(ActionEvent event){
-        
+        Parent root;
+        try {
+            root = FXMLLoader.load(Mokinvaraus.class.getResource("asiakasIkkuna.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Asiakashallinta");
+            stage.show();
+            ((Node) event.getSource()).getScene().getWindow().hide();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
