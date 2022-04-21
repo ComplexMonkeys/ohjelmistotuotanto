@@ -1,18 +1,18 @@
 package org.mokkivaraus.controller;
 
-import java.io.IOException;
-
-import org.mokkivaraus.Mokinvaraus;
-
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.stage.Stage;
+import org.mokkivaraus.*;
+import java.io.*;
+import java.net.*;
+import java.sql.*;
+import java.util.*;
+import javafx.event.*;
+import javafx.fxml.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.*;
+import javafx.scene.input.*;
+import javafx.scene.layout.*;
+import javafx.stage.*;
 
 public class asiakasIkkunaController {
 
@@ -32,13 +32,24 @@ public class asiakasIkkunaController {
     private Button btPoista;
 
     @FXML
-    private TableColumn<?, ?> cAsiakasId;
+    private TableColumn<Asiakas, Integer> cAsiakasId;
 
     @FXML
-    private TableColumn<?, ?> cAsiakasNimi;
+    private TableColumn<Asiakas, String> cAsiakasNimi;
 
     @FXML
-    private TableView<?> tvAsiakas;
+    private TableView<Asiakas> tvAsiakas;
+
+    Asiakas valittu;
+
+    
+    public void paivitaLista(){
+        try {
+            tvAsiakas.getItems().setAll(haeLista());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     void btLisaaAction(ActionEvent event) {
@@ -61,7 +72,30 @@ public class asiakasIkkunaController {
 
     @FXML
     void btPaivitaAction(ActionEvent event) {
+        paivitaLista();
+    }
 
+    public void initialize(URL url, ResourceBundle rb) {
+        cAsiakasId.setCellValueFactory(new PropertyValueFactory<Asiakas, Integer>("asiakas_id"));
+        cAsiakasNimi.setCellValueFactory(new PropertyValueFactory<Asiakas, String>("nimi"));
+        try {
+            tvAsiakas.getItems().setAll(haeLista());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        tvAsiakas.setRowFactory(tv -> {
+            TableRow<Asiakas> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
+
+                    valittu = row.getItem();
+                    btMuokkaa.setDisable(false);
+                    btPoista.setDisable(false);
+                }
+            });
+            return row;
+        });
     }
 
     @FXML
@@ -85,5 +119,28 @@ public class asiakasIkkunaController {
     void btPoistaAction(ActionEvent event) {
 
     }
+    private List<Asiakas> haeLista() throws SQLException{
+        List<Asiakas> lista = new ArrayList<>();
+        // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+        try {
+            Statement stmt = con.createStatement();
+            // Määrittää SQL komennon ja lähettää sen tietokannalle.
+            ResultSet rs = stmt.executeQuery("select * from asiakas");
+            // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
+            while (rs.next()) {
+                Asiakas tempasiakas = new Asiakas(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                lista.add(tempasiakas);
+            }
+            // Nappaa poikkeukset ja tulostaa ne.
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        finally{
+            // Yhteys tietokantaan suljetaan.
+            con.close();
+        }
+        return lista;
 
+    }
 }
