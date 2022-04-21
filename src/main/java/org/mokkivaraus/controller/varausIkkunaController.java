@@ -35,16 +35,16 @@ public class varausIkkunaController {
     private Button btPaivita;
 
     @FXML
-    private TableColumn<?, ?> cAlue;
+    private TableColumn<Varaus, Integer> cAlue;
 
     @FXML
-    private TableColumn<?, ?> cHenkilomaara;
+    private TableColumn<Varaus, Integer> cHenkilomaara;
 
     @FXML
-    private TableColumn<?, ?> cMokkiId;
+    private TableColumn<Varaus, Integer> cMokkiId;
 
     @FXML
-    private TableColumn<?, ?> cMokkiNimi;
+    private TableColumn<Varaus, String> cMokkiNimi;
 
     @FXML
     private DatePicker dpAloitus;
@@ -87,7 +87,7 @@ public class varausIkkunaController {
 
     @FXML
     void btPaivitaAction(ActionEvent event) {
-        
+        paivitaLista();
     }
 
     @FXML
