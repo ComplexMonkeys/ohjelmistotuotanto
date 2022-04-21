@@ -38,14 +38,15 @@ public class alkuIkkunaController {
             stage.setTitle("Aluehallinta");
             stage.show();
             ((Node) event.getSource()).getScene().getWindow().hide();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    // Painiketta painaessa ohjelma hakee seuraavan ikkunan fxml-tiedoston, avaa uuden ikkunan sen pohjalta ja piilottaa nykyisen ikkunan
-    // IOException: Jostakin syystä tiedostoa mokitIkkuna.fxml ei löydy. Tarkista tiedostopolut.
+    // Painiketta painaessa ohjelma hakee seuraavan ikkunan fxml-tiedoston, avaa
+    // uuden ikkunan sen pohjalta ja piilottaa nykyisen ikkunan
+    // IOException: Jostakin syystä tiedostoa mokitIkkuna.fxml ei löydy. Tarkista
+    // tiedostopolut.
     @FXML
     void btMokitAction(ActionEvent event) {
         Parent root;
@@ -56,14 +57,13 @@ public class alkuIkkunaController {
             stage.setTitle("Mökkien hallinta");
             stage.show();
             ((Node) event.getSource()).getScene().getWindow().hide();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    void btAsiakasAction(ActionEvent event){
+    void btAsiakasAction(ActionEvent event) {
         Parent root;
         try {
             root = FXMLLoader.load(Mokinvaraus.class.getResource("asiakasIkkuna.fxml"));
@@ -72,14 +72,13 @@ public class alkuIkkunaController {
             stage.setTitle("Asiakashallinta");
             stage.show();
             ((Node) event.getSource()).getScene().getWindow().hide();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    void btPalveluAction(ActionEvent event){
+    void btPalveluAction(ActionEvent event) {
         Parent root;
         try {
             root = FXMLLoader.load(Mokinvaraus.class.getResource("palveluIkkuna.fxml"));
@@ -88,14 +87,23 @@ public class alkuIkkunaController {
             stage.setTitle("Palveluhallinta");
             stage.show();
             ((Node) event.getSource()).getScene().getWindow().hide();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    void btVarausAction(ActionEvent event){
-
+    void btVarausAction(ActionEvent event) {
+        Parent root;
+        try {
+            root = FXMLLoader.load(Mokinvaraus.class.getResource("varausIkkuna.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Varaushallinta");
+            stage.show();
+            ((Node) event.getSource()).getScene().getWindow().hide();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
