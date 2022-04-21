@@ -36,7 +36,8 @@ public class lisaaAsiakasIkkunaController {
 
     @FXML
     void btPeruutaAction(ActionEvent event) {
-
+        Stage stage = (Stage) btPeruuta.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
@@ -63,7 +64,6 @@ public class lisaaAsiakasIkkunaController {
                 "INSERT INTO asiakas (postinro,etunimi,sukunimi,lahiosoite,email,puhelinnro) VALUES ('"
                         + postinro + "','" + etunimi + "','" + sukunimi + "','" + lahiosoite + "','" + email + "','"
                         + puhelinnro + "');");
-        // TODO: Lisää tähän tvmokit listan päivitys jos mahdollista?
         
         // Nappaa poikkeukset ja tulostaa ne.
     } catch (Exception e) {
