@@ -42,7 +42,16 @@ public class asiakasIkkunaController {
 
     @FXML
     void btLisaaAction(ActionEvent event) {
-
+        Parent root;
+        try {
+            root = FXMLLoader.load(Mokinvaraus.class.getResource("lisaaAsiakasIkkuna.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Lisää asiakas");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
