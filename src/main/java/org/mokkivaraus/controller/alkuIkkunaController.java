@@ -20,6 +20,9 @@ public class alkuIkkunaController {
     private Button btMokit;
 
     @FXML
+    private Button btAsiakas;
+
+    @FXML
     void btAlueAction(ActionEvent event) {
         Parent root;
         try {
@@ -51,5 +54,10 @@ public class alkuIkkunaController {
         catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void btAsiakasAction(ActionEvent event){
+        
     }
 }

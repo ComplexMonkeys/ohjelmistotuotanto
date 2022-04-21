@@ -3,10 +3,10 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.VBox?>
 
-
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="10.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mokkivaraus.controller.alkuIkkunaController">
    <children>
       <Button fx:id="btMokit" mnemonicParsing="false" onAction="#btMokitAction" text="Mökkihallinta" textAlignment="CENTER" />
       <Button fx:id="btAlue" mnemonicParsing="false" onAction="#btAlueAction" text="Aluehallinta" />
+      <Button fx:id="btAsiakas" mnemonicParsing="false" onAction="#btAsiakasAction" text="Asiakashallinta" />
    </children>
 </VBox>
