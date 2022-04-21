@@ -39,6 +39,9 @@ public class muokkaaMokkiIkkunaController {
     @FXML
     private TextField tfVarustelu;
 
+    @FXML
+    private Label labelId;
+
     Mokki mokki;
 
     @FXML
@@ -52,6 +55,7 @@ public class muokkaaMokkiIkkunaController {
     }
 
     public void initdata(int mokki_id, int alueenid, String kuvaus, String varustelu, String nimi, String postinro, String osoite, int henkilomaara, double hinta) {
+        labelId.setText(Integer.toString(mokki_id));
         tfNimi.setText(nimi);
         tfAlue.setText(Integer.toString(alueenid));
         tfVarustelu.setText(varustelu);

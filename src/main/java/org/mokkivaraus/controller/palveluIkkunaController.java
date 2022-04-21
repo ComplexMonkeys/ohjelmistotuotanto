@@ -32,22 +32,22 @@ public class palveluIkkunaController {
     private Button btPoista;
 
     @FXML
-    private TableColumn<?, ?> cAlue;
+    private TableColumn<Palvelu, Integer> cAlue;
 
     @FXML
-    private TableColumn<?, ?> cHinta;
+    private TableColumn<Palvelu, Double> cHinta;
 
     @FXML
-    private TableColumn<?, ?> cPalveluId;
+    private TableColumn<Palvelu, Integer> cPalveluId;
 
     @FXML
-    private TableColumn<?, ?> cPalveluNimi;
+    private TableColumn<Palvelu, String> cPalveluNimi;
 
     @FXML
     private HBox hbNapit;
 
     @FXML
-    private TableView<?> tvPalvelut;
+    private TableView<Palvelu> tvPalvelut;
 
     @FXML
     void btLisaaAction(ActionEvent event) {
@@ -82,7 +82,48 @@ public class palveluIkkunaController {
     }
 
     @FXML
-    void btPoistaAction(ActionEvent event) {
+    void btPoistaAction(ActionEvent event) throws Exception {
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+        try {
+            Palvelu palvelu = tvPalvelut.getSelectionModel().getSelectedItem();
+            try(
+                Statement stmt = con.createStatement()) {
+                    stmt.executeUpdate("DELETE FROM palvelu WHERE palvelu_id = " + palvelu.getPalvelu_id());
+                }
+                con.close();
+
+                //TODO puuttuu listan paivitus
+             }
+             catch (SQLException e){
+                 System.out.println(e);
+             }
+             finally {
+                 con.close();
+             }
+    }
+    private List<Palvelu> haePalvelulista() throws SQLException{
+        List<Palvelu> lista = new ArrayList<>();
+        // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+        try {
+            Statement stmt = con.createStatement();
+            // Määrittää SQL komennon ja lähettää sen tietokannalle.
+            ResultSet rs = stmt.executeQuery("select * from palvelu");
+            // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
+            while (rs.next()) {
+                Palvelu tempPalvelu = new Palvelu(rs.getInt(1),rs.getInt(2),rs.getString(3),
+                rs.getInt(4),rs.getString(5),rs.getDouble(6),rs.getDouble(7));
+                lista.add(tempPalvelu);
+            }
+            // Nappaa poikkeukset ja tulostaa ne.
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        finally{
+            // Yhteys tietokantaan suljetaan.
+            con.close();
+        }
+        return lista;
 
     }
 
