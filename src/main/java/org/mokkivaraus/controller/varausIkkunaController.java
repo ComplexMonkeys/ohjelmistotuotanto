@@ -32,6 +32,9 @@ public class varausIkkunaController {
     private Button btVaraus;
 
     @FXML
+    private Button btPaivita;
+
+    @FXML
     private TableColumn<?, ?> cAlue;
 
     @FXML
@@ -80,6 +83,11 @@ public class varausIkkunaController {
     @FXML
     void btVarausAction(ActionEvent event) {
 
+    }
+
+    @FXML
+    void btPaivitaAction(ActionEvent event) {
+        
     }
 
     @FXML
