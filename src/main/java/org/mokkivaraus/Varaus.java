@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Varaus {
     LocalDateTime dateTime = LocalDateTime.now();
-    DateTimeFormatter mysqlFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM:SS");
+    DateTimeFormatter mysqlFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
 
     private int varausId;
     private int asiakasId;
