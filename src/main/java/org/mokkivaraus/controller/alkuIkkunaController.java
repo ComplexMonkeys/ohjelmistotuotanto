@@ -77,6 +77,17 @@ public class alkuIkkunaController {
 
     @FXML
     void btPalveluAction(ActionEvent event){
-        
+        Parent root;
+        try {
+            root = FXMLLoader.load(Mokinvaraus.class.getResource("palveluIkkuna.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Palveluhallinta");
+            stage.show();
+            ((Node) event.getSource()).getScene().getWindow().hide();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
