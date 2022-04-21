@@ -23,6 +23,9 @@ public class alkuIkkunaController {
     private Button btAsiakas;
 
     @FXML
+    private Button btPalvelu;
+
+    @FXML
     void btAlueAction(ActionEvent event) {
         Parent root;
         try {
@@ -58,6 +61,11 @@ public class alkuIkkunaController {
 
     @FXML
     void btAsiakasAction(ActionEvent event){
+        
+    }
+
+    @FXML
+    void btPalveluAction(ActionEvent event){
         
     }
 }

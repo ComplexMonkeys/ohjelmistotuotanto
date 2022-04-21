@@ -8,5 +8,6 @@
       <Button fx:id="btMokit" mnemonicParsing="false" onAction="#btMokitAction" text="Mökkihallinta" textAlignment="CENTER" />
       <Button fx:id="btAlue" mnemonicParsing="false" onAction="#btAlueAction" text="Aluehallinta" />
       <Button fx:id="btAsiakas" mnemonicParsing="false" onAction="#btAsiakasAction" text="Asiakashallinta" />
+      <Button fx:id="btPalvelu" mnemonicParsing="false" onAction="#btPalveluAction" text="Palveluhallinta" />
    </children>
 </VBox>
