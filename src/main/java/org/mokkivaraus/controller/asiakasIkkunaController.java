@@ -11,7 +11,6 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.*;
 import javafx.scene.input.*;
-import javafx.scene.layout.*;
 import javafx.stage.*;
 
 public class asiakasIkkunaController implements Initializable{
@@ -60,6 +59,13 @@ public class asiakasIkkunaController implements Initializable{
             stage.setTitle("Lisää asiakas");
             stage.setScene(new Scene(root));
             stage.show();
+            stage.setOnHiding(sulku -> {
+                try {
+                    tvAsiakas.getItems().setAll(haeLista());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -72,7 +78,6 @@ public class asiakasIkkunaController implements Initializable{
         try {
             stage.setScene(new Scene(loader.load()));
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -81,6 +86,13 @@ public class asiakasIkkunaController implements Initializable{
         stage.setTitle("Muokkaa asiakasta");
 
         stage.show();
+        stage.setOnHiding(sulku -> {
+            try {
+                tvAsiakas.getItems().setAll(haeLista());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @FXML
