@@ -46,5 +46,7 @@ public class muokkaaAsiakasIkkunaController {
     void btTallennaAction(ActionEvent event) {
 
     }
-
+    public void initdata(int asiakas_id) {
+    labelId.setText(Integer.toString(asiakas_id));
+    }
 }
