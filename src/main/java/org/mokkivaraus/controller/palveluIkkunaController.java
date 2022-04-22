@@ -67,6 +67,13 @@ public class palveluIkkunaController {
             stage.setTitle("Lisää palvelu");
             stage.setScene(new Scene(root));
             stage.show();
+            stage.setOnHiding(sulku -> {
+                try {
+                    tvPalvelut.getItems().setAll(haePalvelulista());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            });
         } catch(IOException e){
             e.printStackTrace();
         }
@@ -81,6 +88,16 @@ public class palveluIkkunaController {
         } catch(IOException e) {
             e.printStackTrace();
         }
+
+        // TODO avaa muokkaa-ikkuna sopivilla initeillä
+
+        stage.setOnHiding(sulku -> {
+            try {
+                tvPalvelut.getItems().setAll(haePalvelulista());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @FXML
