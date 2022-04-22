@@ -69,6 +69,13 @@ public class alueIkkunaController implements Initializable{
             stage.setTitle("Lisää alue");
             stage.setScene(new Scene(root));
             stage.show();
+            stage.setOnHiding(sulku -> {
+                try {
+                    tvAlue.getItems().setAll(haeAluelista());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            });
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -91,6 +98,13 @@ public class alueIkkunaController implements Initializable{
         stage.setTitle("Muokkaa aluetta");
 
         stage.show();
+        stage.setOnHiding(sulku -> {
+            try {
+                tvAlue.getItems().setAll(haeAluelista());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @FXML
