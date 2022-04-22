@@ -9,6 +9,7 @@ import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.*;
 
 public class varausIkkunaController{
@@ -23,7 +24,7 @@ public class varausIkkunaController{
     private Button btPaivita;
 
     @FXML
-    private TableView<Mokki> tvVaraus;
+    private TableView<Mokki> tvMokit;
 
     @FXML
     private TableColumn<Mokki, Integer> cAlue;
@@ -44,11 +45,14 @@ public class varausIkkunaController{
     private DatePicker dpLopetus;
 
     Mokki valittu;
-    
-
+            
     public void paivitaLista() {
+        cAlue.setCellValueFactory(new PropertyValueFactory<Mokki, Integer>("alue_id"));
+        cHenkilomaara.setCellValueFactory(new PropertyValueFactory<Mokki, Integer>("henkilomaara"));
+        cMokkiId.setCellValueFactory(new PropertyValueFactory<Mokki, Integer>("mokki_id"));
+        cMokkiNimi.setCellValueFactory(new PropertyValueFactory<Mokki, String>("mokkinimi"));
         try {
-            tvVaraus.getItems().setAll(haeMokkiLista());
+            tvMokit.getItems().setAll(haeMokkiLista());
         } catch (SQLException e) {
             e.printStackTrace();
         }
