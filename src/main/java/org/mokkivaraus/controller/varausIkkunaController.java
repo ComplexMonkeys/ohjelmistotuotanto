@@ -72,7 +72,9 @@ public class varausIkkunaController{
 
     @FXML
     void btVarausAction(ActionEvent event) {
-
+        TextInputDialog td = new TextInputDialog("Anna asiakas-id!");
+        td.showAndWait();
+        int asiakasId = Integer.parseInt(td.getEditor().getText());
     }
 
     @FXML
