@@ -67,7 +67,20 @@ public class asiakasIkkunaController implements Initializable{
 
     @FXML
     void btMuokkaaAction(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(Mokinvaraus.class.getResource("muokkaaAsiakasIkkuna.fxml"));
+        Stage stage = new Stage();
+        try {
+            stage.setScene(new Scene(loader.load()));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
+        muokkaaAsiakasIkkunaController controller = loader.getController();
+        controller.initdata(valittu.getAsiakas_id());
+        stage.setTitle("Muokkaa mökkiä");
+
+        stage.show();
     }
 
     @FXML
