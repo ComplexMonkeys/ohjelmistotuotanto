@@ -130,9 +130,28 @@ public class asiakasIkkunaController implements Initializable{
     }
 
     @FXML
-    void btPoistaAction(ActionEvent event) {
-
+    void btPoistaAction(ActionEvent event) throws SQLException {
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+        try {
+            // Asettaa mokki muuttujaan valitun mökin.
+            Asiakas asiakas = tvAsiakas.getSelectionModel().getSelectedItem();
+            try (// SQL komento joka poistaa valitun mökin.
+            Statement stmt = con.createStatement()) {
+                stmt.executeUpdate("DELETE FROM asiakas WHERE asiakas_id = " + asiakas.getAsiakas_id() + ";");
+            }
+            con.close();
+            // Päivittää listan poiston tapahduttua.
+            paivitaLista();
+        }
+        // Nappaa SQL poikkeukset ja tulostaa ne.
+        catch (SQLException e) {
+            System.out.print(e);
+        }
+        finally {
+            con.close();
+        }
     }
+
     private List<Asiakas> haeLista() throws SQLException{
         List<Asiakas> lista = new ArrayList<>();
         // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
