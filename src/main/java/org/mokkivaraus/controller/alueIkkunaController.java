@@ -77,17 +77,20 @@ public class alueIkkunaController implements Initializable{
 
     @FXML
     void btMuokkaAction(ActionEvent event) {
-        Parent root;
+        FXMLLoader loader = new FXMLLoader(Mokinvaraus.class.getResource("muokkaaAlueIkkuna.fxml"));
+        Stage stage = new Stage();
         try {
-            root = FXMLLoader.load(Mokinvaraus.class.getResource("muokkaaAlueIkkuna.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("Lisää alue");
-            stage.setScene(new Scene(root));
-            stage.show();
-        }
-        catch (IOException e) {
+            stage.setScene(new Scene(loader.load()));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+        muokkaaAlueIkkunaController controller = loader.getController();
+        controller.initdata(valittu.getAlue_id());
+        stage.setTitle("Muokkaa aluetta");
+
+        stage.show();
     }
 
     @FXML
