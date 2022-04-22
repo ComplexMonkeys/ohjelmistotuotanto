@@ -14,7 +14,7 @@ import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 
-public class asiakasIkkunaController {
+public class asiakasIkkunaController implements Initializable{
 
     @FXML
     private Button btLisaa;
@@ -75,6 +75,7 @@ public class asiakasIkkunaController {
         paivitaLista();
     }
 
+    @Override
     public void initialize(URL url, ResourceBundle rb) {
         cAsiakasId.setCellValueFactory(new PropertyValueFactory<Asiakas, Integer>("asiakas_id"));
         cAsiakasNimi.setCellValueFactory(new PropertyValueFactory<Asiakas, String>("nimi"));
