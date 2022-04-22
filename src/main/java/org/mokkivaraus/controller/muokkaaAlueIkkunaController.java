@@ -41,7 +41,7 @@ public class muokkaaAlueIkkunaController {
         int alueenid = Integer.parseInt(labelId.getText());
 
         // Määrittää SQL komennon ja lähettää sen tietokannalle.
-        stmt.executeUpdate("UPDATE alue set aluenimi = '"+ alueennimi + "' WHERE alue_id = '"+alueenid+"' ;");
+        stmt.executeUpdate("UPDATE alue set nimi = '"+ alueennimi + "' WHERE alue_id = '"+alueenid+"' ;");
     } catch (Exception e) {
         System.out.println(e);
     } finally {
