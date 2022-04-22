@@ -6,19 +6,24 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="112.0" prefWidth="290.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mokkivaraus.controller.muokkaaAlueIkkunaController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="139.0" prefWidth="290.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mokkivaraus.controller.muokkaaAlueIkkunaController">
    <children>
-      <HBox alignment="CENTER" layoutX="-1.0" layoutY="20.0" prefHeight="40.0" prefWidth="293.0" spacing="10.0">
+      <HBox alignment="CENTER" layoutX="-1.0" layoutY="57.0" prefHeight="40.0" prefWidth="293.0" spacing="10.0">
          <children>
             <Label text="Alueen nimi" />
             <TextField fx:id="tfAlueNimi" />
          </children>
       </HBox>
-      <HBox alignment="CENTER" layoutX="108.0" layoutY="60.0" prefHeight="32.0" prefWidth="163.0" spacing="10.0">
+      <HBox alignment="CENTER" layoutX="108.0" layoutY="97.0" prefHeight="32.0" prefWidth="163.0" spacing="10.0">
          <children>
             <Button fx:id="btTallenna" mnemonicParsing="false" onAction="#btTallennaAction" text="Tallenna" />
             <Button fx:id="btPeruuta" mnemonicParsing="false" onAction="#btPeruutaAction" text="Peruuta" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="-1.0" layoutY="11.0" prefHeight="40.0" prefWidth="293.0" spacing="10.0">
+         <children>
+            <Label text="Alueen ID: " />
+            <Label fx:id="labelId" text="Label" />
          </children>
       </HBox>
    </children>

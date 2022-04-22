@@ -5,8 +5,6 @@ import javafx.fxml.*;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-// TODO, lisää label, jossa on alue_id
-
 public class muokkaaAlueIkkunaController {
 
     @FXML
@@ -17,6 +15,9 @@ public class muokkaaAlueIkkunaController {
 
     @FXML
     private TextField tfAlueNimi;
+
+    @FXML
+    private Label labelId;
 
     @FXML
     void btPeruutaAction(ActionEvent event) {
