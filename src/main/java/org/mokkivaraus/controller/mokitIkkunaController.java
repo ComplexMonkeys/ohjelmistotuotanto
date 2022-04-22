@@ -75,9 +75,17 @@ public class mokitIkkunaController implements Initializable {
             stage.setTitle("Lisää mökki");
             stage.setScene(new Scene(root));
             stage.show();
+            stage.setOnHiding(sulku -> {
+                try {
+                    tvmokit.getItems().setAll(haeLista());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
     }
 
     @FXML
@@ -97,6 +105,14 @@ public class mokitIkkunaController implements Initializable {
         stage.setTitle("Muokkaa mökkiä");
 
         stage.show();
+
+        stage.setOnHiding(sulku -> {
+            try {
+                tvmokit.getItems().setAll(haeLista());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @FXML
