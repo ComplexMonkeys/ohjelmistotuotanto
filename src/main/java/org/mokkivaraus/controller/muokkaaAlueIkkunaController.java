@@ -5,6 +5,8 @@ import javafx.fxml.*;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+// TODO, lisää label, jossa on alue_id
+
 public class muokkaaAlueIkkunaController {
 
     @FXML
