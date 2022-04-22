@@ -16,6 +16,8 @@ private String Email;
 
 private String Puhelinnro;
 
+private String nimi;
+
 
 //parametriton alustaja
 public Asiakas(){
@@ -30,6 +32,7 @@ this.Sukunimi = Sukunimi;
 this.Lahiosoite = Lahiosoite;
 this.Email = Email;
 this.Puhelinnro = Puhelinnro;
+this.nimi = Etunimi + " " + Sukunimi;
 }
 public int getAsiakas_id() {
     return Asiakas_id;
@@ -72,6 +75,9 @@ public String getPuhelinnro() {
 }
 public void setPuhelinnro(String puhelinnro) {
     Puhelinnro = puhelinnro;
+}
+public String getNimi(){
+    return nimi;
 }
 @Override
 public String toString(){
