@@ -8,6 +8,7 @@ import org.mokkivaraus.Asiakas;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -83,7 +84,13 @@ public class muokkaaAsiakasIkkunaController {
     stage.close();
 }
 }
-    public void initdata(int Asiakas_id) {
+    public void initdata(int Asiakas_id, String Email, String Etunimi, String Sukunimi, String Lahiosoite, String Postinro, String Puhelinnro) {
     labelId.setText(Integer.toString(Asiakas_id));
+    tfEmail.setText(Email);
+    tfEtunimi.setText(Etunimi);
+    tfSukunimi.setText(Sukunimi);
+    tfOsoite.setText(Lahiosoite);
+    tfPostiNro.setText(Postinro);
+    tfPuhNro.setText(Puhelinnro);
     }
 }
