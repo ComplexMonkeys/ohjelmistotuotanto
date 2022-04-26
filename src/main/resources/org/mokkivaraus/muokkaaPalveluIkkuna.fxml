@@ -21,7 +21,6 @@
             <RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="78.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="185.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="200.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="278.0" minHeight="10.0" prefHeight="130.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="215.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="177.0" minHeight="0.0" prefHeight="25.0" vgrow="SOMETIMES" />
@@ -30,17 +29,15 @@
             <TextField fx:id="tfAlueId" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="tfNimi" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="tfTyyppi" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="tfOsoite" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="tfHinta" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <TextField fx:id="tfKuvaus" prefHeight="130.0" prefWidth="280.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField fx:id="tfAlv" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <TextField fx:id="tfHinta" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="tfKuvaus" prefHeight="130.0" prefWidth="280.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="tfAlv" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <Label text="Alueen id:" GridPane.rowIndex="1" />
             <Label text="Pavelun nimi:" GridPane.rowIndex="2" />
             <Label text="Tyyppi:" GridPane.rowIndex="3" />
-            <Label text="Katuosoite" GridPane.rowIndex="4" />
-            <Label text="Hinta" GridPane.rowIndex="6" />
-            <Label text="Kuvaus" GridPane.rowIndex="5" />
-            <Label text="ALV" GridPane.rowIndex="7" />
+            <Label text="Hinta" GridPane.rowIndex="5" />
+            <Label text="Kuvaus" GridPane.rowIndex="4" />
+            <Label text="ALV" GridPane.rowIndex="6" />
             <Label text="Palvelun ID:" />
             <Label fx:id="labelId" text="Label" GridPane.columnIndex="1" />
          </children>

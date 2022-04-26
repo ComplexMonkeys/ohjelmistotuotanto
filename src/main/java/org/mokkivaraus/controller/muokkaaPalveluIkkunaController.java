@@ -39,9 +39,6 @@ public class muokkaaPalveluIkkunaController {
     private TextField tfNimi;
 
     @FXML
-    private TextField tfOsoite;
-
-    @FXML
     private TextField tfTyyppi;
 
     @FXML
