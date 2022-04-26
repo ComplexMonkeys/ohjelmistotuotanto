@@ -82,7 +82,7 @@ public class asiakasIkkunaController implements Initializable{
         }
 
         muokkaaAsiakasIkkunaController controller = loader.getController();
-        controller.initdata(valittu.getAsiakas_id());
+        controller.initdata(valittu.getAsiakas_id(), valittu.getEmail(), valittu.getEtunimi(), valittu.getSukunimi(), valittu.getLahiosoite(), valittu.getPostinro(), valittu.getPuhelinnro());
         stage.setTitle("Muokkaa asiakasta");
 
         stage.show();
