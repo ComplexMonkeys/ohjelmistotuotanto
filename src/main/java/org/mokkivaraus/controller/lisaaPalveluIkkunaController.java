@@ -36,7 +36,7 @@ public class lisaaPalveluIkkunaController {
     private TextField tfNimi;
 
     @FXML
-    private Label labelId;
+    private TextField tfPalveluId;
 
     @FXML
     private TextField tfTyyppi;

@@ -39,7 +39,7 @@
             <Label text="Kuvaus" GridPane.rowIndex="4" />
             <Label text="ALV" GridPane.rowIndex="6" />
             <Label text="Palvelun ID:" />
-            <Label fx:id="labelId" text="Label" GridPane.columnIndex="1" />
+            <TextField fx:id="tfPalveluId" GridPane.columnIndex="1" />
          </children>
       </GridPane>
       <HBox alignment="CENTER" layoutX="433.0" layoutY="526.0" prefHeight="26.0" prefWidth="161.0" spacing="10.0">
