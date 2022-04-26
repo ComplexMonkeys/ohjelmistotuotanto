@@ -176,32 +176,4 @@ public class varausIkkunaController implements Initializable{
         return lista;
 
     }
-
-    /** 
-    // haeLista-metodi, joka luo listan olioista näytettäväksi taulukkoon.
-    private List<Varaus> haeVarausLista() throws SQLException {
-        List<Varaus> lista = new ArrayList<>();
-        // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
-        try {
-            Statement stmt = con.createStatement();
-            // Määrittää SQL komennon ja lähettää sen tietokannalle.
-            ResultSet rs = stmt.executeQuery("select * from varaus");
-            // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
-            while (rs.next()) {
-                Varaus tempvaraus = new Varaus(rs.getInt(1), rs.getInt(2), rs.getInt(3),
-                        rs.getString(4), rs.getString(5), rs.getString(6));
-                lista.add(tempvaraus);
-            }
-            // Nappaa poikkeukset ja tulostaa ne.
-        } catch (Exception e) {
-            System.out.println(e);
-        } finally {
-            // Yhteys tietokantaan suljetaan.
-            con.close();
-        }
-        return lista;
-        
-
-    }*/
 }
