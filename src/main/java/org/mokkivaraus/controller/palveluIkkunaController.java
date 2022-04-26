@@ -149,9 +149,9 @@ public class palveluIkkunaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cAlue.setCellValueFactory(new PropertyValueFactory<Palvelu, Integer>("alue_id"));
-        cHinta.setCellValueFactory(new PropertyValueFactory<Palvelu, Double>("henkilomaara"));
-        cPalveluId.setCellValueFactory(new PropertyValueFactory<Palvelu, Integer>("mokki_id"));
-        cPalveluNimi.setCellValueFactory(new PropertyValueFactory<Palvelu, String>("mokkinimi"));
+        cHinta.setCellValueFactory(new PropertyValueFactory<Palvelu, Double>("hinta"));
+        cPalveluId.setCellValueFactory(new PropertyValueFactory<Palvelu, Integer>("palvelu_id"));
+        cPalveluNimi.setCellValueFactory(new PropertyValueFactory<Palvelu, String>("nimi"));
 
         try {
             tvPalvelut.getItems().setAll(haePalvelulista());
