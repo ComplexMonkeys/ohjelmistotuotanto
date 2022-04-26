@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.scene.control.Label;
 
 public class lisaaPalveluIkkunaController {
 
@@ -35,7 +36,7 @@ public class lisaaPalveluIkkunaController {
     private TextField tfNimi;
 
     @FXML
-    private TextField tfOsoite;
+    private Label labelId;
 
     @FXML
     private TextField tfTyyppi;
