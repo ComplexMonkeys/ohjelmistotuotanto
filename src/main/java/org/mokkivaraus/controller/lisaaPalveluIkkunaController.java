@@ -49,7 +49,7 @@ public class lisaaPalveluIkkunaController {
     @FXML
     void btTallennaAction(ActionEvent event) throws Exception {
         if (tfAlueId.getText() != "" && tfAlv.getText() != "" && tfHinta.getText() != "" && tfKuvaus.getText() != ""
-        && tfNimi.getText() != "" && tfOsoite.getText() != "" && tfTyyppi.getText() != ""){
+        && tfNimi.getText() != "" && tfTyyppi.getText() != ""){
 
             Connection con = DriverManager.getConnection(
                 // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
@@ -57,15 +57,14 @@ public class lisaaPalveluIkkunaController {
             try{
                 java.sql.Statement stmt = con.createStatement();
                 int alueenid = Integer.parseInt(tfAlueId.getText());
-                int alv = Integer.parseInt(tfAlv.getText());
-                int hinta = Integer.parseInt(tfHinta.getText());
+                double alv = Double.parseDouble(tfAlv.getText());
+                double hinta = Double.parseDouble(tfHinta.getText());
                 String kuvaus = tfKuvaus.getText();
                 String nimi = tfNimi.getText();
-                String osoite = tfOsoite.getText();
-                String tyyppi = tfTyyppi.getText();
+                int tyyppi = Integer.parseInt(tfTyyppi.getText());
 
                 stmt.executeUpdate(
-                    "INSERT INTO palvelu (alue_id, alv, hinta, kuvaus, nimi, osoite, tyyppi) VALUES('"+ alueenid + "','" + alv + "','" +  hinta + "','" + kuvaus + "','" + nimi + "','" + osoite + "','" + tyyppi + "');");
+                    "INSERT INTO palvelu (alue_id, alv, hinta, kuvaus, nimi, tyyppi) VALUES("+ alueenid + "," + alv + "," +  hinta + ",'" + kuvaus + "','" + nimi + "','" + tyyppi + "');");
                 
                  } catch(Exception e){
                      System.out.println(e);
