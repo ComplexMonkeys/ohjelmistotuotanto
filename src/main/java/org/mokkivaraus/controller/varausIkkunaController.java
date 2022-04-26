@@ -1,11 +1,19 @@
 package org.mokkivaraus.controller;
 
+import java.io.IOException;
+
+import org.mokkivaraus.Mokinvaraus;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
 public class varausIkkunaController {
 
@@ -44,7 +52,16 @@ public class varausIkkunaController {
 
     @FXML
     void btLisaaAction(ActionEvent event) {
-
+        Parent root;
+        try {
+            root = FXMLLoader.load(Mokinvaraus.class.getResource("lisaaVarausIkkuna.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Lisää varaus");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
