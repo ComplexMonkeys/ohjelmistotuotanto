@@ -16,22 +16,18 @@ public class Varaus {
     private String varattuAlku;
     private String varattuLoppu;
 
-    public Varaus(int asiakasId, int mokkiId, String varattuAlku,
+    
+
+    public Varaus(int varausId, int asiakasId, int mokkiId, String varattuPvm, String vahvistusPvm, String varattuAlku,
             String varattuLoppu) {
+        this.varausId = varausId;
         this.asiakasId = asiakasId;
         this.mokkiId = mokkiId;
-        this.varattuPvm = dateTime.format(mysqlFormat);
-        this.vahvistusPvm = dateTimeEnd.format(mysqlFormat);
+        this.varattuPvm = varattuPvm;
+        this.vahvistusPvm = vahvistusPvm;
         this.varattuAlku = varattuAlku;
         this.varattuLoppu = varattuLoppu;
     }
-
-
-    public static void main(String[] args) {
-        Varaus varaus = new Varaus(1, 1, "1212-12-12 12:12:12", "1212-12-12 12:12:12");
-        System.out.println(varaus);
-    }
-
 
     public int getVarausId() {
         return varausId;
