@@ -165,6 +165,8 @@ public class palveluIkkunaController implements Initializable {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
 
                     valittu = row.getItem();
+                    btMuokkaa.setDisable(false);
+                    btPoista.setDisable(false);
                 }
             });
             return row;
