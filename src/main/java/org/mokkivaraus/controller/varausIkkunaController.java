@@ -10,6 +10,9 @@ import javafx.scene.layout.HBox;
 public class varausIkkunaController {
 
     @FXML
+    private Button btLisaa;
+
+    @FXML
     private Button btMuokkaa;
 
     @FXML
@@ -38,6 +41,11 @@ public class varausIkkunaController {
 
     @FXML
     private TableView<?> tvVaraus;
+
+    @FXML
+    void btLisaaAction(ActionEvent event) {
+
+    }
 
     @FXML
     void btMuokkaAction(ActionEvent event) {

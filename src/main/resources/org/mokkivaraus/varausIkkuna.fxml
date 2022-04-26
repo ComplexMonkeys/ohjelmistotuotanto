@@ -18,6 +18,7 @@
       </TableView>
       <HBox fx:id="hbNapit" alignment="CENTER" layoutY="331.0" prefHeight="37.0" prefWidth="227.0" spacing="15.0">
          <children>
+            <Button fx:id="btLisaa" mnemonicParsing="false" onAction="#btLisaaAction" text="Lisää" />
             <Button fx:id="btMuokkaa" disable="true" mnemonicParsing="false" onAction="#btMuokkaAction" text="Muokkaa" />
             <Button fx:id="btPoista" disable="true" mnemonicParsing="false" onAction="#btPoistaAction" text="Poista" />
          </children>
