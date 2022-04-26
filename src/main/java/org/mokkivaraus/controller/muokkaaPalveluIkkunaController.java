@@ -3,7 +3,7 @@ package org.mokkivaraus.controller;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-import com.mysql.cj.xdevapi.Statement;
+import java.sql.*;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -51,7 +51,7 @@ public class muokkaaPalveluIkkunaController {
     }
 
     @FXML
-    void btTallennaAction(ActionEvent event) {
+    void btTallennaAction(ActionEvent event) throws Exception {
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
         try{
             java.sql.Statement stmt = con.createStatement();
@@ -64,7 +64,7 @@ public class muokkaaPalveluIkkunaController {
             String tyyppi = tfTyyppi.getText();
 
 
-            stmt.executeUpdate("UPDATE alue")
+            stmt.executeUpdate("UPDATE palvelu set nimi ='"+nimi+"', tyyppi = '"+tyyppi+"', kuvaus = '"+kuvaus+"', hinta = '"+hinta+"', alv = '"+alv+"' ;");
         }
         catch(Exception e){
             System.out.println(e);
