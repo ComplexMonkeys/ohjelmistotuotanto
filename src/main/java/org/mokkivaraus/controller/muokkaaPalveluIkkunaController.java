@@ -72,7 +72,13 @@ public class muokkaaPalveluIkkunaController {
         Stage stage = (Stage) btTallenna.getScene().getWindow();
         stage.close();
     }
-    public void initdata(int palvelu_id) {
+    public void initdata(int palvelu_id, int alue_id, double alv, double hinta, String kuvaus, String nimi, int tyyppi) {
         labelId.setText(Integer.toString(palvelu_id));
+        tfAlueId.setText(Integer.toString(alue_id));
+        tfAlv.setText(Double.toString(alv));
+        tfHinta.setText(Double.toString(hinta));
+        tfKuvaus.setText(kuvaus);
+        tfNimi.setText(nimi);
+        tfTyyppi.setText(Integer.toString(tyyppi));
     }
 }

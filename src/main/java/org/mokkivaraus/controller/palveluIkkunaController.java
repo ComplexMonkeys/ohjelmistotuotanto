@@ -93,7 +93,7 @@ public class palveluIkkunaController implements Initializable {
             e.printStackTrace();
         }
         muokkaaPalveluIkkunaController controller = loader.getController();
-        controller.initdata(valittu.getPalvelu_id());
+        controller.initdata(valittu.getPalvelu_id(), valittu.getAlue_id(), valittu.getAlv(), valittu.getHinta(), valittu.getKuvaus(), valittu.getNimi(), valittu.getTyyppi());
         stage.setTitle("Muokkaa palvelua");
         stage.show();
         stage.setOnHiding(sulku -> {
