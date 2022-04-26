@@ -14,7 +14,7 @@ import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 
-public class palveluIkkunaController {
+public class palveluIkkunaController implements Initializable {
 
     @FXML
     private Button btLisaa;
@@ -48,6 +48,10 @@ public class palveluIkkunaController {
 
     @FXML
     private TableView<Palvelu> tvPalvelut;
+
+    Palvelu valittu;
+
+
 
     public void paivitaPalvelulista(){
         try{
@@ -141,6 +145,30 @@ public class palveluIkkunaController {
              finally {
                  con.close();
              }
+    }
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        cAlue.setCellValueFactory(new PropertyValueFactory<Palvelu, Integer>("alue_id"));
+        cHinta.setCellValueFactory(new PropertyValueFactory<Palvelu, Double>("henkilomaara"));
+        cPalveluId.setCellValueFactory(new PropertyValueFactory<Palvelu, Integer>("mokki_id"));
+        cPalveluNimi.setCellValueFactory(new PropertyValueFactory<Palvelu, String>("mokkinimi"));
+
+        try {
+            tvPalvelut.getItems().setAll(haePalvelulista());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        tvPalvelut.setRowFactory(tv -> {
+            TableRow<Palvelu> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
+
+                    valittu = row.getItem();
+                }
+            });
+            return row;
+        });
     }
     private List<Palvelu> haePalvelulista() throws SQLException{
         List<Palvelu> lista = new ArrayList<>();

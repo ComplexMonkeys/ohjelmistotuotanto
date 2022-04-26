@@ -57,6 +57,7 @@ public class lisaaPalveluIkkunaController {
                 "jdbc:mysql://localhost:3306/vn", "employee", "password");
             try{
                 java.sql.Statement stmt = con.createStatement();
+                int palvelunid = Integer.parseInt(tfPalveluId.getText());
                 int alueenid = Integer.parseInt(tfAlueId.getText());
                 double alv = Double.parseDouble(tfAlv.getText());
                 double hinta = Double.parseDouble(tfHinta.getText());
@@ -65,7 +66,7 @@ public class lisaaPalveluIkkunaController {
                 int tyyppi = Integer.parseInt(tfTyyppi.getText());
 
                 stmt.executeUpdate(
-                    "INSERT INTO palvelu (alue_id, alv, hinta, kuvaus, nimi, tyyppi) VALUES("+ alueenid + "," + alv + "," +  hinta + ",'" + kuvaus + "','" + nimi + "','" + tyyppi + "');");
+                    "INSERT INTO palvelu (palvelu_id, alue_id, alv, hinta, kuvaus, nimi, tyyppi) VALUES(" + palvelunid + "," + alueenid + "," + alv + "," +  hinta + ",'" + kuvaus + "','" + nimi + "','" + tyyppi + "');");
                 
                  } catch(Exception e){
                      System.out.println(e);
