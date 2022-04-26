@@ -57,7 +57,6 @@ public class muokkaaPalveluIkkunaController {
             double hinta = Double.parseDouble(tfHinta.getText());
             String kuvaus = tfKuvaus.getText();
             String nimi = tfNimi.getText();
-            String osoite = tfOsoite.getText();
             String tyyppi = tfTyyppi.getText();
 
 
