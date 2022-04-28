@@ -83,23 +83,26 @@ public class varausIkkunaController implements Initializable {
 
     @FXML
     void btMuokkaAction(ActionEvent event) {
-        Parent root;
+        FXMLLoader loader = new FXMLLoader(Mokinvaraus.class.getResource("muokkaaVarausIkkuna.fxml"));
+        Stage stage = new Stage();
         try {
-            root = FXMLLoader.load(Mokinvaraus.class.getResource("muokkaaVarausIkkuna.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("Muokkaa varausta");
-            stage.setScene(new Scene(root));
-            stage.show();
-            stage.setOnHiding(sulku -> {
-                try {
-                    paivitaVarauslista();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
+            stage.setScene(new Scene(loader.load()));
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        muokkaaVarausIkkunaController controller = loader.getController();
+        controller.initdata(valittu.getVarausId(), valittu.getVahvistusPvm());
+        stage.setTitle("Muokkaa varausta");
+
+        stage.show();
+        stage.setOnHiding(sulku -> {
+            try {
+                paivitaVarauslista();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @FXML
