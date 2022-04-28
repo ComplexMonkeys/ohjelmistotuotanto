@@ -4,9 +4,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.mokkivaraus.Palvelu;
 
 import java.sql.*;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -23,7 +29,7 @@ public class lisaaVarausPalveluIkkunaController {
     private Button btTallenna;
 
     @FXML
-    private ListView<?> listPalvelu;
+    private ListView<Palvelu> listPalvelu;
 
     @FXML
     private TextField tfAsiakasId;
@@ -72,6 +78,15 @@ public class lisaaVarausPalveluIkkunaController {
         mokkiId = a;
         aloitusPvm = b;
         lopetusPvm = c;
+        listPalvelu.setItems(haeLista());
+    }
+
+    public ObservableList<Palvelu> haeLista(){
+        ObservableList<Palvelu> palvelut = FXCollections.observableArrayList();
+
+        // TODO: Tee lista hakemalla kaikki mökin kanssa samalla alueella olevat palvelut
+
+        return palvelut;
     }
 
 }
