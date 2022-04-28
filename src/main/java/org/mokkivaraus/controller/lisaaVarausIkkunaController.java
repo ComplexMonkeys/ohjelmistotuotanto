@@ -1,6 +1,8 @@
 package org.mokkivaraus.controller;
+import org.mokkivaraus.Mokinvaraus;
 import org.mokkivaraus.Mokki;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
@@ -9,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import javafx.event.*;
 import javafx.fxml.*;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
@@ -88,39 +91,30 @@ public class lisaaVarausIkkunaController implements Initializable{
 
     @FXML
     void btVarausAction(ActionEvent event) throws Exception {
-        TextInputDialog td = new TextInputDialog("Anna asiakas-id!");
-        td.showAndWait();
-        int asiakasId = Integer.parseInt(td.getEditor().getText());
         int mokkiId = valittu.getMokki_id();
         LocalDate aloitusPvm = dpAloitus.getValue();
         LocalDate lopetusPvm = dpLopetus.getValue();
         DateTimeFormatter mysqlFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
-        LocalDateTime dateTime = LocalDateTime.now();
-        LocalDateTime dateTimeEnd = LocalDateTime.now().plusDays(7);
         LocalDateTime aloitusPvmFormat = aloitusPvm.atTime(12,0,0);
         aloitusPvmFormat.format(mysqlFormat);
         LocalDateTime lopetusPvmFormat = lopetusPvm.atTime(12,0,0);
         lopetusPvmFormat.format(mysqlFormat);
 
-        Connection con = DriverManager.getConnection(
-                    // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
-                    "jdbc:mysql://localhost:3306/vn", "employee", "password");
-            try {
-                Statement stmt = con.createStatement();
-                // Määrittää SQL komennon ja lähettää sen tietokannalle.
-                stmt.executeUpdate(
-                        "INSERT INTO varaus (asiakas_id, mokki_mokki_id, varattu_pvm, vahvistus_pvm, varattu_alkupvm, varattu_loppupvm) VALUES ('"
-                                + asiakasId + "','" + mokkiId + "','" + dateTime.format(mysqlFormat) + "','" + dateTimeEnd.format(mysqlFormat) + "','" + aloitusPvmFormat + "','"
-                                + lopetusPvmFormat + "');");
-                
-                // Nappaa poikkeukset ja tulostaa ne.
-            } catch (Exception e) {
-                System.out.println(e);
-            } finally {
-                // Yhteys tietokantaan suljetaan.
-                con.close();
-    }
-}
+        FXMLLoader loader = new FXMLLoader(Mokinvaraus.class.getResource("lisaaVarausPalveluIkkuna.fxml"));
+        Stage stage = new Stage();
+        try {
+            stage.setScene(new Scene(loader.load()));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        lisaaVarausPalveluIkkunaController controller = loader.getController();
+        controller.initdata(mokkiId, aloitusPvmFormat, lopetusPvmFormat);
+        stage.setTitle("Muokkaa mökkiä");
+
+        stage.show();
+    }  
 
     @FXML
     void btPaivitaAction(ActionEvent event) {
