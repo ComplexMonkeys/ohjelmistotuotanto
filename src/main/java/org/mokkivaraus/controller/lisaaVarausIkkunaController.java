@@ -1,8 +1,6 @@
 package org.mokkivaraus.controller;
 import org.mokkivaraus.Mokki;
 
-
-
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
@@ -15,7 +13,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.stage.*;
-
 
 public class lisaaVarausIkkunaController implements Initializable{
 
