@@ -121,6 +121,13 @@ public class palveluIkkunaController implements Initializable {
             stage2.setTitle("alkuikkuna");
             stage2.setScene(new Scene(root));
             stage2.show();
+            stage.setOnHiding(sulku -> {
+                try {
+                    paivitaPalvelulista();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
         }
         catch (IOException e) {
             e.printStackTrace();
