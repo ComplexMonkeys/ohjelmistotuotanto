@@ -24,7 +24,7 @@ public class lisaaMokkiIkkunaController {
     private TextField tfHinta;
 
     @FXML
-    private TextField tfKuvaus;
+    private TextField tfKuvaus; // TODO: Katso saisiko tekstin wrappaamaan
 
     @FXML
     private TextField tfNimi;
@@ -70,8 +70,6 @@ public class lisaaMokkiIkkunaController {
                         "INSERT INTO mokki (alue_id, postinro, mokkinimi, katuosoite, hinta, kuvaus, henkilomaara, varustelu) VALUES ('"
                                 + alueenid + "','" + postinro + "','" + nimi + "','" + osoite + "','" + hinta + "','"
                                 + kuvaus + "','" + maara + "','" + varustelu + "');");
-                // TODO: Lisää tähän tvmokit listan päivitys jos mahdollista?
-                
                 // Nappaa poikkeukset ja tulostaa ne.
             } catch (Exception e) {
                 System.out.println(e);

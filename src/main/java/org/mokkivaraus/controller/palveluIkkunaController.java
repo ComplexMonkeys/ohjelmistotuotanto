@@ -144,8 +144,6 @@ public class palveluIkkunaController implements Initializable {
                     stmt.executeUpdate("DELETE FROM palvelu WHERE palvelu_id = " + palvelu.getPalvelu_id());
                 }
                 con.close();
-
-                //TODO puuttuu listan paivitus
              }
              catch (SQLException e){
                  System.out.println(e);
