@@ -111,7 +111,7 @@ public class lisaaVarausIkkunaController implements Initializable{
 
         lisaaVarausPalveluIkkunaController controller = loader.getController();
         controller.initdata(mokkiId, aloitusPvmFormat, lopetusPvmFormat);
-        stage.setTitle("Muokkaa mökkiä");
+        stage.setTitle("Tee varaus");
 
         stage.show();
     }  
