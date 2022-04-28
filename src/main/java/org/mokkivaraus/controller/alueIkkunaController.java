@@ -182,14 +182,10 @@ public class alueIkkunaController implements Initializable{
 
     public List<Alue> haeAluelista() throws SQLException{
         List<Alue> lista = new ArrayList<>();
-        
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
         try{
-            Connection con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/vn", "employee", "password");
                 java.sql.Statement stmt = con.createStatement();
-                
                 ResultSet rs = stmt.executeQuery("SELECT * FROM alue");
-            
                 while(rs.next()) {
                     Alue tempalue = new Alue(rs.getInt(1),rs.getString(2));
                     lista.add(tempalue);
@@ -197,6 +193,9 @@ public class alueIkkunaController implements Initializable{
                 con.close();
         } catch (Exception e) {
             System.out.println(e);
+        }
+        finally{
+            con.close();
         }
         return lista;
     }
