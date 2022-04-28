@@ -5,6 +5,7 @@ import org.mokkivaraus.Mokki;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import java.sql.*;
 
@@ -77,9 +78,13 @@ public class muokkaaMokkiIkkunaController {
             
     
             // Määrittää SQL komennon ja lähettää sen tietokannalle.
-            stmt.executeUpdate("UPDATE mokki set mokkinimi = '"+ nimi + "', katuosoite = '"+osoite+"', kuvaus = '"+kuvaus+"', henkilomaara = "+ maara +" , hinta = "+ hinta +" , varustelu = '"+varustelu+"' WHERE mokki_id = '"+mokkinumero+"' ;");
+            stmt.executeUpdate("UPDATE mokki set alue_id = "+ alueenid +" , mokkinimi = '"+ nimi + "', postinro = '"+ postinro + "', katuosoite = '"+osoite+"', kuvaus = '"+kuvaus+"', henkilomaara = "+ maara +" , hinta = "+ hinta +" , varustelu = '"+varustelu+"' WHERE mokki_id = '"+mokkinumero+"' ;");
         } catch (Exception e) {
             System.out.println(e);
+            Alert constraitAlert = new Alert(AlertType.ERROR);
+            constraitAlert.setHeaderText("Jotain meni vikaan");
+            constraitAlert.setContentText("Tarkista, että alue_id ja postinumero ovat olemassa");
+            constraitAlert.showAndWait();
         } finally {
             // Yhteys tietokantaan suljetaan.
             con.close();
