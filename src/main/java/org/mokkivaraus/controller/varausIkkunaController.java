@@ -13,6 +13,7 @@ import javafx.scene.control.cell.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
+
 public class varausIkkunaController implements Initializable {
 
     @FXML
@@ -110,43 +111,40 @@ public class varausIkkunaController implements Initializable {
     void btPoistaAction(ActionEvent event) throws Exception {
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
         try {
-            // Asettaa mokki muuttujaan valitun mökin.
+            // Asettaa varaus muuttujaan valitun varauksen.
             Varaus varaus = tvVaraus.getSelectionModel().getSelectedItem();
-            try (// SQL komento joka poistaa valitun mökin.
-            Statement stmt = con.createStatement()) {
+            try (
+                    // SQL komento joka poistaa valitun mökin.
+                    Statement stmt = con.createStatement()) {
                 stmt.executeUpdate("DELETE FROM varaus WHERE varaus_id = " + varaus.getVarausId() + ";");
             }
-            con.close();
-            // Päivittää listan poiston tapahduttua.
-            paivitaVarauslista();
         }
         // Nappaa SQL poikkeukset ja tulostaa ne.
         catch (SQLException e) {
             System.out.print(e);
-        }
-        finally {
+        } finally {
+            // Suljetaan yhteys tietokantaan.
             con.close();
+            // Päivittää listan poiston tapahduttua.
+            paivitaVarauslista();
         }
     }
 
     public List<Varaus> haeVarauslista() throws SQLException {
         List<Varaus> lista = new ArrayList<>();
-
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
         try {
-            Connection con = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/vn", "employee", "password");
             java.sql.Statement stmt = con.createStatement();
-
             ResultSet rs = stmt.executeQuery("SELECT * FROM varaus");
-
             while (rs.next()) {
                 Varaus tempalue = new Varaus(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5),
                         rs.getString(6), rs.getString(7));
                 lista.add(tempalue);
             }
-            con.close();
         } catch (Exception e) {
             System.out.println(e);
+        } finally {
+            con.close();
         }
         return lista;
     }
