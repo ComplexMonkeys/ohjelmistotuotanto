@@ -2,15 +2,11 @@ package org.mokkivaraus.controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-
-import java.sql.*;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.scene.control.Label;
 
 public class lisaaPalveluIkkunaController {
 
