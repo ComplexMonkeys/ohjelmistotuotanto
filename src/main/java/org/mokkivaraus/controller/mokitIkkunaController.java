@@ -126,11 +126,11 @@ public class mokitIkkunaController implements Initializable {
         try {
             // Asettaa mokki muuttujaan valitun mökin.
             Mokki mokki = tvmokit.getSelectionModel().getSelectedItem();
-            try (// SQL komento joka poistaa valitun mökin.
+            try (
+                // SQL komento joka poistaa valitun mökin.
             Statement stmt = con.createStatement()) {
                 stmt.executeUpdate("DELETE FROM mokki WHERE mokki_id = " + mokki.getMokki_id() + ";");
             }
-            con.close();
             // Päivittää listan poiston tapahduttua.
             paivitaLista();
         }
