@@ -64,8 +64,10 @@ public class muokkaaVarausIkkunaController {
             con.close();
         }
     }
-    public void initdata(int varausId, String Varattupvm) {
+    public void initdata(int varausId, String Varattupvm, int mokkiId, int asiakasId) {
         labelId.setText(Integer.toString(varausId));
         labelPvm.setText(Varattupvm);
+        tfMokki.setText(Integer.toString(mokkiId));
+        tfAsiakas.setText(Integer.toString(asiakasId));
         }
 }

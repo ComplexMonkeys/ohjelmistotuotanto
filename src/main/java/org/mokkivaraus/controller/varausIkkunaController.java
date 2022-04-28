@@ -92,7 +92,7 @@ public class varausIkkunaController implements Initializable {
         }
 
         muokkaaVarausIkkunaController controller = loader.getController();
-        controller.initdata(valittu.getVarausId(), valittu.getVarattuPvm());
+        controller.initdata(valittu.getVarausId(), valittu.getVarattuPvm(), valittu.getMokkiId(), valittu.getAsiakasId());
         stage.setTitle("Muokkaa varausta");
 
         stage.show();
