@@ -1,9 +1,8 @@
 package org.mokkivaraus.controller;
-import org.mokkivaraus.Mokinvaraus;
 import org.mokkivaraus.Mokki;
-import org.mokkivaraus.Varaus;
 
-import java.io.*;
+
+
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
@@ -12,12 +11,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import javafx.event.*;
 import javafx.fxml.*;
-import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.stage.*;
-import javafx.util.converter.DateTimeStringConverter;
+
 
 public class lisaaVarausIkkunaController implements Initializable{
 
