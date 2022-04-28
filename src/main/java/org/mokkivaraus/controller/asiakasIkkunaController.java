@@ -13,7 +13,7 @@ import javafx.scene.control.cell.*;
 import javafx.scene.input.*;
 import javafx.stage.*;
 
-public class asiakasIkkunaController implements Initializable{
+public class asiakasIkkunaController implements Initializable {
 
     @FXML
     private Button btLisaa;
@@ -41,8 +41,7 @@ public class asiakasIkkunaController implements Initializable{
 
     Asiakas valittu;
 
-    
-    public void paivitaLista(){
+    public void paivitaLista() {
         try {
             tvAsiakas.getItems().setAll(haeLista());
         } catch (SQLException e) {
@@ -61,8 +60,8 @@ public class asiakasIkkunaController implements Initializable{
             stage.show();
             stage.setOnHiding(sulku -> {
                 try {
-                    tvAsiakas.getItems().setAll(haeLista());
-                } catch (SQLException e) {
+                    paivitaLista();
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             });
@@ -82,14 +81,15 @@ public class asiakasIkkunaController implements Initializable{
         }
 
         muokkaaAsiakasIkkunaController controller = loader.getController();
-        controller.initdata(valittu.getAsiakas_id(), valittu.getEmail(), valittu.getEtunimi(), valittu.getSukunimi(), valittu.getLahiosoite(), valittu.getPostinro(), valittu.getPuhelinnro());
+        controller.initdata(valittu.getAsiakas_id(), valittu.getEmail(), valittu.getEtunimi(), valittu.getSukunimi(),
+                valittu.getLahiosoite(), valittu.getPostinro(), valittu.getPuhelinnro());
         stage.setTitle("Muokkaa asiakasta");
 
         stage.show();
         stage.setOnHiding(sulku -> {
             try {
-                tvAsiakas.getItems().setAll(haeLista());
-            } catch (SQLException e) {
+                paivitaLista();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
@@ -135,8 +135,7 @@ public class asiakasIkkunaController implements Initializable{
             stage2.setTitle("alkuikkuna");
             stage2.setScene(new Scene(root));
             stage2.show();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -148,7 +147,7 @@ public class asiakasIkkunaController implements Initializable{
             // Asettaa mokki muuttujaan valitun mökin.
             Asiakas asiakas = tvAsiakas.getSelectionModel().getSelectedItem();
             try (// SQL komento joka poistaa valitun mökin.
-            Statement stmt = con.createStatement()) {
+                    Statement stmt = con.createStatement()) {
                 stmt.executeUpdate("DELETE FROM asiakas WHERE asiakas_id = " + asiakas.getAsiakas_id() + ";");
             }
             con.close();
@@ -158,13 +157,12 @@ public class asiakasIkkunaController implements Initializable{
         // Nappaa SQL poikkeukset ja tulostaa ne.
         catch (SQLException e) {
             System.out.print(e);
-        }
-        finally {
+        } finally {
             con.close();
         }
     }
 
-    private List<Asiakas> haeLista() throws SQLException{
+    private List<Asiakas> haeLista() throws SQLException {
         List<Asiakas> lista = new ArrayList<>();
         // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
@@ -174,14 +172,14 @@ public class asiakasIkkunaController implements Initializable{
             ResultSet rs = stmt.executeQuery("select * from asiakas");
             // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
             while (rs.next()) {
-                Asiakas tempasiakas = new Asiakas(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                Asiakas tempasiakas = new Asiakas(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
+                        rs.getString(5), rs.getString(6), rs.getString(7));
                 lista.add(tempasiakas);
             }
             // Nappaa poikkeukset ja tulostaa ne.
         } catch (Exception e) {
             System.out.println(e);
-        }
-        finally{
+        } finally {
             // Yhteys tietokantaan suljetaan.
             con.close();
         }

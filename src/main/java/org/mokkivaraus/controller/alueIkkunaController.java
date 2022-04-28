@@ -71,8 +71,8 @@ public class alueIkkunaController implements Initializable{
             stage.show();
             stage.setOnHiding(sulku -> {
                 try {
-                    tvAlue.getItems().setAll(haeAluelista());
-                } catch (SQLException e) {
+                    paivitaAluelista();
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             });
@@ -100,8 +100,8 @@ public class alueIkkunaController implements Initializable{
         stage.show();
         stage.setOnHiding(sulku -> {
             try {
-                tvAlue.getItems().setAll(haeAluelista());
-            } catch (SQLException e) {
+                paivitaAluelista();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
