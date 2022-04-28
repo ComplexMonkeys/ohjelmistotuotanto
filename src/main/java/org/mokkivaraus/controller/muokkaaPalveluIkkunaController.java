@@ -52,15 +52,16 @@ public class muokkaaPalveluIkkunaController {
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
         try{
             java.sql.Statement stmt = con.createStatement();
-            int alueenid = Integer.parseInt(labelId.getText());
+            int palvelunid = Integer.parseInt(labelId.getText());
+            int alue_id = Integer.parseInt(tfAlueId.getText());
             double alv = Double.parseDouble(tfAlv.getText());
             double hinta = Double.parseDouble(tfHinta.getText());
             String kuvaus = tfKuvaus.getText();
             String nimi = tfNimi.getText();
-            String tyyppi = tfTyyppi.getText();
+            int tyyppi = Integer.parseInt(tfTyyppi.getText());
 
 
-            stmt.executeUpdate("UPDATE palvelu set nimi ='"+nimi+"', tyyppi = '"+tyyppi+"', kuvaus = '"+kuvaus+"', hinta = '"+hinta+"', alv = '"+alv+"' ;");
+            stmt.executeUpdate("UPDATE palvelu set palvelu_id = "+ palvelunid + ", alue_id = "+alue_id+", nimi = '"+nimi+"', alv = "+ alv +" , hinta = "+ hinta +" , tyyppi = "+ tyyppi +" , kuvaus = '"+kuvaus+"' WHERE palvelu_id = "+palvelunid+" ;");
         }
         catch(Exception e){
             System.out.println(e);
@@ -71,7 +72,13 @@ public class muokkaaPalveluIkkunaController {
         Stage stage = (Stage) btTallenna.getScene().getWindow();
         stage.close();
     }
-    public void initdata(int alue_id) {
-        labelId.setText(Integer.toString(alue_id));
+    public void initdata(int palvelu_id, int alue_id, double alv, double hinta, String kuvaus, String nimi, int tyyppi) {
+        labelId.setText(Integer.toString(palvelu_id));
+        tfAlueId.setText(Integer.toString(alue_id));
+        tfAlv.setText(Double.toString(alv));
+        tfHinta.setText(Double.toString(hinta));
+        tfKuvaus.setText(kuvaus);
+        tfNimi.setText(nimi);
+        tfTyyppi.setText(Integer.toString(tyyppi));
     }
 }

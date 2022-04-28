@@ -99,7 +99,18 @@ public class varausIkkunaController implements Initializable {
 
     @FXML
     void btPaluuAction(ActionEvent event) {
-
+        Stage stage = (Stage) btPaluu.getScene().getWindow();
+        stage.close();
+        Parent root;
+        try {
+            root = FXMLLoader.load(Mokinvaraus.class.getResource("alkuIkkuna.fxml"));
+            Stage stage2 = new Stage();
+            stage2.setTitle("Aloitus");
+            stage2.setScene(new Scene(root));
+            stage2.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

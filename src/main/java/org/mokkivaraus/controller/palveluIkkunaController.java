@@ -92,9 +92,10 @@ public class palveluIkkunaController implements Initializable {
         } catch(IOException e) {
             e.printStackTrace();
         }
-
-        // TODO avaa muokkaa-ikkuna sopivilla initeillä
-
+        muokkaaPalveluIkkunaController controller = loader.getController();
+        controller.initdata(valittu.getPalvelu_id(), valittu.getAlue_id(), valittu.getAlv(), valittu.getHinta(), valittu.getKuvaus(), valittu.getNimi(), valittu.getTyyppi());
+        stage.setTitle("Muokkaa palvelua");
+        stage.show();
         stage.setOnHiding(sulku -> {
             try {
                 tvPalvelut.getItems().setAll(haePalvelulista());
