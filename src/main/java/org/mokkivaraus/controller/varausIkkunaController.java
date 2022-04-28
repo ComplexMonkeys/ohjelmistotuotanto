@@ -82,6 +82,13 @@ public class varausIkkunaController implements Initializable {
             stage.setTitle("Lisää varaus");
             stage.setScene(new Scene(root));
             stage.show();
+            stage.setOnHiding(sulku -> {
+                try {
+                    paivitaVarauslista();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -94,7 +101,7 @@ public class varausIkkunaController implements Initializable {
 
     @FXML
     void btPaivitaAction(ActionEvent event) {
-
+        paivitaVarauslista();
     }
 
     @FXML
