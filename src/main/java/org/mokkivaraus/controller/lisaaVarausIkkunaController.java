@@ -91,9 +91,9 @@ public class lisaaVarausIkkunaController implements Initializable{
         stage.close();
         Parent root;
         try {
-            root = FXMLLoader.load(Mokinvaraus.class.getResource("alkuIkkuna.fxml"));
+            root = FXMLLoader.load(Mokinvaraus.class.getResource("varausIkkuna.fxml"));
             Stage stage2 = new Stage();
-            stage2.setTitle("alkuikkuna");
+            stage2.setTitle("Varausikkuna");
             stage2.setScene(new Scene(root));
             stage2.show();
         } catch (IOException e) {
