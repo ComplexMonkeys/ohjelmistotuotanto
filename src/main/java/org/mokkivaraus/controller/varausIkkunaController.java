@@ -172,8 +172,8 @@ public class varausIkkunaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         cMokkiId.setCellValueFactory(new PropertyValueFactory<Varaus, Integer>("mokkiId"));
         cVarausId.setCellValueFactory(new PropertyValueFactory<Varaus, Integer>("VarausId"));
-        cPaatosPvm.setCellValueFactory(new PropertyValueFactory<Varaus, String>("VarattuAlku"));
-        cAloitusPvm.setCellValueFactory(new PropertyValueFactory<Varaus, String>("VarattuLoppu"));
+        cPaatosPvm.setCellValueFactory(new PropertyValueFactory<Varaus, String>("VarattuLoppu"));
+        cAloitusPvm.setCellValueFactory(new PropertyValueFactory<Varaus, String>("VarattuAlku"));
 
         try {
             tvVaraus.getItems().setAll(haeVarauslista());
