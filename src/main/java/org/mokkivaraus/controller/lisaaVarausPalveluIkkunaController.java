@@ -2,8 +2,6 @@ package org.mokkivaraus.controller;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.mokkivaraus.Palvelu;
 
@@ -87,7 +85,7 @@ public class lisaaVarausPalveluIkkunaController {
         ObservableList<Palvelu> palvelut = FXCollections.observableArrayList();
         int alueId;
 
-        // TODO: Tee lista hakemalla kaikki mökin kanssa samalla alueella olevat palvelut
+        // TODO: Tee lista hakemalla kaikki mökin kanssa samalla alueella olevat palvelut, Paska on yhä rikki
 
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
         try{
