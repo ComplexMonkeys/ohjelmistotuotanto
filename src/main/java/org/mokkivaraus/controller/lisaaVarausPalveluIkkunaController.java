@@ -25,7 +25,7 @@ public class lisaaVarausPalveluIkkunaController {
     private Button btTallenna;
 
     @FXML
-    private ListView<Palvelu> listPalvelu;
+    private ListView<String> listPalvelu;
 
     @FXML
     private TextField tfAsiakasId;
@@ -81,22 +81,22 @@ public class lisaaVarausPalveluIkkunaController {
         }
     }
 
-    public ObservableList<Palvelu> haeLista() throws SQLException{
-        ObservableList<Palvelu> palvelut = FXCollections.observableArrayList();
-        int alueId;
-
-        // TODO: Tee lista hakemalla kaikki mökin kanssa samalla alueella olevat palvelut, Paska on yhä rikki
+    public ObservableList<String> haeLista() throws SQLException{
+        ObservableList<String> palvelut = FXCollections.observableArrayList();
+        int alueId = 0;
 
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
         try{
             Statement stmt = con.createStatement();
             ResultSet set = stmt.executeQuery("SELECT alue_id FROM mokki WHERE mokki_id = '" + mokkiId + "' ;");
-            alueId = set.getInt(1);
+            if (set.next()){
+                alueId = set.getInt(1);
+            }
 
             ResultSet set2 = stmt.executeQuery("SELECT * FROM palvelu WHERE alue_id = '" + alueId + "' ;");
             while (set2.next()){
                 Palvelu tempPalvelu = new Palvelu(set2.getInt(1), set2.getInt(2), set2.getString(3), set2.getInt(4), set2.getString(5), set2.getDouble(6), set2.getDouble(7));
-                palvelut.add(tempPalvelu);
+                palvelut.add(tempPalvelu.getNimi());
             }
         } catch (Exception e){
             e.printStackTrace();
