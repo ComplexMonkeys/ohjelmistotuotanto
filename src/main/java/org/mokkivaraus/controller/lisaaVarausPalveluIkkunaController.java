@@ -32,6 +32,9 @@ public class lisaaVarausPalveluIkkunaController {
     private Button btTallenna;
 
     @FXML
+    private Button btPaivita;
+
+    @FXML
     private ListView<String> listPalvelu;
 
     @FXML
@@ -81,6 +84,11 @@ public class lisaaVarausPalveluIkkunaController {
         Stage stage = (Stage) btTallenna.getScene().getWindow();
         stage.close();
 
+    }
+
+    @FXML
+    void btPaivitaAction(ActionEvent event){
+        
     }
 
     public void initdata(int a, LocalDateTime b, LocalDateTime c){

@@ -28,6 +28,11 @@
             <ListView fx:id="listPalvelu" prefHeight="446.0" prefWidth="553.0" />
          </children>
       </VBox>
-      <Spinner fx:id="spLkm" layoutX="23.0" layoutY="514.0" prefHeight="25.0" prefWidth="57.0" />
+      <HBox alignment="CENTER" layoutX="23.0" layoutY="499.0" prefHeight="35.0" prefWidth="124.0" spacing="10.0">
+         <children>
+            <Spinner fx:id="spLkm" prefHeight="25.0" prefWidth="57.0" />
+            <Button fx:id="btPaivita" mnemonicParsing="false" onAction="#btPaivitaAction" text="Päivitä" />
+         </children>
+      </HBox>
    </children>
 </Pane>
