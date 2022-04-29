@@ -65,7 +65,6 @@ public class muokkaaMokkiIkkunaController {
         try {
             Statement stmt = con.createStatement();
             // Haetaan tiedot tekstikentistä ja muutetaan oikeisiin muotoihin.
-            // TODO: muokkaa/päivitä lauseke myös muokkaamaan alueen id ja postinumero
             int alueenid = Integer.parseInt(tfAlue.getText());
             String postinro = tfPostinumero.getText();
             String nimi = tfNimi.getText();
