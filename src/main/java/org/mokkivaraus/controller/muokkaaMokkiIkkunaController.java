@@ -27,7 +27,7 @@ public class muokkaaMokkiIkkunaController {
     private TextField tfHinta;
 
     @FXML
-    private TextField tfKuvaus; // TODO: Katso saisiko tekstin wrappaamaan
+    private TextArea tfKuvaus;
 
     @FXML
     private TextField tfNimi;
@@ -39,7 +39,7 @@ public class muokkaaMokkiIkkunaController {
     private TextField tfPostinumero;
 
     @FXML
-    private TextField tfVarustelu;
+    private TextArea tfVarustelu;
 
     @FXML
     private Label labelId;
