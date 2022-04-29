@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class lisaaPalveluIkkunaController {
@@ -66,6 +68,11 @@ public class lisaaPalveluIkkunaController {
                 
                  } catch(Exception e){
                      System.out.println(e);
+                     Alert constraitAlert = new Alert(AlertType.ERROR);
+                     constraitAlert.setHeaderText("Jotain meni vikaan");
+                     constraitAlert.setContentText("Tarkista, että alue_id on olemassa");
+                     constraitAlert.showAndWait();
+         
                  } finally{
                      con.close();
                  }
