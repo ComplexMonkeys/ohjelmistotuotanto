@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -26,6 +27,9 @@ public class lisaaVarausPalveluIkkunaController {
 
     @FXML
     private ListView<String> listPalvelu;
+
+    @FXML
+    private Spinner<?> spLkm;
 
     @FXML
     private TextField tfAsiakasId;
