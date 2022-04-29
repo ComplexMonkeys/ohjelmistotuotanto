@@ -9,6 +9,11 @@ public class VarauksenPalvelut {
         this.palveluId = palveluId;
         this.lkm = lkm;
     }
+
+    public VarauksenPalvelut(int palveluId, int lkm) {
+        this.palveluId = palveluId;
+        this.lkm = lkm;
+    }
     public int getVarausId() {
         return varausId;
     }

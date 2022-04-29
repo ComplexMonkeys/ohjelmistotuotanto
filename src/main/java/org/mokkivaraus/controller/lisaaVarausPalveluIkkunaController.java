@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import org.mokkivaraus.Palvelu;
+import org.mokkivaraus.VarauksenPalvelut;
 import org.mokkivaraus.Varaus;
 
 import java.sql.*;
@@ -13,14 +14,15 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class lisaaVarausPalveluIkkunaController {
@@ -32,7 +34,7 @@ public class lisaaVarausPalveluIkkunaController {
     private Button btTallenna;
 
     @FXML
-    private ListView<String> listPalvelu;
+    private ListView<Palvelu> listPalvelu;
 
     @FXML
     private Spinner<Integer> spLkm;
@@ -40,6 +42,7 @@ public class lisaaVarausPalveluIkkunaController {
     @FXML
     private TextField tfAsiakasId;
     private int currentValue;
+    private String selected;
 
     int mokkiId;
     LocalDateTime aloitusPvm;
@@ -47,7 +50,7 @@ public class lisaaVarausPalveluIkkunaController {
     
     @FXML
     void btPeruutaAction(ActionEvent event) {
-        
+
         Stage stage = (Stage) btPeruuta.getScene().getWindow();
         stage.close();
     }
@@ -70,7 +73,8 @@ public class lisaaVarausPalveluIkkunaController {
                     "INSERT INTO varaus (asiakas_id, mokki_mokki_id, varattu_pvm, vahvistus_pvm, varattu_alkupvm, varattu_loppupvm) VALUES ('"
                             + asiakasId + "','" + mokkiId + "','" + dateTime.format(mysqlFormat) + "','" + dateTimeEnd.format(mysqlFormat) + "','" + aloitusPvm + "','"
                             + lopetusPvm + "');");
-                
+            Statement stmt2 = con.createStatement();
+            int varauksen_id = stmt2.executeUpdate("SELECT MAX(varaus_id)FROM varaus;");
             // Nappaa poikkeukset ja tulostaa ne.
         } catch (Exception e) {
             System.out.println(e);
@@ -88,6 +92,13 @@ public class lisaaVarausPalveluIkkunaController {
         valueFactory.setValue(0);
         spLkm.setValueFactory(valueFactory);
         currentValue = spLkm.getValue();
+        listPalvelu.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event){
+                selected = Integer.toString(listPalvelu.getSelectionModel().getSelectedItem().getPalvelu_id())  ;
+                tfAsiakasId.setText(selected);
+                VarauksenPalvelut varauksenPalvelut = new VarauksenPalvelut(Integer.parseInt(selected), spLkm.getValue());
+            }
+        });
         spLkm.valueProperty().addListener(new ChangeListener<Integer>() {
             public void changed(ObservableValue<? extends Integer> arg0, Integer arg1, Integer arg2){
                 currentValue = spLkm.getValue();
@@ -105,8 +116,8 @@ public class lisaaVarausPalveluIkkunaController {
     }
 
     
-    public ObservableList<String> haeLista() throws SQLException{
-        ObservableList<String> palvelut = FXCollections.observableArrayList();
+    public ObservableList<Palvelu> haeLista() throws SQLException{
+        ObservableList<Palvelu> palvelut = FXCollections.observableArrayList();
         int alueId = 0;
 
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
@@ -120,7 +131,7 @@ public class lisaaVarausPalveluIkkunaController {
             ResultSet set2 = stmt.executeQuery("SELECT * FROM palvelu WHERE alue_id = '" + alueId + "' ;");
             while (set2.next()){
                 Palvelu tempPalvelu = new Palvelu(set2.getInt(1), set2.getInt(2), set2.getString(3), set2.getInt(4), set2.getString(5), set2.getDouble(6), set2.getDouble(7));
-                palvelut.add(tempPalvelu.getNimi());
+                palvelut.add(tempPalvelu);
             }
         } catch (Exception e){
             e.printStackTrace();
