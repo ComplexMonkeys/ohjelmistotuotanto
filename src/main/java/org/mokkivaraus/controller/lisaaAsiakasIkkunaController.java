@@ -2,8 +2,10 @@ package org.mokkivaraus.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 import java.sql.*;
@@ -68,6 +70,10 @@ public class lisaaAsiakasIkkunaController {
         // Nappaa poikkeukset ja tulostaa ne.
     } catch (Exception e) {
         System.out.println(e);
+        Alert constraitAlert = new Alert(AlertType.ERROR);
+        constraitAlert.setHeaderText("Jotain meni vikaan");
+        constraitAlert.setContentText("Tarkista, että postinro on olemassa");
+        constraitAlert.showAndWait();
     } finally {
         // Yhteys tietokantaan suljetaan.
         con.close();

@@ -4,6 +4,7 @@ import java.sql.*;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.*;
 
 public class lisaaMokkiIkkunaController {
@@ -73,6 +74,10 @@ public class lisaaMokkiIkkunaController {
                 // Nappaa poikkeukset ja tulostaa ne.
             } catch (Exception e) {
                 System.out.println(e);
+                Alert constraitAlert = new Alert(AlertType.ERROR);
+                constraitAlert.setHeaderText("Jotain meni vikaan");
+                constraitAlert.setContentText("Tarkista, että alue_id on olemassa");
+                constraitAlert.showAndWait();
             } finally {
                 // Yhteys tietokantaan suljetaan.
                 con.close();
