@@ -4,8 +4,10 @@ import java.sql.*;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class lisaaPostiIkkunaController {
@@ -30,8 +32,7 @@ public class lisaaPostiIkkunaController {
 
     @FXML
     void btTallennaAction(ActionEvent event) {
-        // TODO: Lisää varmistus/virheenkäsittely jos postinumero ei ole viittä merkkiä
-        if (tfPostinumero.getText() != "" && tfToimipaikka.getText() != "") {
+        if (tfPostinumero.getText().length() >= 5 && tfToimipaikka.getText() != "") {
 
             try {
                 Connection con = DriverManager.getConnection(
@@ -46,11 +47,21 @@ public class lisaaPostiIkkunaController {
                 // Yhteys tietokantaan suljetaan komennon jälkeen.
                 con.close();
                 // Nappaa poikkeukset ja tulostaa ne.
+            } catch (DataTruncation liikaapituutta){
+                Alert constraitAlert = new Alert(AlertType.ERROR);
+                constraitAlert.setHeaderText("Jotain meni vikaan");
+                constraitAlert.setContentText("Postinumeron pituus ei saa ylittää viittä merkkiä!");
+                constraitAlert.showAndWait();
             } catch (Exception e) {
                 System.out.println(e);
             }
             Stage stage = (Stage) btTallenna.getScene().getWindow();
             stage.close();
+        } else{
+            Alert constraitAlert = new Alert(AlertType.ERROR);
+            constraitAlert.setHeaderText("Jotain meni vikaan");
+            constraitAlert.setContentText("Syötä postinumero ja toimipaikka.");
+            constraitAlert.showAndWait();
         }
     }
 

@@ -27,10 +27,10 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField fx:id="tfPostinumero" GridPane.columnIndex="1" />
             <TextField fx:id="tfToimipaikka" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Postinumero:" />
             <Label text="Toimipaikka:" GridPane.rowIndex="1" />
+            <Label fx:id="labelPostinumero" text="Label" GridPane.columnIndex="1" />
          </children>
       </GridPane>
    </children>

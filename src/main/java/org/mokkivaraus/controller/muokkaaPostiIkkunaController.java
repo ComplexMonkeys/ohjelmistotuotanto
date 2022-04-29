@@ -5,6 +5,7 @@ import java.sql.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -17,7 +18,7 @@ public class muokkaaPostiIkkunaController {
     private Button btTallenna;
 
     @FXML
-    private TextField tfPostinumero;
+    private Label labelPostinumero;
 
     @FXML
     private TextField tfToimipaikka;
@@ -37,7 +38,7 @@ public class muokkaaPostiIkkunaController {
             try {
                 Statement stmt = con.createStatement();
                 // Haetaan tiedot tekstikentistä ja muutetaan oikeisiin muotoihin.
-                String postinumero = tfPostinumero.getText();
+                String postinumero = labelPostinumero.getText();
                 String toimipaikka = tfToimipaikka.getText();
         
                 // Määrittää SQL komennon ja lähettää sen tietokannalle.
@@ -53,9 +54,7 @@ public class muokkaaPostiIkkunaController {
     }
 
     public void initdata(String postinro, String toimipaikka) {
-        // TODO: Vaihda tfPostinumero labeliksi
-        tfPostinumero.setText(postinro);
-        tfPostinumero.setEditable(false);
+        labelPostinumero.setText(postinro);
         tfToimipaikka.setText(toimipaikka);
     }
 
