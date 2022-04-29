@@ -33,7 +33,7 @@
             <TextField fx:id="tfKuvaus" prefHeight="130.0" prefWidth="280.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextField fx:id="tfAlv" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <Label text="Alueen id:" GridPane.rowIndex="1" />
-            <Label text="Pavelun nimi:" GridPane.rowIndex="2" />
+            <Label text="Palvelun nimi:" GridPane.rowIndex="2" />
             <Label text="Tyyppi:" GridPane.rowIndex="3" />
             <Label text="Hinta" GridPane.rowIndex="5" />
             <Label text="Kuvaus" GridPane.rowIndex="4" />
