@@ -13,8 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -27,16 +26,13 @@ public class lisaaVarausPalveluIkkunaController {
     private Button btTallenna;
 
     @FXML
-    private TableColumn<?, ?> cLkm;
+    private ListView<String> listPalvelu;
 
     @FXML
-    private TableColumn<?, ?> cNimi;
+    private Spinner<?> spLkm;
 
     @FXML
     private TextField tfAsiakasId;
-
-    @FXML
-    private TableView<?> tvPalvelut;
 
     int mokkiId;
     LocalDateTime aloitusPvm;
@@ -82,11 +78,11 @@ public class lisaaVarausPalveluIkkunaController {
         mokkiId = a;
         aloitusPvm = b;
         lopetusPvm = c;
-        /*try {
+        try {
             listPalvelu.setItems(haeLista());
         } catch (SQLException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
     public ObservableList<String> haeLista() throws SQLException{
