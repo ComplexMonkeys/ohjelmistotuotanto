@@ -89,7 +89,6 @@ public class alueIkkunaController implements Initializable{
         try {
             stage.setScene(new Scene(loader.load()));
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

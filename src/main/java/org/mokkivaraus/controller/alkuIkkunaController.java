@@ -29,6 +29,9 @@ public class alkuIkkunaController {
     private Button btVaraus;
 
     @FXML
+    private Button btPosti;
+
+    @FXML
     void btAlueAction(ActionEvent event) {
         Parent root;
         try {
@@ -100,6 +103,21 @@ public class alkuIkkunaController {
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("Varaushallinta");
+            stage.show();
+            ((Node) event.getSource()).getScene().getWindow().hide();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void btPostiAction(ActionEvent event){
+        Parent root;
+        try {
+            root = FXMLLoader.load(Mokinvaraus.class.getResource("postiIkkuna.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Postitoimipaikat");
             stage.show();
             ((Node) event.getSource()).getScene().getWindow().hide();
         } catch (IOException e) {
