@@ -4,16 +4,22 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import org.mokkivaraus.Palvelu;
+import org.mokkivaraus.Varaus;
 
 import java.sql.*;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -29,17 +35,19 @@ public class lisaaVarausPalveluIkkunaController {
     private ListView<String> listPalvelu;
 
     @FXML
-    private Spinner<?> spLkm;
+    private Spinner<Integer> spLkm;
 
     @FXML
     private TextField tfAsiakasId;
+    private int currentValue;
 
     int mokkiId;
     LocalDateTime aloitusPvm;
     LocalDateTime lopetusPvm;
-
+    
     @FXML
     void btPeruutaAction(ActionEvent event) {
+        
         Stage stage = (Stage) btPeruuta.getScene().getWindow();
         stage.close();
     }
@@ -76,6 +84,16 @@ public class lisaaVarausPalveluIkkunaController {
     }
 
     public void initdata(int a, LocalDateTime b, LocalDateTime c){
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10);
+        valueFactory.setValue(0);
+        spLkm.setValueFactory(valueFactory);
+        currentValue = spLkm.getValue();
+        spLkm.valueProperty().addListener(new ChangeListener<Integer>() {
+            public void changed(ObservableValue<? extends Integer> arg0, Integer arg1, Integer arg2){
+                currentValue = spLkm.getValue();
+                tfAsiakasId.setText(Integer.toString(currentValue));
+            }
+        });
         mokkiId = a;
         aloitusPvm = b;
         lopetusPvm = c;
@@ -86,6 +104,7 @@ public class lisaaVarausPalveluIkkunaController {
         }
     }
 
+    
     public ObservableList<String> haeLista() throws SQLException{
         ObservableList<String> palvelut = FXCollections.observableArrayList();
         int alueId = 0;
