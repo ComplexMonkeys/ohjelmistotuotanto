@@ -32,6 +32,11 @@ public class VarauksenPalvelut {
     public void setLkm(int lkm) {
         this.lkm = lkm;
     }
+
+    @Override
+    public String toString() {
+        return "VarauksenPalvelut [lkm=" + lkm + ", palveluId=" + palveluId + ", varausId=" + varausId + "]";
+    }
     
 
 }

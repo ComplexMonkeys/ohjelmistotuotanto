@@ -2,6 +2,7 @@ package org.mokkivaraus.controller;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import org.mokkivaraus.Palvelu;
 import org.mokkivaraus.VarauksenPalvelut;
@@ -37,7 +38,7 @@ public class lisaaVarausPalveluIkkunaController {
     private Button btPaivita;
 
     @FXML
-    private ListView<String> listPalvelu;
+    private ListView<Palvelu> listPalvelu;
 
     @FXML
     private Spinner<Integer> spLkm;
@@ -47,6 +48,7 @@ public class lisaaVarausPalveluIkkunaController {
     private int currentValue;
     private String selected;
 
+    ArrayList varauksenPalvelutList = new ArrayList<VarauksenPalvelut>();
     int mokkiId;
     LocalDateTime aloitusPvm;
     LocalDateTime lopetusPvm;
@@ -92,6 +94,11 @@ public class lisaaVarausPalveluIkkunaController {
 
     @FXML
     void btPaivitaAction(ActionEvent event){
+        VarauksenPalvelut varauksenPalvelut = new VarauksenPalvelut(Integer.parseInt(selected), spLkm.getValue());
+        varauksenPalvelutList.add(varauksenPalvelut);
+        for (int i = 0; i < (varauksenPalvelutList.size()); i++){
+            System.out.println(varauksenPalvelutList.get(i));
+        }
         
     }
 
@@ -104,7 +111,6 @@ public class lisaaVarausPalveluIkkunaController {
             public void handle(MouseEvent event){
                 selected = Integer.toString(listPalvelu.getSelectionModel().getSelectedItem().getPalvelu_id())  ;
                 tfAsiakasId.setText(selected);
-                VarauksenPalvelut varauksenPalvelut = new VarauksenPalvelut(Integer.parseInt(selected), spLkm.getValue());
             }
         });
         spLkm.valueProperty().addListener(new ChangeListener<Integer>() {
