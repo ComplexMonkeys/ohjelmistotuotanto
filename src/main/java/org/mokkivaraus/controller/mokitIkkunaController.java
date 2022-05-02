@@ -20,6 +20,9 @@ public class mokitIkkunaController implements Initializable {
     private Button btLisaa;
 
     @FXML
+    private Button btHae;
+
+    @FXML
     private Button btMuokkaa;
 
     @FXML
@@ -51,6 +54,9 @@ public class mokitIkkunaController implements Initializable {
 
     @FXML
     private TableColumn<Mokki, String> cMokkiNimi;
+
+    @FXML
+    private TextField tfAlue;
 
     Mokki valittu;
 
@@ -198,6 +204,41 @@ public class mokitIkkunaController implements Initializable {
             Statement stmt = con.createStatement();
             // Määrittää SQL komennon ja lähettää sen tietokannalle.
             ResultSet rs = stmt.executeQuery("select * from mokki");
+            // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
+            while (rs.next()) {
+                Mokki tempmokki = new Mokki(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
+                        rs.getString(5), rs.getDouble(6), rs.getString(7), rs.getInt(8), rs.getString(9));
+                lista.add(tempmokki);
+            }
+            // Nappaa poikkeukset ja tulostaa ne.
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        finally{
+            // Yhteys tietokantaan suljetaan.
+            con.close();
+        }
+        return lista;
+
+    }
+
+    @FXML
+    void btHaeAction(ActionEvent event) {
+        try {
+            tvmokit.getItems().setAll(haeSuodatettuLista());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private List<Mokki> haeSuodatettuLista() throws SQLException{
+        List<Mokki> lista = new ArrayList<>();
+        // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+        try {
+            Statement stmt = con.createStatement();
+            // Määrittää SQL komennon ja lähettää sen tietokannalle.
+            ResultSet rs = stmt.executeQuery("SELECT * FROM mokki WHERE alue_id IN (SELECT alue_id FROM alue WHERE nimi = '" + tfAlue.getText() + "');");
             // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
             while (rs.next()) {
                 Mokki tempmokki = new Mokki(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
