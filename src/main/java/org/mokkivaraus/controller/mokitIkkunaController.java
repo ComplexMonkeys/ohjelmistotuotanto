@@ -199,7 +199,7 @@ public class mokitIkkunaController implements Initializable {
             TableRow<Mokki> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-
+                    // TODO: Heikki tekee kivoja juttuja.
                     tulostus = row.getItem();
                     System.out.println(tulostus);
                 }
