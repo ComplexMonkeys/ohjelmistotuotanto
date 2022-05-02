@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 
 import org.mokkivaraus.Palvelu;
 import org.mokkivaraus.VarauksenPalvelut;
-import org.mokkivaraus.Lasku;
 
 import java.sql.*;
 import javafx.collections.FXCollections;

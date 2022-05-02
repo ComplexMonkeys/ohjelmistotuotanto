@@ -143,7 +143,7 @@ public class Mokki {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        con.close();
         this.alueNimi = nimi;
     }
 
@@ -166,6 +166,7 @@ public class Mokki {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        con.close();
         this.varaukset = lista;
     }
 
