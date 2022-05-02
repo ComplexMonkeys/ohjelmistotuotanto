@@ -243,10 +243,14 @@ public class mokitIkkunaController implements Initializable {
 
     @FXML
     void btHaeAction(ActionEvent event) {
-        try {
-            tvmokit.getItems().setAll(haeSuodatettuLista());
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if(tfAlue.getText() != ""){
+            try {
+                tvmokit.getItems().setAll(haeSuodatettuLista());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            paivitaLista();
         }
     }
 
