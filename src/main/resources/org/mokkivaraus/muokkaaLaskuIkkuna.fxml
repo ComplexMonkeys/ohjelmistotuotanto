@@ -33,7 +33,7 @@
             <Label text="Varaus:" GridPane.rowIndex="1" />
             <Label text="Hinta:" GridPane.rowIndex="2" />
             <Label text="Laskun ID: " />
-            <TextField fx:id="tfLaskuId" GridPane.columnIndex="1" />
+            <Label fx:id="labelId" text="Label" GridPane.columnIndex="1" />
          </children>
       </GridPane>
    </children>

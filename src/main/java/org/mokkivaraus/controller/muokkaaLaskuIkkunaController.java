@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
@@ -20,7 +21,7 @@ public class muokkaaLaskuIkkunaController {
     private Button btTallenna;
 
     @FXML
-    private TextField tfLaskuId;
+    private Label labelId;
 
     @FXML
     private TextField tfHinta;
@@ -39,7 +40,7 @@ public class muokkaaLaskuIkkunaController {
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
         try{
             java.sql.Statement stmt = con.createStatement();
-            int laskuid = Integer.parseInt(tfLaskuId.getText());
+            int laskuid = Integer.parseInt(labelId.getText());
             int varaus_id = Integer.parseInt(tfVarausId.getText());
             double summa = Double.parseDouble(tfHinta.getText());
 
@@ -61,8 +62,7 @@ public class muokkaaLaskuIkkunaController {
     }
 
     public void initdata(int lasku_id, double summa, int varaus_id) {
-       tfLaskuId.setText(Integer.toString(lasku_id));
-       tfLaskuId.setEditable(false);
+       labelId.setText(Integer.toString(lasku_id));
        tfHinta.setText(Double.toString(summa));
        tfVarausId.setText(Integer.toString(varaus_id));
     }
