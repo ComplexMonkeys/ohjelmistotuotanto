@@ -29,6 +29,7 @@ public class lisaaLaskuIkkunaController {
         Stage stage = (Stage) btPeruuta.getScene().getWindow();
         stage.close();
     }
+    
 
     @FXML
     void btTallennaAction(ActionEvent event) throws SQLException {
@@ -37,9 +38,11 @@ public class lisaaLaskuIkkunaController {
             try{
                     java.sql.Statement stmt = con.createStatement();
                     int varaus_id = Integer.parseInt(tfVarausId.getText());
+                    int lasku_id = Integer.parseInt(tfLaskuId.getText());
                     double hinta = Double.parseDouble(tfHinta.getText());
+                    double alv = hinta - (hinta * 0.9);
 
-                    stmt.executeUpdate("INSERT INTO lasku (varaus_id,hinta) VALUES ('"+ varaus_id +"','" + hinta + "');");
+                    stmt.executeUpdate("INSERT INTO lasku (lasku_id, varaus_id, summa, alv) VALUES ('"+ lasku_id + "','"+ varaus_id +"','" + hinta + "','" + alv + "');");
             } catch (Exception e){
                 System.out.println(e);
             } finally {
