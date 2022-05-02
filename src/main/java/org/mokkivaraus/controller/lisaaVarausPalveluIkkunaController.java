@@ -2,15 +2,11 @@ package org.mokkivaraus.controller;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
 import org.mokkivaraus.Palvelu;
 import org.mokkivaraus.VarauksenPalvelut;
 
 import java.sql.*;
-
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -43,11 +39,9 @@ public class lisaaVarausPalveluIkkunaController {
 
     @FXML
     private TextField tfAsiakasId;
-    private int currentValue;
     private String selected;
 
     ObservableList<VarauksenPalvelut> palveluLista = FXCollections.observableArrayList();
-    ArrayList varauksenPalvelutList = new ArrayList<VarauksenPalvelut>();
     int mokkiId;
     LocalDateTime aloitusPvm;
     LocalDateTime lopetusPvm;
@@ -126,15 +120,9 @@ public class lisaaVarausPalveluIkkunaController {
                 selected = Integer.toString(listPalvelu.getSelectionModel().getSelectedItem().getPalvelu_id());
             }
         });
-        spLkm.valueProperty().addListener(new ChangeListener<Integer>() {
-            public void changed(ObservableValue<? extends Integer> arg0, Integer arg1, Integer arg2) {
-                currentValue = spLkm.getValue();
-            }
-        });
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10);
         valueFactory.setValue(0);
         spLkm.setValueFactory(valueFactory);
-        currentValue = spLkm.getValue();
         mokkiId = a;
         aloitusPvm = b;
         lopetusPvm = c;
