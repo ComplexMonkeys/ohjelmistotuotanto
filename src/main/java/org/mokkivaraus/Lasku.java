@@ -17,7 +17,9 @@ public class Lasku{
         this.summa = summa;
         this.alv = alv;
     }
-
+    public double laskeAlv(){
+        return summa - (summa * 0.9);
+    }
 
     public int getLasku_id() {
         return this.lasku_id;
