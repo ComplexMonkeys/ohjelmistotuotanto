@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 import org.mokkivaraus.Palvelu;
 import org.mokkivaraus.VarauksenPalvelut;
+import org.mokkivaraus.Lasku;
 
 import java.sql.*;
 import javafx.collections.FXCollections;
@@ -86,6 +87,9 @@ public class lisaaVarausPalveluIkkunaController {
                         stmt.executeUpdate("INSERT INTO varauksen_palvelut (varaus_id, palvelu_id, lkm) VALUES ('"
                                 + valittuVaraus.getVarausId() + "','" + valittuVaraus.getPalveluId() + "','"
                                 + valittuVaraus.getLkm() + "');");
+
+
+                                //TODO: laskun automaattinen generointi
                     } catch (Exception e) {
                         System.out.println(e);
                     }
@@ -94,7 +98,10 @@ public class lisaaVarausPalveluIkkunaController {
             }
         } catch (Exception e) {
             System.out.println(e);
-        } finally {
+            
+            
+        
+        }finally {
             // Yhteys tietokantaan suljetaan.
             con.close();
         }
