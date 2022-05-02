@@ -1,5 +1,6 @@
 package org.mokkivaraus.controller;
-
+import java.sql.Connection;
+import java.sql.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -27,8 +28,23 @@ public class lisaaLaskuIkkunaController {
     }
 
     @FXML
-    void btTallennaAction(ActionEvent event) {
+    void btTallennaAction(ActionEvent event) throws SQLException {
+        if (tfVarausId.getText() != "" && tfHinta.getText() != ""){
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+            try{
+                    java.sql.Statement stmt = con.createStatement();
+                    int varaus_id = Integer.parseInt(tfVarausId.getText());
+                    double hinta = Double.parseDouble(tfHinta.getText());
 
+                    stmt.executeUpdate("INSERT INTO lasku (varaus_id,hinta) VALUES ('"+ varaus_id +"','" + hinta + "');");
+            } catch (Exception e){
+                System.out.println(e);
+            } finally {
+                con.close();
+            }
+            Stage stage = (Stage) btTallenna.getScene().getWindow();
+            stage.close();
+        }
     }
 
 }
