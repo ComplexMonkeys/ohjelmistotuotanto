@@ -79,7 +79,26 @@ public class laskuIkkunaController implements Initializable {
 
     @FXML
     void btMuokkaAction(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(Mokinvaraus.class.getResource("muokkaaLaskuIkkuna.fxml"));
+        Stage stage = new Stage();
+        try {
+            stage.setScene(new Scene(loader.load()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        muokkaaLaskuIkkunaController controller = loader.getController();
+        controller.initdata(valittu.getLasku_id(),valittu.getSumma(),valittu.getVaraus_id());
+        stage.setTitle("Muokkaa laskutusta");
+
+        stage.show();
+        stage.setOnHiding(sulku -> {
+            try {
+                paivitaLista();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @FXML
