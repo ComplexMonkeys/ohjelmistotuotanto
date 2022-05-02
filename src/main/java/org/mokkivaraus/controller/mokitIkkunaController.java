@@ -9,6 +9,7 @@ import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.cell.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
@@ -202,6 +203,12 @@ public class mokitIkkunaController implements Initializable {
                     // TODO: Heikki tekee kivoja juttuja.
                     tulostus = row.getItem();
                     System.out.println(tulostus);
+                    Dialog<String> dialog = new Dialog<String>();
+                    dialog.setTitle("Mökki");
+                    ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
+                    dialog.setContentText(tulostus.toString());
+                    dialog.getDialogPane().getButtonTypes().add(type);
+                    dialog.showAndWait();
                 }
             });
             return row;

@@ -145,18 +145,17 @@ public class Mokki {
 
     @Override
     public String toString() {
-        return "{" +
-            " mokki_id='" + getMokki_id() + "'" +
-            ", alue_id='" + getAlue_id() + "'" +
-            ", postinro='" + getPostinro() + "'" +
-            ", mokkinimi='" + getMokkinimi() + "'" +
-            ", katuosoite='" + getKatuosoite() + "'" +
-            ", hinta='" + getHinta() + "'" +
-            ", kuvaus='" + getKuvaus() + "'" +
-            ", henkilomaara='" + getHenkilomaara() + "'" +
-            ", varustelu='" + getVarustelu() + "'" +
-            ", alueNimi='" + getAlueNimi() + "'" +
-            "}";
+        return
+            "Mökin ID: " + getMokki_id() + "\n" +
+            "Alueen ID: " + getAlue_id() + "\n" +
+            "Alueen Nimi: " + getAlueNimi() + "\n" +
+            "Postinumero: " + getPostinro() + "\n" +
+            "Mökin Nimi: " + getMokkinimi() + "\n" +
+            "Osoite: " + getKatuosoite() + "\n" +
+            "Hinta: " + getHinta() + "\n" +
+            "Kuvaus: " + getKuvaus() + "\n" +
+            "Max. Henkilömäärä: " + getHenkilomaara() + "\n" +
+            "Varustelu: " + getVarustelu();
     }
 
 }
