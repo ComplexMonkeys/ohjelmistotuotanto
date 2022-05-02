@@ -62,6 +62,7 @@ public class muokkaaLaskuIkkunaController {
 
     public void initdata(int lasku_id, double summa, int varaus_id) {
        tfLaskuId.setText(Integer.toString(lasku_id));
+       tfLaskuId.setEditable(false);
        tfHinta.setText(Double.toString(summa));
        tfVarausId.setText(Integer.toString(varaus_id));
     }
