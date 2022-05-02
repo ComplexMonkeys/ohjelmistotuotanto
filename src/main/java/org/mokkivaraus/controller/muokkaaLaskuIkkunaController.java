@@ -44,7 +44,7 @@ public class muokkaaLaskuIkkunaController {
             double summa = Double.parseDouble(tfHinta.getText());
 
 
-            stmt.executeUpdate("UPDATE lasku set varaus_id = "+varaus_id+", summa = "+summa+", WHERE lasku_id = "+laskuid+" ;");
+            stmt.executeUpdate("UPDATE lasku set varaus_id = "+varaus_id+", summa = "+summa+" WHERE lasku_id = "+laskuid+" ;");
         }
         catch(Exception e){
             System.out.println(e);
@@ -59,7 +59,7 @@ public class muokkaaLaskuIkkunaController {
         Stage stage = (Stage) btTallenna.getScene().getWindow();
         stage.close();
     }
-    
+
     public void initdata(int lasku_id, double summa, int varaus_id) {
        tfLaskuId.setText(Integer.toString(lasku_id));
        tfHinta.setText(Double.toString(summa));
