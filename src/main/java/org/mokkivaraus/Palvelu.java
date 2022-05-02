@@ -64,5 +64,10 @@ public class Palvelu {
     }
     public void setAlv(double alv) {
         this.alv = alv;
+    }
+
+    @Override
+    public String toString() {
+        return nimi;
     } 
 }

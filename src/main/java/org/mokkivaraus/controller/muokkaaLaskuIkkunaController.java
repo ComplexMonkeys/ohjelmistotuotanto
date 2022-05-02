@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class muokkaaLaskuIkkunaController {
 
@@ -25,7 +26,8 @@ public class muokkaaLaskuIkkunaController {
 
     @FXML
     void btPeruutaAction(ActionEvent event) {
-
+        Stage stage = (Stage) btPeruuta.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
