@@ -32,6 +32,9 @@ public class alkuIkkunaController {
     private Button btPosti;
 
     @FXML
+    private Button btLasku;
+
+    @FXML
     void btAlueAction(ActionEvent event) {
         Parent root;
         try {
@@ -123,5 +126,10 @@ public class alkuIkkunaController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void btLaskuAction(ActionEvent event) {
+        // TODO: Laskutus
     }
 }

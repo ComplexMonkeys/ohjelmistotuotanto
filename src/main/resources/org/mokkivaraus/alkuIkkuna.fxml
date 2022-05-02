@@ -11,5 +11,6 @@
       <Button fx:id="btPalvelu" mnemonicParsing="false" onAction="#btPalveluAction" text="Palveluhallinta" />
       <Button fx:id="btPosti" mnemonicParsing="false" onAction="#btPostiAction" text="Postitoimipaikat" />
       <Button fx:id="btVaraus" mnemonicParsing="false" onAction="#btVarausAction" text="Varaus" />
+      <Button fx:id="btLasku" mnemonicParsing="false" onAction="#btLaskuAction" text="Laskutus" />
    </children>
 </VBox>
