@@ -14,9 +14,6 @@ public class lisaaLaskuIkkunaController {
 
     @FXML
     private Button btTallenna;
-    
-    @FXML
-    private TextField tfLaskuId;
 
     @FXML
     private TextField tfHinta;

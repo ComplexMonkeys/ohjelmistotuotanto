@@ -1,6 +1,7 @@
 package org.mokkivaraus;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Mokki {
     // mökin id
@@ -25,6 +26,8 @@ public class Mokki {
     // mökin alueen nimi merkkijonona
     private String alueNimi;
 
+    private ArrayList<Varaus> varaukset;
+
     // lisätietoa kentistä saa määrittelydokumentista
 
     // Muuttujaton alustaja
@@ -46,6 +49,7 @@ public class Mokki {
         
         try {
             setAlueNimi();
+            setVaraukset();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -132,9 +136,9 @@ public class Mokki {
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
         try {
             Statement stmt = con.createStatement();
-            ResultSet rd = stmt.executeQuery("SELECT nimi FROM alue WHERE alue_id = '" + this.alue_id + "';");
-            while (rd.next()){
-                nimi = rd.getString(1);
+            ResultSet rs = stmt.executeQuery("SELECT nimi FROM alue WHERE alue_id = '" + this.alue_id + "';");
+            while (rs.next()){
+                nimi = rs.getString(1);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -143,8 +147,36 @@ public class Mokki {
         this.alueNimi = nimi;
     }
 
+    public ArrayList<Varaus> getVaraukset(){
+        return varaukset;
+    }
+
+    public void setVaraukset() throws SQLException{
+        ArrayList<Varaus> lista = new ArrayList<>();
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+        try{
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM varaus WHERE mokki_mokki_id = '" + this.mokki_id + "';");
+            while (rs.next()) {
+                Varaus tempalue = new Varaus(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5),
+                        rs.getString(6), rs.getString(7));
+                lista.add(tempalue);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        this.varaukset = lista;
+    }
+
     @Override
     public String toString() {
+        ArrayList<Varaus> tempvaraukset = getVaraukset();
+        ArrayList<String> lista = new ArrayList<>();
+        for (int i = 0; i < tempvaraukset.size(); i++){
+            String varaus = tempvaraukset.get(i).getVarausId() + ": " + tempvaraukset.get(i).getVarattuAlku() + " - " + tempvaraukset.get(i).getVarattuLoppu() + "\n";
+            lista.add(varaus);
+        }
+
         return
             "Mökin ID: " + getMokki_id() + "\n" +
             "Alueen ID: " + getAlue_id() + "\n" +
@@ -155,7 +187,8 @@ public class Mokki {
             "Hinta: " + getHinta() + "\n" +
             "Kuvaus: " + getKuvaus() + "\n" +
             "Max. Henkilömäärä: " + getHenkilomaara() + "\n" +
-            "Varustelu: " + getVarustelu();
+            "Varustelu: " + getVarustelu() + "\n" +
+            "Varaukset: "+ "\n" + lista;
     }
 
 }
