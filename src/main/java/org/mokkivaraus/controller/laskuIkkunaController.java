@@ -9,6 +9,7 @@ import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.cell.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
@@ -47,6 +48,7 @@ public class laskuIkkunaController implements Initializable {
     private TableView <Lasku> tvLaskut;
 
     Lasku valittu;
+    Lasku tulostus;
 
     public void paivitaLista() {
         try {
@@ -158,6 +160,26 @@ public class laskuIkkunaController implements Initializable {
         tvLaskut.setRowFactory(tv -> {
             TableRow<Lasku> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                    tulostus = row.getItem();
+                    System.out.println(tulostus);
+                    // Luo dialogi
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Test");
+                    alert.setHeaderText("This is a test.");
+                    alert.setResizable(false);
+                    alert.setContentText("Select okay or cancel this alert.");
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if(!result.isPresent()){
+                    } else if (result.get() == ButtonType.OK){
+                        System.out.println("Okei");
+                    }
+                    else if(result.get() == ButtonType.CANCEL){
+                        System.out.println("Peruutus");
+                    }
+                    // TODO: alert-ikkuna tekemään laskutus
+                }
+
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
 
                     valittu = row.getItem();
