@@ -152,6 +152,7 @@ public class Mokki {
     }
 
     public void setVaraukset() throws SQLException{
+        // TODO: Hae vain tulevat varaukset
         ArrayList<Varaus> lista = new ArrayList<>();
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
         try{
