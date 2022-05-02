@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class lisaaLaskuIkkunaController {
 
@@ -21,7 +22,8 @@ public class lisaaLaskuIkkunaController {
 
     @FXML
     void btPeruutaAction(ActionEvent event) {
-
+        Stage stage = (Stage) btPeruuta.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
