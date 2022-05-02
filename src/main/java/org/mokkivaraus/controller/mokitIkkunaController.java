@@ -59,6 +59,7 @@ public class mokitIkkunaController implements Initializable {
     private TextField tfAlue;
 
     Mokki valittu;
+    Mokki tulostus;
 
     public void paivitaLista(){
         try {
@@ -189,6 +190,18 @@ public class mokitIkkunaController implements Initializable {
                     valittu = row.getItem();
                     btMuokkaa.setDisable(false);
                     btPoista.setDisable(false);
+                }
+            });
+            return row;
+        });
+
+        tvmokit.setRowFactory(tv -> {
+            TableRow<Mokki> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+
+                    tulostus = row.getItem();
+                    System.out.println(tulostus);
                 }
             });
             return row;

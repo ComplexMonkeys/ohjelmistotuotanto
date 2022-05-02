@@ -1,5 +1,9 @@
 package org.mokkivaraus;
 
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Mokki {
     // mökin id
     private int mokki_id;
@@ -21,6 +25,9 @@ public class Mokki {
     // varustelu, max. 100 merkkiä
     private String varustelu;
 
+    private String alueNimi;
+    private ArrayList<Palvelu> palvelut;
+
     // lisätietoa kentistä saa määrittelydokumentista
 
     // Muuttujaton alustaja
@@ -39,6 +46,13 @@ public class Mokki {
         this.kuvaus = kuvaus;
         this.henkilomaara = henkilomaara;
         this.varustelu = varustelu;
+        
+        try {
+            setPalvelut();
+            setAlueNimi();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public int getMokki_id() {
@@ -113,11 +127,72 @@ public class Mokki {
         this.varustelu = varustelu;
     }
 
+    public String getAlueNimi(){
+        return alueNimi;
+    }
+
+    public void setAlueNimi() throws SQLException{
+        String nimi = "";
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rd = stmt.executeQuery("SELECT nimi FROM alue WHERE alue_id = '" + this.alue_id + "';");
+            while (rd.next()){
+                nimi = rd.getString(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        this.alueNimi = nimi;
+    }
+
+    public List<Palvelu> getPalvelut(){
+        return palvelut;
+    }
+
+    public void setPalvelut() throws SQLException{
+        ArrayList<Palvelu> lista = new ArrayList<>();
+        // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+        try {
+            Statement stmt = con.createStatement();
+            // Määrittää SQL komennon ja lähettää sen tietokannalle.
+            ResultSet rs = stmt.executeQuery("select * from palvelu");
+            // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
+            while (rs.next()) {
+                Palvelu tempPalvelu = new Palvelu(rs.getInt(1),rs.getInt(2),rs.getString(3),
+                rs.getInt(4),rs.getString(5),rs.getDouble(6),rs.getDouble(7));
+                lista.add(tempPalvelu);
+            }
+            // Nappaa poikkeukset ja tulostaa ne.
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        finally{
+            // Yhteys tietokantaan suljetaan.
+            con.close();
+        }
+        
+        this.palvelut = lista;
+    }
+
     @Override
     public String toString() {
-        return "Mokki [alue_id=" + alue_id + ", henkilomaara=" + henkilomaara + ", hinta=" + hinta + ", katuosoite="
-                + katuosoite + ", kuvaus=" + kuvaus + ", mokki_id=" + mokki_id + ", mokkinimi=" + mokkinimi
-                + ", postinro="
-                + postinro + ", varustelu=" + varustelu + "]";
+        return "{" +
+            " mokki_id='" + getMokki_id() + "'" +
+            ", alue_id='" + getAlue_id() + "'" +
+            ", postinro='" + getPostinro() + "'" +
+            ", mokkinimi='" + getMokkinimi() + "'" +
+            ", katuosoite='" + getKatuosoite() + "'" +
+            ", hinta='" + getHinta() + "'" +
+            ", kuvaus='" + getKuvaus() + "'" +
+            ", henkilomaara='" + getHenkilomaara() + "'" +
+            ", varustelu='" + getVarustelu() + "'" +
+            ", alueNimi='" + getAlueNimi() + "'" +
+            ", palvelut='" + getPalvelut() + "'" +
+            "}";
     }
+
+    
 }
