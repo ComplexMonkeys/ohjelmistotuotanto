@@ -1,13 +1,20 @@
 package org.mokkivaraus.controller;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.layout.HBox;
+import org.mokkivaraus.*;
+import java.io.*;
+import java.net.*;
+import java.sql.*;
+import java.util.*;
+import javafx.event.*;
+import javafx.fxml.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.*;
+import javafx.scene.input.*;
+import javafx.scene.layout.*;
+import javafx.stage.*;
 
-public class laskuIkkunaController {
+public class laskuIkkunaController implements Initializable {
 
     @FXML
     private Button btLisaa;
@@ -25,23 +32,49 @@ public class laskuIkkunaController {
     private Button btPoista;
 
     @FXML
-    private TableColumn<?, ?> cLaskuId;
+    private TableColumn<Lasku, Integer> cLaskuId;
 
     @FXML
-    private TableColumn<?, ?> cSumma;
+    private TableColumn<Lasku, Double> cSumma;
 
     @FXML
-    private TableColumn<?, ?> cVarausId;
+    private TableColumn<Lasku, Integer> cVarausId;
 
     @FXML
     private HBox hbNapit;
 
     @FXML
-    private TableView<?> tvLaskut;
+    private TableView <Lasku> tvLaskut;
+
+    Lasku valittu;
+
+    public void paivitaLista() {
+        try {
+            tvLaskut.getItems().setAll(haeLista());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     void btLisaaAction(ActionEvent event) {
-
+        Parent root;
+        try {
+            root = FXMLLoader.load(Mokinvaraus.class.getResource("lisaaLaskuIkkuna.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Lisää asiakas");
+            stage.setScene(new Scene(root));
+            stage.show();
+            stage.setOnHiding(sulku -> {
+                try {
+                    paivitaLista();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -51,17 +84,92 @@ public class laskuIkkunaController {
 
     @FXML
     void btPaivitaAction(ActionEvent event) {
-
+        paivitaLista();
     }
 
     @FXML
     void btPaluuAction(ActionEvent event) {
-
+        Stage stage = (Stage) btPaluu.getScene().getWindow();
+        stage.close();
+        Parent root;
+        try {
+            root = FXMLLoader.load(Mokinvaraus.class.getResource("alkuIkkuna.fxml"));
+            Stage stage2 = new Stage();
+            stage2.setTitle("alkuikkuna");
+            stage2.setScene(new Scene(root));
+            stage2.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
-    void btPoistaAction(ActionEvent event) {
-
+    void btPoistaAction(ActionEvent event)  throws SQLException {
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+        try {
+            // Asettaa mokki muuttujaan valitun mökin.
+            Lasku lasku = tvLaskut.getSelectionModel().getSelectedItem();
+            try (// SQL komento joka poistaa valitun mökin.
+                    Statement stmt = con.createStatement()) {
+                stmt.executeUpdate("DELETE FROM lasku WHERE lasku_id = " + lasku.getLasku_id() + ";");
+            }
+            con.close();
+            // Päivittää listan poiston tapahduttua.
+            paivitaLista();
+        }
+        // Nappaa SQL poikkeukset ja tulostaa ne.
+        catch (SQLException e) {
+            System.out.print(e);
+        } finally {
+            con.close();
+        }
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        cLaskuId.setCellValueFactory(new PropertyValueFactory<Lasku, Integer>("lasku_id"));
+        cSumma.setCellValueFactory(new PropertyValueFactory<Lasku, Double> ("summa"));
+        cVarausId.setCellValueFactory(new PropertyValueFactory<Lasku, Integer>("varaus_id"));
+        try {
+            tvLaskut.getItems().setAll(haeLista());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        tvLaskut.setRowFactory(tv -> {
+            TableRow<Lasku> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
+
+                    valittu = row.getItem();
+                    btMuokkaa.setDisable(false);
+                    btPoista.setDisable(false);
+                }
+            });
+            return row;
+        });
+    }
+    private List<Lasku> haeLista() throws SQLException {
+        List<Lasku> lista = new ArrayList<>();
+        // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+        try {
+            Statement stmt = con.createStatement();
+            // Määrittää SQL komennon ja lähettää sen tietokannalle.
+            ResultSet rs = stmt.executeQuery("select * from lasku");
+            // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
+            while (rs.next()) {
+                Lasku templlasku = new Lasku(rs.getInt(1),rs.getInt(2),rs.getDouble(3), rs.getDouble(4));
+                lista.add(templlasku);
+            }
+            // Nappaa poikkeukset ja tulostaa ne.
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            // Yhteys tietokantaan suljetaan.
+            con.close();
+        }
+        return lista;
+
+    }
 }

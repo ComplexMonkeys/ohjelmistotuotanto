@@ -130,6 +130,16 @@ public class alkuIkkunaController {
 
     @FXML
     void btLaskuAction(ActionEvent event) {
-        // TODO: Laskutus
+        Parent root;
+        try {
+            root = FXMLLoader.load(Mokinvaraus.class.getResource("laskuIkkuna.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Laskutus");
+            stage.show();
+            ((Node) event.getSource()).getScene().getWindow().hide();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
