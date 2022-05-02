@@ -24,9 +24,8 @@ public class Mokki {
     private int henkilomaara;
     // varustelu, max. 100 merkkiä
     private String varustelu;
-
+    // mökin alueen nimi merkkijonona
     private String alueNimi;
-    private ArrayList<Palvelu> palvelut;
 
     // lisätietoa kentistä saa määrittelydokumentista
 
@@ -48,7 +47,6 @@ public class Mokki {
         this.varustelu = varustelu;
         
         try {
-            setPalvelut();
             setAlueNimi();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -147,36 +145,6 @@ public class Mokki {
         this.alueNimi = nimi;
     }
 
-    public List<Palvelu> getPalvelut(){
-        return palvelut;
-    }
-
-    public void setPalvelut() throws SQLException{
-        ArrayList<Palvelu> lista = new ArrayList<>();
-        // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
-        try {
-            Statement stmt = con.createStatement();
-            // Määrittää SQL komennon ja lähettää sen tietokannalle.
-            ResultSet rs = stmt.executeQuery("select * from palvelu");
-            // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
-            while (rs.next()) {
-                Palvelu tempPalvelu = new Palvelu(rs.getInt(1),rs.getInt(2),rs.getString(3),
-                rs.getInt(4),rs.getString(5),rs.getDouble(6),rs.getDouble(7));
-                lista.add(tempPalvelu);
-            }
-            // Nappaa poikkeukset ja tulostaa ne.
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        finally{
-            // Yhteys tietokantaan suljetaan.
-            con.close();
-        }
-        
-        this.palvelut = lista;
-    }
-
     @Override
     public String toString() {
         return "{" +
@@ -190,9 +158,7 @@ public class Mokki {
             ", henkilomaara='" + getHenkilomaara() + "'" +
             ", varustelu='" + getVarustelu() + "'" +
             ", alueNimi='" + getAlueNimi() + "'" +
-            ", palvelut='" + getPalvelut() + "'" +
             "}";
     }
 
-    
 }
