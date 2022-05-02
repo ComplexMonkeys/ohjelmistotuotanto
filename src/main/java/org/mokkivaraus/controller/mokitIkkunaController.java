@@ -186,19 +186,6 @@ public class mokitIkkunaController implements Initializable {
         tvmokit.setRowFactory(tv -> {
             TableRow<Mokki> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
-                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
-
-                    valittu = row.getItem();
-                    btMuokkaa.setDisable(false);
-                    btPoista.setDisable(false);
-                }
-            });
-            return row;
-        });
-
-        tvmokit.setRowFactory(tv -> {
-            TableRow<Mokki> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
                     tulostus = row.getItem();
                     System.out.println(tulostus);
@@ -208,6 +195,13 @@ public class mokitIkkunaController implements Initializable {
                     dialog.setContentText(tulostus.toString());
                     dialog.getDialogPane().getButtonTypes().add(type);
                     dialog.showAndWait();
+                }
+
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
+
+                    valittu = row.getItem();
+                    btMuokkaa.setDisable(false);
+                    btPoista.setDisable(false);
                 }
             });
             return row;
