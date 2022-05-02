@@ -44,7 +44,7 @@ public class mokitIkkunaController implements Initializable {
     private TableView<Mokki> tvmokit;
 
     @FXML
-    private TableColumn<Mokki, Integer> cAlue;
+    private TableColumn<Mokki, String> cAlue;
 
     @FXML
     private TableColumn<Mokki, Integer> cHenkilomaara;
@@ -171,7 +171,7 @@ public class mokitIkkunaController implements Initializable {
     // haeLista-metodissa
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cAlue.setCellValueFactory(new PropertyValueFactory<Mokki, Integer>("alue_id"));
+        cAlue.setCellValueFactory(new PropertyValueFactory<Mokki, String>("alueNimi"));
         cHenkilomaara.setCellValueFactory(new PropertyValueFactory<Mokki, Integer>("henkilomaara"));
         cMokkiId.setCellValueFactory(new PropertyValueFactory<Mokki, Integer>("mokki_id"));
         cMokkiNimi.setCellValueFactory(new PropertyValueFactory<Mokki, String>("mokkinimi"));
