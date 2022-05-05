@@ -2,19 +2,19 @@ package org.mokkivaraus;
 
 public class Asiakas {
 
-private int Asiakas_id;
+private int asiakas_id;
 
-private String Postinro;
+private String postinro;
 
-private String Etunimi;
+private String etunimi;
 
-private String Sukunimi;
+private String sukunimi;
 
-private String Lahiosoite;
+private String lahiosoite;
 
-private String Email;
+private String email;
 
-private String Puhelinnro;
+private String puhelinnro;
 
 private String nimi;
 
@@ -23,58 +23,58 @@ private String nimi;
 public Asiakas(){
 }
 //parametrillinen alustaja
-public Asiakas(int Asiakas_id,String Postinro,String Etunimi,String Sukunimi,
-String Lahiosoite, String Email, String Puhelinnro){
-this.Asiakas_id = Asiakas_id;
-this.Postinro = Postinro;
-this.Etunimi = Etunimi;
-this.Sukunimi = Sukunimi;
-this.Lahiosoite = Lahiosoite;
-this.Email = Email;
-this.Puhelinnro = Puhelinnro;
-this.nimi = Etunimi + " " + Sukunimi;
+public Asiakas(int asiakas_id,String postinro,String etunimi,String sukunimi,
+String lahiosoite, String email, String puhelinnro){
+this.asiakas_id = asiakas_id;
+this.postinro = postinro;
+this.etunimi = etunimi;
+this.sukunimi = sukunimi;
+this.lahiosoite = lahiosoite;
+this.email = email;
+this.puhelinnro = puhelinnro;
+this.nimi = etunimi + " " + sukunimi;
 }
 public int getAsiakas_id() {
-    return Asiakas_id;
+    return asiakas_id;
 }
 public void setAsiakas_id(int asiakas_id) {
-    Asiakas_id = asiakas_id;
+    this.asiakas_id = asiakas_id;
 }
 public String getPostinro() {
-    return Postinro;
+    return postinro;
 }
 public void setPostinro(String postinro) {
-    Postinro = postinro;
+    this.postinro = postinro;
 }
 public String getEtunimi() {
-    return Etunimi;
+    return etunimi;
 }
 public void setEtunimi(String etunimi) {
-    Etunimi = etunimi;
+    this.etunimi = etunimi;
 }
 public String getSukunimi() {
-    return Sukunimi;
+    return sukunimi;
 }
 public void setSukunimi(String sukunimi) {
-    Sukunimi = sukunimi;
+    this.sukunimi = sukunimi;
 }
 public String getLahiosoite() {
-    return Lahiosoite;
+    return lahiosoite;
 }
 public void setLahiosoite(String lahiosoite) {
-    Lahiosoite = lahiosoite;
+    this.lahiosoite = lahiosoite;
 }
 public String getEmail() {
-    return Email;
+    return email;
 }
 public void setEmail(String email) {
-    Email = email;
+    this.email = email;
 }
 public String getPuhelinnro() {
-    return Puhelinnro;
+    return puhelinnro;
 }
 public void setPuhelinnro(String puhelinnro) {
-    Puhelinnro = puhelinnro;
+    this.puhelinnro = puhelinnro;
 }
 public String getNimi(){
     return nimi;
