@@ -175,6 +175,7 @@ public class laskuIkkunaController implements Initializable {
                     alert.setHeaderText("Miten haluat lähettää laskun?");
                     alert.setResizable(false);
                     Optional<ButtonType> result = alert.showAndWait();
+                    // TODO: Jostakin syystä valitsee säpon vaikka painaisi ruksia...
                     if (result.orElse(btPrintti) == btSposti) {
                         System.out.println("Säpo");
                         // TODO: Lähetä lasku s-postilla
