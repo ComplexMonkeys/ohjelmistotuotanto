@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.Date;
-
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.Scene;
@@ -79,15 +78,6 @@ public class lisaaVarausIkkunaController implements Initializable {
             return row;
         });
     }
-
-    public void paivitaLista() {
-        try {
-            tvMokit.getItems().setAll(haeMokkiLista());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     @FXML
     void btPaluuAction(ActionEvent event) {
         Stage stage = (Stage) btPaluu.getScene().getWindow();
@@ -121,17 +111,8 @@ public class lisaaVarausIkkunaController implements Initializable {
     }
 
     @FXML
-    void btPaivitaAction(ActionEvent event) {
-        paivitaLista();
-    }
-    @FXML
     void dpAloitusAction(ActionEvent event) {
-    try {
-       System.out.println(haeSuodatettuLista().size());
-    } catch (SQLException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-    } 
+
     }
     @FXML
     void dpLopetusAction(ActionEvent event) {
@@ -139,22 +120,25 @@ public class lisaaVarausIkkunaController implements Initializable {
     }
     
 
-    private List<Varaus> haeSuodatettuLista() throws SQLException{
+    private List<Integer> haeSuodatettuLista() throws SQLException{
         LocalDate date = dpAloitus.getValue();
-        LocalDateTime dateFormatted = date.atTime(12, 0, 0);
-        dateFormatted.format(mysqlFormat);
-        List<Varaus> lista = new ArrayList<>();
+        LocalDateTime startFormatted = date.atTime(12, 0, 0);
+        startFormatted.format(mysqlFormat);
+        LocalDate dateEnd = dpLopetus.getValue();
+        LocalDateTime endFormatted = dateEnd.atTime(12, 0, 0);
+        endFormatted.format(mysqlFormat);
+        List<Integer> lista = new ArrayList<>();
         // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
         try {
             Statement stmt = con.createStatement();
             // Määrittää SQL komennon ja lähettää sen tietokannalle.
-            ResultSet rs = stmt.executeQuery("SELECT * FROM varaus WHERE varattu_alkupvm <= '" + dateFormatted + "';");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM varaus WHERE varattu_alkupvm <= '" + startFormatted + "' AND varattu_loppupvm > '" + startFormatted + "' AND varattu_loppupvm >= '"+ endFormatted +"' AND varattu_alkupvm < '"+ endFormatted + "';");
             // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
             while (rs.next()) {
                 Varaus tempvaraus = new Varaus(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5),
                 rs.getString(6), rs.getString(7));
-                lista.add(tempvaraus);
+                lista.add(tempvaraus.getMokkiId());
             }
             // Nappaa poikkeukset ja tulostaa ne.
         } catch (Exception e) {
@@ -166,6 +150,84 @@ public class lisaaVarausIkkunaController implements Initializable {
         }
         return lista;
 
+    }
+
+String sqlKomento(){
+    String stringOut = "";
+    try {
+        System.out.println(haeSuodatettuLista().size());
+        System.out.println(haeSuodatettuLista());
+        StringBuilder sqlString = new StringBuilder();
+        sqlString.append("SELECT * FROM mokki where");
+        for (int i = 0; i < (haeSuodatettuLista().size()); i++){
+         sqlString.append(" mokki_id !=" + haeSuodatettuLista().get(i));
+        if(i != haeSuodatettuLista().size()-1){
+            sqlString.append(" and");
+        }
+            System.out.println(sqlString);
+        }
+        sqlString.append(";");
+        System.out.println(sqlString);
+        stringOut = sqlString.toString();
+     } catch (SQLException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+     }
+    return stringOut;
+}
+
+
+    private List<Mokki> haeRajattuMokkiLista() throws SQLException {
+        List<Mokki> lista = new ArrayList<>();
+        // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+        try {
+            Statement stmt = con.createStatement();
+            // Määrittää SQL komennon ja lähettää sen tietokannalle.
+            ResultSet rs = stmt.executeQuery(sqlKomento());
+            // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
+            while (rs.next()) {
+                Mokki tempmokki = new Mokki(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
+                        rs.getString(5), rs.getDouble(6), rs.getString(7), rs.getInt(8), rs.getString(9));
+                lista.add(tempmokki);
+            }
+            // Nappaa poikkeukset ja tulostaa ne.
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Yhteys tietokantaan suljetaan.
+            con.close();
+        }
+        return lista;
+
+    }
+
+    public void paivitaLista() {
+        try {
+            if (!haeSuodatettuLista().isEmpty()){
+                try {
+                    tvMokit.getItems().setAll(haeRajattuMokkiLista());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+                try {
+                    tvMokit.getItems().setAll(haeMokkiLista());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+    }
+
+
+    @FXML
+    void btPaivitaAction(ActionEvent event) {
+        paivitaLista();
     }
 
     private List<Mokki> haeMokkiLista() throws SQLException {
