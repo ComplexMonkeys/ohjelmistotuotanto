@@ -55,6 +55,13 @@ public class lisaaVarausPalveluIkkunaController {
 
     @FXML
     void btTallennaAction(ActionEvent event) throws Exception {
+        VarauksenPalvelut varauksenPalvelut = new VarauksenPalvelut(Integer.parseInt(selected), spLkm.getValue());
+        try {
+            palveluLista.add(varauksenPalvelut);
+            System.out.println("Palveluiden lukumäärä tallennettu");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         int asiakasId = Integer.parseInt(tfAsiakasId.getText());
         DateTimeFormatter mysqlFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
         LocalDateTime dateTime = LocalDateTime.now();
@@ -134,7 +141,7 @@ public class lisaaVarausPalveluIkkunaController {
                 selected = Integer.toString(listPalvelu.getSelectionModel().getSelectedItem().getPalvelu_id());
             }
         });
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10);
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10);
         valueFactory.setValue(0);
         spLkm.setValueFactory(valueFactory);
         mokkiId = a;
