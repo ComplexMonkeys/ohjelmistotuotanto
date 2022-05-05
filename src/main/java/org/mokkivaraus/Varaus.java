@@ -2,6 +2,7 @@ package org.mokkivaraus;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class Varaus {
     LocalDateTime dateTime = LocalDateTime.now();
@@ -15,6 +16,7 @@ public class Varaus {
     private String vahvistusPvm;
     private String varattuAlku;
     private String varattuLoppu;
+    private ArrayList<Palvelu> palvelut;
 
     
 
@@ -85,11 +87,17 @@ public class Varaus {
         this.varattuLoppu = varattuLoppu;
     }
 
+    public void getPalvelut(){}
+
     @Override
     public String toString() {
-        return "Varaus [asiakasId=" + asiakasId + ", mokkiId=" + mokkiId + ", vahvistusPvm=" + vahvistusPvm
-                + ", varattuAlku=" + varattuAlku + ", varattuLoppu=" + varattuLoppu + ", varattuPvm=" + varattuPvm
-                + ", varausId=" + varausId + "]";
+        return "Varauksen ID: " + getVarausId() + "\n" +
+                "Mökin ID: " + getMokkiId() + "\n" + 
+                "Asiakkan ID: " + getAsiakasId() + "\n" +
+                "Varaus tehty: " + getVarattuPvm() + "\n" +
+                "Varauksen vahvistus: " + getVahvistusPvm() + "\n" +
+                "Vuokraus alkaa: " + getVarattuAlku() + "\n" +
+                "Vuokraus päättyy:  " + getVarattuLoppu();
     }
 
 }
