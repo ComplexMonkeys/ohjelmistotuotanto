@@ -1,5 +1,7 @@
 package org.mokkivaraus;
 
+import java.sql.*;
+
 public class Palvelu {
     private int palvelu_id;
     private int alue_id;
@@ -8,6 +10,8 @@ public class Palvelu {
     private String kuvaus;
     private double hinta;
     private double alv;
+
+    private String alueNimi;
 
     // PA = ((P)ARAMETRITÖN (A)LUSTAJA)ASKA
     public Palvelu(){    
@@ -21,6 +25,11 @@ public class Palvelu {
         this.kuvaus = kuvaus;
         this.hinta = hinta;
         this.alv = alv;
+        try {
+            setAlueNimi();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public int getPalvelu_id() {
@@ -66,8 +75,38 @@ public class Palvelu {
         this.alv = alv;
     }
 
+    public String getAlueNimi(){
+        return alueNimi;
+    }
+
+    public void setAlueNimi() throws SQLException{
+        String nimi = "";
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT nimi FROM alue WHERE alue_id = '" + getAlue_id() + "';");
+            while (rs.next()){
+                nimi = rs.getString(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        con.close();
+        this.alueNimi = nimi;
+    }
+
     @Override
     public String toString() {
         return nimi;
-    } 
+    }
+
+    public String tulostus(){
+        return "Palvelun ID: " + getPalvelu_id() + "\n" +
+        "Alue: " + getAlue_id() + " - " + getAlueNimi() + "\n" +
+        "Palvelun nimi: " + getNimi() + "\n" +
+        "Tyyppi: " + getTyyppi() + "\n" +
+        "Kuvaus: " + getKuvaus() + "\n" +
+        "Hinta: " + getHinta() + "\n" +
+        "Alv: " + getAlv();
+    }
 }
