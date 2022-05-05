@@ -173,10 +173,10 @@ public class Mokki {
     @Override
     public String toString() {
         ArrayList<Varaus> tempvaraukset = getVaraukset();
-        ArrayList<String> lista = new ArrayList<>();
+        String lista = "Varaukset: \n";
         for (int i = 0; i < tempvaraukset.size(); i++){
             String varaus = tempvaraukset.get(i).getVarausId() + ": " + tempvaraukset.get(i).getVarattuAlku() + " - " + tempvaraukset.get(i).getVarattuLoppu() + "\n";
-            lista.add(varaus);
+            lista = lista + varaus;
         }
 
         return
@@ -189,8 +189,7 @@ public class Mokki {
             "Hinta: " + getHinta() + "\n" +
             "Kuvaus: " + getKuvaus() + "\n" +
             "Max. Henkilömäärä: " + getHenkilomaara() + "\n" +
-            "Varustelu: " + getVarustelu() + "\n" +
-            "Varaukset: "+ "\n" + lista;
+            "Varustelu: " + getVarustelu() + "\n" + lista;
     }
 
 }
