@@ -140,13 +140,16 @@ public class lisaaVarausIkkunaController implements Initializable {
     
 
     private List<Varaus> haeSuodatettuLista() throws SQLException{
+        LocalDate date = dpAloitus.getValue();
+        LocalDateTime dateFormatted = date.atTime(12, 0, 0);
+        dateFormatted.format(mysqlFormat);
         List<Varaus> lista = new ArrayList<>();
         // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
         try {
             Statement stmt = con.createStatement();
             // Määrittää SQL komennon ja lähettää sen tietokannalle.
-            ResultSet rs = stmt.executeQuery("SELECT * FROM varaus WHERE varattu_alkupvm <= '" + dpAloitus.getValue().format(mysqlFormat) + "');");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM varaus WHERE varattu_alkupvm <= '" + dateFormatted + "';");
             // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
             while (rs.next()) {
                 Varaus tempvaraus = new Varaus(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5),
@@ -155,7 +158,7 @@ public class lisaaVarausIkkunaController implements Initializable {
             }
             // Nappaa poikkeukset ja tulostaa ne.
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         finally{
             // Yhteys tietokantaan suljetaan.
