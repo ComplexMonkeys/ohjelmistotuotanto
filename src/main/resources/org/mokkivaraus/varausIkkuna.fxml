@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="407.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mokkivaraus.controller.varausIkkunaController">
    <children>
@@ -25,5 +27,12 @@
       </HBox>
       <Button fx:id="btPaivita" layoutX="159.0" layoutY="24.0" mnemonicParsing="false" onAction="#btPaivitaAction" text="Päivitä" />
       <Button fx:id="btPaluu" layoutX="527.0" layoutY="373.0" mnemonicParsing="false" onAction="#btPaluuAction" text="Paluu" />
+      <VBox alignment="CENTER" layoutX="8.0" layoutY="96.0" prefHeight="200.0" prefWidth="203.0" spacing="10.0">
+         <children>
+            <DatePicker fx:id="dpAlku" promptText="Aloituspvm" />
+            <DatePicker fx:id="dpLoppu" promptText="Lopetuspvm" />
+            <Button fx:id="btHaku" mnemonicParsing="false" onAction="#btHakuAction" text="Hae" />
+         </children>
+      </VBox>
    </children>
 </Pane>

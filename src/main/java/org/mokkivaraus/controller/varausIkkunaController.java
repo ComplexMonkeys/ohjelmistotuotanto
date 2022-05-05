@@ -17,6 +17,9 @@ import javafx.stage.*;
 public class varausIkkunaController implements Initializable {
 
     @FXML
+    private Button btHaku;
+
+    @FXML
     private Button btLisaa;
 
     @FXML
@@ -44,6 +47,12 @@ public class varausIkkunaController implements Initializable {
     private TableColumn<Varaus, Integer> cVarausId;
 
     @FXML
+    private DatePicker dpAlku;
+
+    @FXML
+    private DatePicker dpLoppu;
+
+    @FXML
     private HBox hbNapit;
 
     @FXML
@@ -58,6 +67,11 @@ public class varausIkkunaController implements Initializable {
             e.printStackTrace();
         }
 
+    }
+
+    @FXML
+    void btHakuAction(ActionEvent event) {
+        // TODO: lista varauksista päivämäärän (dpAlku, dpLoppu) mukaan
     }
 
     @FXML
