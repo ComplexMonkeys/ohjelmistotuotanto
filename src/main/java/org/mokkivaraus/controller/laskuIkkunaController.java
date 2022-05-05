@@ -9,6 +9,7 @@ import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
@@ -162,21 +163,25 @@ public class laskuIkkunaController implements Initializable {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
                     tulostus = row.getItem();
                     System.out.println(tulostus);
-                    // Luo dialogi
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Test");
-                    alert.setHeaderText("This is a test.");
+                    
+                    // Luo alert-dialogin muokatuilla painikkeilla
+                    ButtonType btPrintti = new ButtonType("Tulosta", ButtonBar.ButtonData.OK_DONE);
+                    ButtonType btSposti = new ButtonType("Sähköposti", ButtonBar.ButtonData.CANCEL_CLOSE);
+                    Alert alert = new Alert(AlertType.WARNING,
+                            tulostus.toString(),
+                            btPrintti,
+                            btSposti);
+                    alert.setTitle("Lähetä lasku");
+                    alert.setHeaderText("Miten haluat lähettää laskun?");
                     alert.setResizable(false);
-                    alert.setContentText("Select okay or cancel this alert.");
                     Optional<ButtonType> result = alert.showAndWait();
-                    if(!result.isPresent()){
-                    } else if (result.get() == ButtonType.OK){
-                        System.out.println("Okei");
+                    if (result.orElse(btPrintti) == btSposti) {
+                        System.out.println("Säpo");
+                        // TODO: Lähetä lasku s-postilla
+                    } else if (result.orElse(btSposti) == btPrintti){
+                        System.out.println("Printti");
+                        // TODO: Tulosta lasku paperille
                     }
-                    else if(result.get() == ButtonType.CANCEL){
-                        System.out.println("Peruutus");
-                    }
-                    // TODO: alert-ikkuna tekemään laskutus
                 }
 
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
