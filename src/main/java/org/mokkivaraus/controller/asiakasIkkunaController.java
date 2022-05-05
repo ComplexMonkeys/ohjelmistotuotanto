@@ -9,6 +9,7 @@ import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.cell.*;
 import javafx.scene.input.*;
 import javafx.stage.*;
@@ -40,6 +41,7 @@ public class asiakasIkkunaController implements Initializable {
     private TableView<Asiakas> tvAsiakas;
 
     Asiakas valittu;
+    Asiakas tulostus;
 
     public void paivitaLista() {
         try {
@@ -113,6 +115,17 @@ public class asiakasIkkunaController implements Initializable {
         tvAsiakas.setRowFactory(tv -> {
             TableRow<Asiakas> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                    tulostus = row.getItem();
+                    System.out.println(tulostus);
+                    Dialog<String> dialog = new Dialog<String>();
+                    dialog.setTitle("Asiakas");
+                    ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
+                    dialog.setContentText(tulostus.toString());
+                    dialog.getDialogPane().getButtonTypes().add(type);
+                    dialog.showAndWait();
+                }
+
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
 
                     valittu = row.getItem();
