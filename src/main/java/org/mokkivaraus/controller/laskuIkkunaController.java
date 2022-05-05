@@ -166,22 +166,21 @@ public class laskuIkkunaController implements Initializable {
                     
                     // Luo alert-dialogin muokatuilla painikkeilla
                     ButtonType btPrintti = new ButtonType("Tulosta", ButtonBar.ButtonData.OK_DONE);
-                    ButtonType btSposti = new ButtonType("Sähköposti", ButtonBar.ButtonData.CANCEL_CLOSE);
-                    Alert alert = new Alert(AlertType.WARNING,
-                            tulostus.toString(),
-                            btPrintti,
-                            btSposti);
+                    ButtonType btSposti = new ButtonType("Sähköposti", ButtonBar.ButtonData.APPLY);
+                    Alert alert = new Alert(AlertType.WARNING, tulostus.toString());
+                    alert.getButtonTypes().addAll(btPrintti, btSposti);
                     alert.setTitle("Lähetä lasku");
                     alert.setHeaderText("Miten haluat lähettää laskun?");
                     alert.setResizable(false);
                     Optional<ButtonType> result = alert.showAndWait();
-                    // TODO: Jostakin syystä valitsee säpon vaikka painaisi ruksia...
-                    if (result.orElse(btPrintti) == btSposti) {
-                        System.out.println("Säpo");
-                        // TODO: Lähetä lasku s-postilla
-                    } else if (result.orElse(btSposti) == btPrintti){
-                        System.out.println("Printti");
-                        // TODO: Tulosta lasku paperille
+                    if (!result.isEmpty()){
+                        if (result.get() == btSposti) {
+                            System.out.println("Säpo");
+                            // TODO: Lähetä lasku s-postilla
+                        } else if (result.get() == btPrintti){
+                            System.out.println("Printti");
+                            // TODO: Tulosta lasku paperille
+                        }
                     }
                 }
 

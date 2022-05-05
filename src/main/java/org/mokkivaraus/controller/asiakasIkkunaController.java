@@ -17,6 +17,9 @@ import javafx.stage.*;
 public class asiakasIkkunaController implements Initializable {
 
     @FXML
+    private Button btHae;
+
+    @FXML
     private Button btLisaa;
 
     @FXML
@@ -38,10 +41,26 @@ public class asiakasIkkunaController implements Initializable {
     private TableColumn<Asiakas, String> cAsiakasNimi;
 
     @FXML
+    private TextField tfNimi;
+
+    @FXML
     private TableView<Asiakas> tvAsiakas;
 
     Asiakas valittu;
     Asiakas tulostus;
+
+    @FXML
+    void btHaeAction(ActionEvent event) {
+        if(tfNimi.getText() != ""){
+            try {
+                tvAsiakas.getItems().setAll(haeSuodatettuLista());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            paivitaLista();
+        }
+    }
 
     public void paivitaLista() {
         try {
@@ -198,5 +217,31 @@ public class asiakasIkkunaController implements Initializable {
         }
         return lista;
 
+    }
+
+    private List<Asiakas> haeSuodatettuLista() throws SQLException{
+        List<Asiakas> lista = new ArrayList<>();
+        // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+        try {
+            Statement stmt = con.createStatement();
+            // Määrittää SQL komennon ja lähettää sen tietokannalle.
+            // TODO: Ongelma: voi hakea vain joko etu- tai sukunimellä, ei voi kirjoittaa molempia hakukenttään samaan aikaan
+            ResultSet rs = stmt.executeQuery("SELECT * FROM asiakas WHERE etunimi LIKE '%" + tfNimi.getText() + "%' OR sukunimi LIKE '%" + tfNimi.getText() + "%';");
+            // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
+            while (rs.next()) {
+                Asiakas temp = new Asiakas(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
+                rs.getString(5), rs.getString(6), rs.getString(7));
+                lista.add(temp);
+            }
+            // Nappaa poikkeukset ja tulostaa ne.
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+        finally{
+            // Yhteys tietokantaan suljetaan.
+            con.close();
+        }
+        return lista;
     }
 }

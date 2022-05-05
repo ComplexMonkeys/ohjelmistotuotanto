@@ -152,12 +152,11 @@ public class Mokki {
     }
 
     public void setVaraukset() throws SQLException{
-        // TODO: Hae vain tulevat varaukset
         ArrayList<Varaus> lista = new ArrayList<>();
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
         try{
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM varaus WHERE mokki_mokki_id = '" + this.mokki_id + "';");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM varaus WHERE mokki_mokki_id = '" + this.mokki_id + "' AND varattu_loppupvm >= curdate()");
             while (rs.next()) {
                 Varaus tempalue = new Varaus(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5),
                         rs.getString(6), rs.getString(7));

@@ -55,6 +55,13 @@ public class lisaaVarausPalveluIkkunaController {
 
     @FXML
     void btTallennaAction(ActionEvent event) throws Exception {
+        VarauksenPalvelut varauksenPalvelut = new VarauksenPalvelut(Integer.parseInt(selected), spLkm.getValue());
+        try {
+            palveluLista.add(varauksenPalvelut);
+            System.out.println("Palveluiden lukumäärä tallennettu");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         int asiakasId = Integer.parseInt(tfAsiakasId.getText());
         DateTimeFormatter mysqlFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
         LocalDateTime dateTime = LocalDateTime.now();
@@ -95,7 +102,7 @@ public class lisaaVarausPalveluIkkunaController {
 
                 }
                 Statement stmt3 = con.createStatement();
-                ResultSet rs2 = stmt3.executeQuery("select sum(T1.hinta + T2.hinta) from (select hinta from mokki WHERE mokki_id = (SELECT mokki_mokki_id FROM varaus WHERE varaus_id = " + varauksen_id + ") ) as T1 , (select hinta from palvelu where palvelu_id = (SELECT palvelu_id FROM varauksen_palvelut WHERE varaus_id = " + varauksen_id + ")) as T2;");
+                ResultSet rs2 = stmt3.executeQuery("select sum(T1.hinta + T2.hinta * t3.lkm) from (select hinta from mokki WHERE mokki_id = (SELECT mokki_mokki_id FROM varaus WHERE varaus_id = " + varauksen_id + ") ) as T1 ,(select hinta from palvelu where palvelu_id = (SELECT palvelu_id FROM varauksen_palvelut WHERE varaus_id = " + varauksen_id + ")) as T2, (select lkm from varauksen_palvelut WHERE varaus_id = " + varauksen_id + ") as t3;");
               
                 if (rs2.next()) {
                     double summa = rs2.getDouble(1);
@@ -134,7 +141,7 @@ public class lisaaVarausPalveluIkkunaController {
                 selected = Integer.toString(listPalvelu.getSelectionModel().getSelectedItem().getPalvelu_id());
             }
         });
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10);
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10);
         valueFactory.setValue(0);
         spLkm.setValueFactory(valueFactory);
         mokkiId = a;

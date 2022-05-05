@@ -9,6 +9,7 @@ import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.cell.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
@@ -32,7 +33,7 @@ public class palveluIkkunaController implements Initializable {
     private Button btPoista;
 
     @FXML
-    private TableColumn<Palvelu, Integer> cAlue;
+    private TableColumn<Palvelu, String> cAlue;
 
     @FXML
     private TableColumn<Palvelu, Double> cHinta;
@@ -50,6 +51,7 @@ public class palveluIkkunaController implements Initializable {
     private TableView<Palvelu> tvPalvelut;
 
     Palvelu valittu;
+    Palvelu tulostus;
 
 
 
@@ -154,7 +156,7 @@ public class palveluIkkunaController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cAlue.setCellValueFactory(new PropertyValueFactory<Palvelu, Integer>("alue_id"));
+        cAlue.setCellValueFactory(new PropertyValueFactory<Palvelu, String>("alueNimi"));
         cHinta.setCellValueFactory(new PropertyValueFactory<Palvelu, Double>("hinta"));
         cPalveluId.setCellValueFactory(new PropertyValueFactory<Palvelu, Integer>("palvelu_id"));
         cPalveluNimi.setCellValueFactory(new PropertyValueFactory<Palvelu, String>("nimi"));
@@ -168,6 +170,17 @@ public class palveluIkkunaController implements Initializable {
         tvPalvelut.setRowFactory(tv -> {
             TableRow<Palvelu> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                    tulostus = row.getItem();
+                    System.out.println(tulostus);
+                    Dialog<String> dialog = new Dialog<String>();
+                    dialog.setTitle("Palvelu");
+                    ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
+                    dialog.setContentText(tulostus.tulostus());
+                    dialog.getDialogPane().getButtonTypes().add(type);
+                    dialog.showAndWait();
+                }
+                
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
 
                     valittu = row.getItem();
