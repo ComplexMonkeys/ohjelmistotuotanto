@@ -55,12 +55,11 @@ public class Lasku{
 
     @Override
     public String toString() {
-        return "{" +
-            " lasku_id='" + getLasku_id() + "'" +
-            ", varaus_id='" + getVaraus_id() + "'" +
-            ", summa='" + getSumma() + "'" +
-            ", alv='" + getAlv() + "'" +
-            "}";
+        return
+            "Laskun ID: " + getLasku_id() + "\n" +
+            "Varauksen ID: " + getVaraus_id() + "\n" +
+            "Summa: " + getSumma() + "\n" +
+            "ALV: " + getAlv();
     }
 
 }

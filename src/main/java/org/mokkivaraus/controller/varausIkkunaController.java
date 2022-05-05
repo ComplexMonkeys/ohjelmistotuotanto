@@ -9,12 +9,16 @@ import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.cell.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 
 public class varausIkkunaController implements Initializable {
+
+    @FXML
+    private Button btHaku;
 
     @FXML
     private Button btLisaa;
@@ -44,12 +48,19 @@ public class varausIkkunaController implements Initializable {
     private TableColumn<Varaus, Integer> cVarausId;
 
     @FXML
+    private DatePicker dpAlku;
+
+    @FXML
+    private DatePicker dpLoppu;
+
+    @FXML
     private HBox hbNapit;
 
     @FXML
     private TableView<Varaus> tvVaraus;
 
     Varaus valittu;
+    Varaus tulostus;
 
     public void paivitaVarauslista() {
         try {
@@ -58,6 +69,11 @@ public class varausIkkunaController implements Initializable {
             e.printStackTrace();
         }
 
+    }
+
+    @FXML
+    void btHakuAction(ActionEvent event) {
+        // TODO: lista varauksista päivämäärän (dpAlku, dpLoppu) mukaan
     }
 
     @FXML
@@ -189,6 +205,17 @@ public class varausIkkunaController implements Initializable {
                     valittu = row.getItem();
                     btMuokkaa.setDisable(false);
                     btPoista.setDisable(false);
+                }
+
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                    tulostus = row.getItem();
+                    System.out.println(tulostus.getPalvelut());
+                    Dialog<String> dialog = new Dialog<String>();
+                    dialog.setTitle("Varaus");
+                    ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
+                    dialog.setContentText(tulostus.toString());
+                    dialog.getDialogPane().getButtonTypes().add(type);
+                    dialog.showAndWait();
                 }
             });
             return row;
