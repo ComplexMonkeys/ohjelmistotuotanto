@@ -95,7 +95,7 @@ public class lisaaVarausPalveluIkkunaController {
 
                 }
                 Statement stmt3 = con.createStatement();
-                ResultSet rs2 = stmt3.executeQuery("select sum(T1.hinta + T2.hinta) from (select hinta from mokki WHERE mokki_id = (SELECT mokki_mokki_id FROM varaus WHERE varaus_id = " + varauksen_id + ") ) as T1 , (select hinta from palvelu where palvelu_id = (SELECT palvelu_id FROM varauksen_palvelut WHERE varaus_id = " + varauksen_id + ")) as T2;");
+                ResultSet rs2 = stmt3.executeQuery("select sum(T1.hinta + T2.hinta * t3.lkm) from (select hinta from mokki WHERE mokki_id = (SELECT mokki_mokki_id FROM varaus WHERE varaus_id = " + varauksen_id + ") ) as T1 ,(select hinta from palvelu where palvelu_id = (SELECT palvelu_id FROM varauksen_palvelut WHERE varaus_id = " + varauksen_id + ")) as T2, (select lkm from varauksen_palvelut WHERE varaus_id = " + varauksen_id + ") as t3;");
               
                 if (rs2.next()) {
                     double summa = rs2.getDouble(1);
