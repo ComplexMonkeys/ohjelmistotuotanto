@@ -167,10 +167,12 @@ public class laskuIkkunaController implements Initializable {
                     // Luo alert-dialogin muokatuilla painikkeilla
                     ButtonType btPrintti = new ButtonType("Tulosta", ButtonBar.ButtonData.OK_DONE);
                     ButtonType btSposti = new ButtonType("Sähköposti", ButtonBar.ButtonData.CANCEL_CLOSE);
+                  
                     Alert alert = new Alert(AlertType.WARNING,
                             tulostus.toString(),
                             btPrintti,
                             btSposti);
+                    alert.getButtonTypes().setAll(btPrintti, btSposti);
                     alert.setTitle("Lähetä lasku");
                     alert.setHeaderText("Miten haluat lähettää laskun?");
                     alert.setResizable(false);
