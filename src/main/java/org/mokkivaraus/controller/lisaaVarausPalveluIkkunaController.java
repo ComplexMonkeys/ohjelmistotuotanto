@@ -71,10 +71,12 @@ public class lisaaVarausPalveluIkkunaController {
                             + asiakasId + "','" + mokkiId + "','" + dateTime.format(mysqlFormat) + "','"
                             + dateTimeEnd.format(mysqlFormat) + "','" + aloitusPvm + "','"
                             + lopetusPvm + "');");
+            
             Statement stmt2 = con.createStatement();
             ResultSet rs = stmt2.executeQuery("SELECT MAX(varaus_id)FROM varaus;");
             if (rs.next()) {
                 int varauksen_id = rs.getInt(1);
+
                 // Nappaa poikkeukset ja tulostaa ne.
                 for (int i = 0; i < (palveluLista.size()); i++) {
                     VarauksenPalvelut valittuVaraus = palveluLista.get(i);
@@ -87,15 +89,21 @@ public class lisaaVarausPalveluIkkunaController {
                                 + valittuVaraus.getVarausId() + "','" + valittuVaraus.getPalveluId() + "','"
                                 + valittuVaraus.getLkm() + "');");
 
-
-                                //TODO: laskun automaattinen generointi
                     } catch (Exception e) {
                         System.out.println(e);
                     }
 
                 }
+                Statement stmt3 = con.createStatement();
+                ResultSet rs2 = stmt3.executeQuery("select sum(T1.hinta + T2.hinta) from (select hinta from mokki WHERE mokki_id = (SELECT mokki_mokki_id FROM varaus WHERE varaus_id = " + varauksen_id + ") ) as T1 , (select hinta from palvelu where palvelu_id = (SELECT palvelu_id FROM varauksen_palvelut WHERE varaus_id = " + varauksen_id + ")) as T2;");
+              
+                if (rs2.next()) {
+                    double summa = rs2.getDouble(1);
+                    double alv = summa - (summa * 0.9);
+                stmt3.executeUpdate("INSERT INTO lasku (varaus_id, summa, alv) VALUES ('"
+                + varauksen_id + "','" + summa + "','" + alv + "');");
             }
-        } catch (Exception e) {
+        } } catch (Exception e) {
             System.out.println(e);
             
             
