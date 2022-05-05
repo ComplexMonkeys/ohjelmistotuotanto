@@ -81,7 +81,11 @@ public String getNimi(){
 }
 @Override
 public String toString(){
-    return "Asiakas [Asiakas_id=" + Asiakas_id + ",Postinro=" + Postinro + ",Etunimi=" + Etunimi + 
-    ",Sukunimi=" + Sukunimi + ",Lahiosoite=" + Lahiosoite + ",Email=" + Email + ",Puhelinnro=" + Puhelinnro + "]";
+    return "Asiakkaan ID: " + getAsiakas_id() + "\n" +
+    "Nimi: " + getNimi() + "\n" +
+    "Lähiosoite: " + getLahiosoite() + "\n" +
+    "Postinumero: " + getPostinro() + "\n" +
+    "Sähköpostiosoite: " + getEmail() + "\n" +
+    "Puh. numero: " + getPuhelinnro();
 }
 }
