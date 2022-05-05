@@ -218,4 +218,16 @@ public class laskuIkkunaController implements Initializable {
         return lista;
 
     }
+    public void tulostus(){
+        javafx.print.Printer defaultprinter = javafx.print.Printer.getDefaultPrinter();
+        if (defaultprinter != null){
+            String tulostinNimi = defaultprinter.getName();
+            System.out.println("Tulostimen nimi on: " + tulostinNimi);
+        } else {
+            System.out.println("Tulostimia ei löydetty");
+        }
+        PrinterJob printerJob = PrinterJob.createPrinterJob();
+        printerJob.printPage(tvLaskut);
+        printerJob.endJob();
+    }
 }
