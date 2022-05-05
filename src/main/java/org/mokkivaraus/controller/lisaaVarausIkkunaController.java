@@ -1,14 +1,19 @@
 package org.mokkivaraus.controller;
+
 import org.mokkivaraus.Mokinvaraus;
 import org.mokkivaraus.Mokki;
+import org.mokkivaraus.Varaus;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.Date;
+
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.Scene;
@@ -17,7 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.stage.*;
 
-public class lisaaVarausIkkunaController implements Initializable{
+public class lisaaVarausIkkunaController implements Initializable {
 
     @FXML
     private Button btPaluu;
@@ -50,20 +55,19 @@ public class lisaaVarausIkkunaController implements Initializable{
     private DatePicker dpLopetus;
 
     Mokki valittu;
-            
+    DateTimeFormatter mysqlFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cAlue.setCellValueFactory(new PropertyValueFactory<Mokki, Integer>("alue_id"));
         cHenkilomaara.setCellValueFactory(new PropertyValueFactory<Mokki, Integer>("henkilomaara"));
         cMokkiId.setCellValueFactory(new PropertyValueFactory<Mokki, Integer>("mokki_id"));
         cMokkiNimi.setCellValueFactory(new PropertyValueFactory<Mokki, String>("mokkinimi"));
-
         try {
             tvMokit.getItems().setAll(haeMokkiLista());
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         tvMokit.setRowFactory(tv -> {
             TableRow<Mokki> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -75,6 +79,7 @@ public class lisaaVarausIkkunaController implements Initializable{
             return row;
         });
     }
+
     public void paivitaLista() {
         try {
             tvMokit.getItems().setAll(haeMokkiLista());
@@ -95,9 +100,9 @@ public class lisaaVarausIkkunaController implements Initializable{
         LocalDate aloitusPvm = dpAloitus.getValue();
         LocalDate lopetusPvm = dpLopetus.getValue();
         DateTimeFormatter mysqlFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
-        LocalDateTime aloitusPvmFormat = aloitusPvm.atTime(12,0,0);
+        LocalDateTime aloitusPvmFormat = aloitusPvm.atTime(12, 0, 0);
         aloitusPvmFormat.format(mysqlFormat);
-        LocalDateTime lopetusPvmFormat = lopetusPvm.atTime(12,0,0);
+        LocalDateTime lopetusPvmFormat = lopetusPvm.atTime(12, 0, 0);
         lopetusPvmFormat.format(mysqlFormat);
 
         FXMLLoader loader = new FXMLLoader(Mokinvaraus.class.getResource("lisaaVarausPalveluIkkuna.fxml"));
@@ -113,20 +118,50 @@ public class lisaaVarausIkkunaController implements Initializable{
         stage.setTitle("Tee varaus");
 
         stage.show();
-    }  
+    }
 
     @FXML
     void btPaivitaAction(ActionEvent event) {
         paivitaLista();
     }
-
     @FXML
     void dpAloitusAction(ActionEvent event) {
-
+    try {
+       System.out.println(haeSuodatettuLista().size());
+    } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    } 
     }
-
     @FXML
     void dpLopetusAction(ActionEvent event) {
+
+    }
+    
+
+    private List<Varaus> haeSuodatettuLista() throws SQLException{
+        List<Varaus> lista = new ArrayList<>();
+        // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+        try {
+            Statement stmt = con.createStatement();
+            // Määrittää SQL komennon ja lähettää sen tietokannalle.
+            ResultSet rs = stmt.executeQuery("SELECT * FROM varaus WHERE varattu_alkupvm <= '" + dpAloitus.getValue().format(mysqlFormat) + "');");
+            // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
+            while (rs.next()) {
+                Varaus tempvaraus = new Varaus(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5),
+                rs.getString(6), rs.getString(7));
+                lista.add(tempvaraus);
+            }
+            // Nappaa poikkeukset ja tulostaa ne.
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        finally{
+            // Yhteys tietokantaan suljetaan.
+            con.close();
+        }
+        return lista;
 
     }
 
