@@ -218,7 +218,6 @@ public class laskuIkkunaController implements Initializable {
 
     }
     public void tulostus(){
-        /*
         javafx.print.Printer defaultprinter = javafx.print.Printer.getDefaultPrinter();
         if (defaultprinter != null){
             String tulostinNimi = defaultprinter.getName();
@@ -228,6 +227,6 @@ public class laskuIkkunaController implements Initializable {
         }
         PrinterJob printerJob = PrinterJob.createPrinterJob();
         printerJob.printPage(tvLaskut);
-        printerJob.endJob();*/
+        printerJob.endJob();
     }
 }
