@@ -1,5 +1,6 @@
 package org.mokkivaraus;
 
+import java.sql.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -29,6 +30,11 @@ public class Varaus {
         this.vahvistusPvm = vahvistusPvm;
         this.varattuAlku = varattuAlku;
         this.varattuLoppu = varattuLoppu;
+        try {
+            setPalvelut();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public int getVarausId() {
@@ -87,17 +93,43 @@ public class Varaus {
         this.varattuLoppu = varattuLoppu;
     }
 
-    public void getPalvelut(){}
+    public ArrayList<Palvelu> getPalvelut(){
+        return palvelut;
+    }
+
+    public void setPalvelut() throws SQLException{
+        ArrayList<Palvelu> lista = new ArrayList<>();
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+        try{
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM palvelu WHERE palvelu_id IN (SELECT palvelu_id FROM varauksen_palvelut where varaus_id = '" + this.varausId +"');");
+            while (rs.next()) {
+                Palvelu tempvaraus = new Palvelu(rs.getInt(1), rs.getInt(2), rs.getString(3), 
+                rs.getInt(4), rs.getString(5), rs.getDouble(6), rs.getDouble(7));
+                lista.add(tempvaraus);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        con.close();
+        this.palvelut = lista;
+    }
 
     @Override
     public String toString() {
+        ArrayList<Palvelu> temp = getPalvelut();
+        String lista = "Varauksen palvelut: ";
+        for (int i = 0; i < temp.size(); i++){
+            String palvelu = temp.get(i).getPalvelu_id() + ": " + temp.get(i).getNimi() + ": " + temp.get(i).getHinta() + "\n";
+            lista = lista + "\n" + palvelu;
+        }
         return "Varauksen ID: " + getVarausId() + "\n" +
                 "Mökin ID: " + getMokkiId() + "\n" + 
                 "Asiakkan ID: " + getAsiakasId() + "\n" +
                 "Varaus tehty: " + getVarattuPvm() + "\n" +
                 "Varauksen vahvistus: " + getVahvistusPvm() + "\n" +
                 "Vuokraus alkaa: " + getVarattuAlku() + "\n" +
-                "Vuokraus päättyy:  " + getVarattuLoppu();
+                "Vuokraus päättyy:  " + getVarattuLoppu() + "\n" + lista;
     }
 
 }
