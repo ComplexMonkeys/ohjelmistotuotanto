@@ -18,6 +18,8 @@ public class Varaus {
     private String varattuAlku;
     private String varattuLoppu;
     private ArrayList<Palvelu> palvelut;
+    
+    private String mokinNimi;
 
     
 
@@ -32,6 +34,7 @@ public class Varaus {
         this.varattuLoppu = varattuLoppu;
         try {
             setPalvelut();
+            setMokinNimi();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -115,6 +118,27 @@ public class Varaus {
         this.palvelut = lista;
     }
 
+    public String getMokinNimi(){
+        return mokinNimi;
+    }
+
+    public void setMokinNimi() throws SQLException{
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+        String nimi = "Nimeä ei saatavilla.";
+        try{
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT mokkinimi FROM mokki WHERE mokki_id = '" + getMokkiId() + "';");
+            while (rs.next()){
+                nimi = rs.getString(1);
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        con.close();
+        this.mokinNimi = nimi;
+    }
+
     @Override
     public String toString() {
         ArrayList<Palvelu> temp = getPalvelut();
@@ -124,8 +148,9 @@ public class Varaus {
             lista = lista + "\n" + palvelu;
         }
         return "Varauksen ID: " + getVarausId() + "\n" +
-                "Mökin ID: " + getMokkiId() + "\n" + 
-                "Asiakkan ID: " + getAsiakasId() + "\n" +
+                "Mökin ID: " + getMokkiId() + "\n" +
+                "Mökin nimi: " + getMokinNimi() + "\n" +  
+                "Asiakkaan ID: " + getAsiakasId() + "\n" +
                 "Varaus tehty: " + getVarattuPvm() + "\n" +
                 "Varauksen vahvistus: " + getVahvistusPvm() + "\n" +
                 "Vuokraus alkaa: " + getVarattuAlku() + "\n" +
