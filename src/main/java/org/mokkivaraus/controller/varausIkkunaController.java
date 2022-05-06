@@ -4,6 +4,9 @@ import org.mokkivaraus.*;
 import java.io.*;
 import java.net.*;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import javafx.event.*;
 import javafx.fxml.*;
@@ -59,6 +62,7 @@ public class varausIkkunaController implements Initializable {
     @FXML
     private TableView<Varaus> tvVaraus;
 
+    DateTimeFormatter mysqlFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
     Varaus valittu;
     Varaus tulostus;
 
@@ -71,9 +75,32 @@ public class varausIkkunaController implements Initializable {
 
     }
 
+    public void paivitaRajattuLista() {
+        try {
+            ArrayList<Varaus> arrayList = haeRajattuVarausLista();
+            if (!arrayList.isEmpty()){
+                try {
+                    tvVaraus.getItems().setAll(arrayList);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+                try {
+                    tvVaraus.getItems().clear();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+    }
+
     @FXML
     void btHakuAction(ActionEvent event) {
-        // TODO: lista varauksista päivämäärän (dpAlku, dpLoppu) mukaan
+        paivitaRajattuLista();
     }
 
     @FXML
@@ -163,6 +190,37 @@ public class varausIkkunaController implements Initializable {
             // Päivittää listan poiston tapahduttua.
             paivitaVarauslista();
         }
+    }
+
+    private ArrayList<Varaus> haeRajattuVarausLista() throws SQLException {
+        LocalDate date = dpAlku.getValue();
+        LocalDateTime startFormatted = date.atTime(12, 0, 0);
+        startFormatted.format(mysqlFormat);
+        LocalDate dateEnd = dpLoppu.getValue();
+        LocalDateTime endFormatted = dateEnd.atTime(12, 0, 0);
+        endFormatted.format(mysqlFormat);
+        ArrayList<Varaus> lista = new ArrayList<>();
+        // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+        try {
+            Statement stmt = con.createStatement();
+            // Määrittää SQL komennon ja lähettää sen tietokannalle.
+            ResultSet rs = stmt.executeQuery("SELECT * FROM varaus WHERE (varattu_alkupvm <= '"+ endFormatted +"'AND varattu_loppupvm >= '"+ endFormatted +"')or (varattu_alkupvm <= '"+ startFormatted +"' AND varattu_loppupvm >= '"+ startFormatted +"');");
+            // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
+            while (rs.next()) {
+                Varaus tempvaraus = new Varaus(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5),
+                rs.getString(6), rs.getString(7));
+                lista.add(tempvaraus);
+            }
+            // Nappaa poikkeukset ja tulostaa ne.
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Yhteys tietokantaan suljetaan.
+            con.close();
+        }
+        return lista;
+
     }
 
     public List<Varaus> haeVarauslista() throws SQLException {
