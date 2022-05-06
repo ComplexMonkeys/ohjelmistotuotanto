@@ -167,21 +167,22 @@ public class laskuIkkunaController implements Initializable {
                     
                     // Luo alert-dialogin muokatuilla painikkeilla
                     ButtonType btPrintti = new ButtonType("Tulosta", ButtonBar.ButtonData.OK_DONE);
-                    ButtonType btSposti = new ButtonType("Sähköposti", ButtonBar.ButtonData.APPLY);
-                    Alert alert = new Alert(AlertType.WARNING, tulostus.toString());
-                    alert.getButtonTypes().addAll(btPrintti, btSposti);
+                    ButtonType btSposti = new ButtonType("Sähköposti", ButtonBar.ButtonData.CANCEL_CLOSE);
+                    Alert alert = new Alert(AlertType.WARNING,
+                            tulostus.toString(),
+                            btPrintti,
+                            btSposti);
                     alert.setTitle("Lähetä lasku");
                     alert.setHeaderText("Miten haluat lähettää laskun?");
                     alert.setResizable(false);
                     Optional<ButtonType> result = alert.showAndWait();
-                    if (!result.isEmpty()){
-                        if (result.get() == btSposti) {
-                            System.out.println("Säpo");
-                            // TODO: Lähetä lasku s-postilla
-                        } else if (result.get() == btPrintti){
-                            System.out.println("Printti");
-                            // TODO: Tulosta lasku paperille
-                        }
+                    // TODO: Jostakin syystä valitsee säpon vaikka painaisi ruksia...
+                    if (result.orElse(btPrintti) == btSposti) {
+                        System.out.println("Säpo");
+                        // TODO: Lähetä lasku s-postilla
+                    } else if (result.orElse(btSposti) == btPrintti){
+                        System.out.println("Printti");
+                        // TODO: Tulosta lasku paperille
                     }
                 }
 
@@ -227,7 +228,44 @@ public class laskuIkkunaController implements Initializable {
             System.out.println("Tulostimia ei löydetty");
         }
         PrinterJob printerJob = PrinterJob.createPrinterJob();
+        PageFormat pf = printerJob.getDefaultPage();
+        pf.setOrientation(PageFormat.PORTRAIT);
         printerJob.printPage(tvLaskut);
         printerJob.endJob();
     }
+
+
+
+    public void spostilahettaja() {
+        String host = "villagenewbies03@gmail.com"
+        
+        final String user = "villagenewbies03@gmail.com";
+
+        final String password = "ohjelmistotuotanto"
+
+        String to = "jonkunsposti@gmail.com";
+
+        Properties props = new Properties();
+        props.put("mail.smtp.ssl.trust", "*" );
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port","587");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.starttls.enable", "true");
+
+        Session session = Session.getDefaultInstance(props,new javax.mail.Authenticator() {
+            protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
+              return new PasswordAuthentication(user,password);
+                    }
+                });
+        try{
+            Mimemessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(user));
+            message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));
+            message.setSubject("Mökinvaraus lasku");
+            message.setText("TERVE");
+
+            Transport.send(message);
+            System.out.println("viesti lähetetty onnistuneesti!");
+
+        } catch (MessagingException e){ e.printStackTrace}   
 }
