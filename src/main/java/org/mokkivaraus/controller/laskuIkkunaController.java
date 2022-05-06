@@ -7,6 +7,9 @@ import java.sql.*;
 import java.util.*;
 import javafx.event.*;
 import javafx.fxml.*;
+import javafx.print.PageOrientation;
+import javafx.print.Paper;
+import javafx.print.Printer;
 import javafx.print.PrinterJob;
 import javafx.scene.*;
 import javafx.scene.control.*;
@@ -182,7 +185,7 @@ public class laskuIkkunaController implements Initializable {
                         // TODO: Lähetä lasku s-postilla
                     } else if (result.orElse(btSposti) == btPrintti){
                         System.out.println("Printti");
-                        // TODO: Tulosta lasku paperille
+                        tulostus();
                     }
                 }
 
@@ -220,6 +223,12 @@ public class laskuIkkunaController implements Initializable {
 
     }
     public void tulostus(){
+        VBox vboxi = new VBox(10);
+        Label tulostuslbl = new Label("Lasku ID: "+ valittu.getLasku_id());
+        Label tulostuslbl2 = new Label("Varaus ID: "+ valittu.getVaraus_id());
+        Label tulostuslbl3 = new Label("Varauksen summa on: "+ valittu.getSumma());
+        vboxi.getChildren().addAll(tulostuslbl,tulostuslbl2,tulostuslbl3);
+        vboxi.setPrefSize(400,250);
         javafx.print.Printer defaultprinter = javafx.print.Printer.getDefaultPrinter();
         if (defaultprinter != null){
             String tulostinNimi = defaultprinter.getName();
@@ -228,14 +237,13 @@ public class laskuIkkunaController implements Initializable {
             System.out.println("Tulostimia ei löydetty");
         }
         PrinterJob printerJob = PrinterJob.createPrinterJob();
-        PageFormat pf = printerJob.getDefaultPage();
-        pf.setOrientation(PageFormat.PORTRAIT);
-        printerJob.printPage(tvLaskut);
+        Printer printer = printerJob.getPrinter();
+        // Create the Page Layout of the Printer
+        printerJob.printPage(printer.createPageLayout(Paper.A4, PageOrientation.PORTRAIT,Printer.MarginType.EQUAL), vboxi);
         printerJob.endJob();
     }
 
-
-
+/*
     public void spostilahettaja() {
         String host = "villagenewbies03@gmail.com"
         
@@ -268,4 +276,6 @@ public class laskuIkkunaController implements Initializable {
             System.out.println("viesti lähetetty onnistuneesti!");
 
         } catch (MessagingException e){ e.printStackTrace}   
+}
+*/
 }
