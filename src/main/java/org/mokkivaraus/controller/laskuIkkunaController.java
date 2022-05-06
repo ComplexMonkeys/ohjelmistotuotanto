@@ -223,6 +223,12 @@ public class laskuIkkunaController implements Initializable {
 
     }
     public void tulostus(){
+        VBox vboxi = new VBox(10);
+        Label tulostuslbl = new Label("Lasku ID: "+ valittu.getLasku_id());
+        Label tulostuslbl2 = new Label("Varaus ID: "+ valittu.getVaraus_id());
+        Label tulostuslbl3 = new Label("Varauksen summa on: "+ valittu.getSumma());
+        vboxi.getChildren().addAll(tulostuslbl,tulostuslbl2,tulostuslbl3);
+        vboxi.setPrefSize(400,250);
         javafx.print.Printer defaultprinter = javafx.print.Printer.getDefaultPrinter();
         if (defaultprinter != null){
             String tulostinNimi = defaultprinter.getName();
@@ -233,7 +239,7 @@ public class laskuIkkunaController implements Initializable {
         PrinterJob printerJob = PrinterJob.createPrinterJob();
         Printer printer = printerJob.getPrinter();
         // Create the Page Layout of the Printer
-        printerJob.printPage(printer.createPageLayout(Paper.A4, PageOrientation.PORTRAIT,Printer.MarginType.EQUAL), tvLaskut);
+        printerJob.printPage(printer.createPageLayout(Paper.A4, PageOrientation.PORTRAIT,Printer.MarginType.EQUAL), vboxi);
         printerJob.endJob();
     }
 
