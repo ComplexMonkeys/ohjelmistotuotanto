@@ -155,8 +155,6 @@ public class lisaaVarausIkkunaController implements Initializable {
 String sqlKomento(){
     String stringOut = "";
     try {
-        System.out.println(haeSuodatettuLista().size());
-        System.out.println(haeSuodatettuLista());
         StringBuilder sqlString = new StringBuilder();
         sqlString.append("SELECT * FROM mokki where");
         for (int i = 0; i < (haeSuodatettuLista().size()); i++){
@@ -164,10 +162,8 @@ String sqlKomento(){
         if(i != haeSuodatettuLista().size()-1){
             sqlString.append(" and");
         }
-            System.out.println(sqlString);
         }
         sqlString.append(";");
-        System.out.println(sqlString);
         stringOut = sqlString.toString();
      } catch (SQLException e) {
          // TODO Auto-generated catch block

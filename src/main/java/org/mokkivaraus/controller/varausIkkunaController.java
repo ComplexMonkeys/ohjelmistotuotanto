@@ -267,7 +267,6 @@ public class varausIkkunaController implements Initializable {
 
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
                     tulostus = row.getItem();
-                    System.out.println(tulostus.getPalvelut());
                     Dialog<String> dialog = new Dialog<String>();
                     dialog.setTitle("Varaus");
                     ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
