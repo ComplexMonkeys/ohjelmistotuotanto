@@ -133,7 +133,7 @@ public class lisaaVarausIkkunaController implements Initializable {
         try {
             Statement stmt = con.createStatement();
             // Määrittää SQL komennon ja lähettää sen tietokannalle.
-            ResultSet rs = stmt.executeQuery("SELECT * FROM varaus WHERE varattu_alkupvm <= '" + startFormatted + "' AND varattu_loppupvm > '" + startFormatted + "' AND varattu_loppupvm >= '"+ endFormatted +"' AND varattu_alkupvm < '"+ endFormatted + "';");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM varaus WHERE (varattu_alkupvm BETWEEN '" + startFormatted + "' AND '" + endFormatted + "') OR (varattu_loppupvm BETWEEN '" + startFormatted + "' AND '" + endFormatted + "')OR varattu_alkupvm < '"+ startFormatted +"' AND varattu_loppupvm > '"+ endFormatted +"' ;");
             // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
             while (rs.next()) {
                 Varaus tempvaraus = new Varaus(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5),
