@@ -219,11 +219,8 @@ public class laskuIkkunaController implements Initializable {
                     Optional<ButtonType> result = alert.showAndWait();
                     // TODO: Jostakin syystä valitsee säpon vaikka painaisi ruksia...
                     if (result.orElse(btPrintti) == btSposti) {
-                        System.out.println("Säpo");
                         spostilahettaja();
-                        // TODO: Lähetä lasku s-postilla
                     } else if (result.orElse(btSposti) == btPrintti){
-                        System.out.println("Printti");
                         tulostus();
                     }
                 }
