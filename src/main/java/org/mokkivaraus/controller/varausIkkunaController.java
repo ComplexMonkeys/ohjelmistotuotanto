@@ -103,7 +103,12 @@ public class varausIkkunaController implements Initializable {
 
     @FXML
     void btHakuAction(ActionEvent event) {
-        paivitaRajattuLista();
+        try {
+            paivitaRajattuLista();
+        } catch (NullPointerException e) {
+            System.out.println("Valitse päivämäärät haulle!");
+        }
+        
     }
 
     @FXML
