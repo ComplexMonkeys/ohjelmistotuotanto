@@ -12,7 +12,10 @@ import jakarta.mail.internet.MimeMessage;
 import java.io.*;
 import java.net.*;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.*;
+import java.util.Date;
+
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.print.PageOrientation;
@@ -25,6 +28,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
+import java.time.*;
 import javafx.stage.*;
 
 public class laskuIkkunaController implements Initializable {
@@ -263,6 +267,10 @@ public class laskuIkkunaController implements Initializable {
         // Tähän sähköposti, johon viesti lähetetään..
         String to = "";
 
+        LocalDate dateTimeEnd = LocalDate.now().plusDays(7);
+
+
+
         Properties props = new Properties();
         props.put("mail.smtp.ssl.trust", "*" );
         props.put("mail.smtp.auth", "true");
@@ -281,8 +289,8 @@ public class laskuIkkunaController implements Initializable {
             message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));
             message.setSubject("Mökinvaraus lasku");
             message.setText("Hyvä asiakas, ohessa on pyydetty sähköpostilasku: " +  "Lasku ID: "+ valittu.getLasku_id() +
-             " Varaus ID: "+ valittu.getVaraus_id() + " Varauksen summa on: "+ valittu.getSumma() 
-             + "Eräpäivä 15.6.2022" + "tilinumero FI13 1194 2948 2394 59");
+             "\n Varaus ID: "+ valittu.getVaraus_id() + "\n Varauksen summa on: "+ valittu.getSumma() 
+             + "\n Eräpäivä " + dateTimeEnd + " \n tilinumero FI13 1194 2948 2394 59 ");
 
             Transport.send(message);
             System.out.println("viesti lähetetty onnistuneesti!");
