@@ -62,6 +62,9 @@ public class varausIkkunaController implements Initializable {
     @FXML
     private TableView<Varaus> tvVaraus;
 
+    @FXML
+    private TextField tfAlue;
+
     DateTimeFormatter mysqlFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
     Varaus valittu;
     Varaus tulostus;

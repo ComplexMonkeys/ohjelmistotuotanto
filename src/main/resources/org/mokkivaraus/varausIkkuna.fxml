@@ -4,6 +4,7 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -29,6 +30,7 @@
       <Button fx:id="btPaluu" layoutX="527.0" layoutY="373.0" mnemonicParsing="false" onAction="#btPaluuAction" text="Paluu" />
       <VBox alignment="CENTER" layoutX="8.0" layoutY="96.0" prefHeight="200.0" prefWidth="203.0" spacing="10.0">
          <children>
+            <TextField fx:id="tfAlue" prefHeight="25.0" prefWidth="193.0" promptText="Alueen nimi" />
             <DatePicker fx:id="dpAlku" promptText="Aloituspvm" />
             <DatePicker fx:id="dpLoppu" promptText="Lopetuspvm" />
             <Button fx:id="btHaku" mnemonicParsing="false" onAction="#btHakuAction" text="Hae" />
