@@ -260,7 +260,8 @@ public class laskuIkkunaController implements Initializable {
 
         final String password = "ohjelmistotuotanto";
 
-        String to = "heikkinen.toni01@gmail.com";
+        // Tähän sähköposti, johon viesti lähetetään..
+        String to = "";
 
         Properties props = new Properties();
         props.put("mail.smtp.ssl.trust", "*" );
@@ -279,7 +280,9 @@ public class laskuIkkunaController implements Initializable {
             message.setFrom(new InternetAddress(user));
             message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));
             message.setSubject("Mökinvaraus lasku");
-            message.setText("TERVE");
+            message.setText("Hyvä asiakas, ohessa on pyydetty sähköpostilasku: " +  "Lasku ID: "+ valittu.getLasku_id() +
+             " Varaus ID: "+ valittu.getVaraus_id() + " Varauksen summa on: "+ valittu.getSumma() 
+             + "Eräpäivä 15.6.2022" + "tilinumero FI13 1194 2948 2394 59");
 
             Transport.send(message);
             System.out.println("viesti lähetetty onnistuneesti!");
