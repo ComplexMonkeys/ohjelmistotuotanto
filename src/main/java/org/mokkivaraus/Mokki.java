@@ -8,46 +8,57 @@ import java.util.ArrayList;
  *  Näiden kenttien lisäksi olio hakee mökkiin tehdyt varaukset ja alueen nimen, jolla mökki sijaitsee.
  */
 public class Mokki {
+
     /**
      * Mökin id
      */
     private int mokki_id;
+
     /**
      * Sen alueen id, jolla mökki sijaitsee
      */
     private int alue_id;
+
     /**
      * Postinumero, huomioi merkkijono koska alkuperäisessä tietokannassa tallenettuna viiden merkin jonona
      */
     private String postinro;
+
     /**
      * Mökin nimi
      */
     private String mokkinimi;
+
     /**
      * Mökin osoite
      */
     private String katuosoite;
+
     /**
      * Mökin hinta
      */
     private double hinta;
+
     /**
      * Mökin kuvaus, max. 150 merkkiä
      */
     private String kuvaus;
+
     /**
      * Mökin suurin sallittu määrä majoittujia
      */
     private int henkilomaara;
+
     /**
      * Listaus mökin varustelusta, max. 100 merkkiä
      */
     private String varustelu;
+
     /**
      * Alueen nimi jolla mökki on
      */
     private String alueNimi;
+    
     /**
      * Lista mökkiin tehdyistä varauksista.
      */
