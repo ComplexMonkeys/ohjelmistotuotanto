@@ -58,7 +58,7 @@ public class Mokki {
      * Alueen nimi jolla mökki on
      */
     private String alueNimi;
-    
+
     /**
      * Lista mökkiin tehdyistä varauksista.
      */
@@ -73,7 +73,7 @@ public class Mokki {
     }
 
     /**
-     * Parametrillinen muuttuja. Kutsuu setAlueNimi()- ja setVaraukset()-metodeja hakeakseen kenttien tiedot tietokannasta.
+     * Parametrillinen alustaja. Kutsuu setAlueNimi()- ja setVaraukset()-metodeja hakeakseen kenttien tiedot tietokannasta.
      * 
      * @param mokki_id Mökin id
      * @param alue_id Alueen id
