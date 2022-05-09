@@ -2,6 +2,9 @@ module org.mokkivaraus {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires jakarta.mail;
+    requires jakarta.activation;
+    
 
     opens org.mokkivaraus to javafx.fxml;
     exports org.mokkivaraus;
