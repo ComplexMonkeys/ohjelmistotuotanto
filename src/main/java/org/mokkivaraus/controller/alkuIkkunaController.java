@@ -34,6 +34,12 @@ public class alkuIkkunaController {
     @FXML
     private Button btLasku;
 
+    
+    /** 
+     * Painike aluehallinnan avaamiselle.
+     * 
+     * @param event Tapahtuma jolla metodi suoritetaan.
+     */
     @FXML
     void btAlueAction(ActionEvent event) {
         Parent root;
@@ -49,10 +55,12 @@ public class alkuIkkunaController {
         }
     }
 
-    // Painiketta painaessa ohjelma hakee seuraavan ikkunan fxml-tiedoston, avaa
-    // uuden ikkunan sen pohjalta ja piilottaa nykyisen ikkunan
-    // IOException: Jostakin syystä tiedostoa mokitIkkuna.fxml ei löydy. Tarkista
-    // tiedostopolut.
+    
+    /** 
+     * Painike mokki-ikkunan avaamiselle.
+     * 
+     * @param event Tapahtuma jolla metodi suoritetaan.
+     */
     @FXML
     void btMokitAction(ActionEvent event) {
         Parent root;
@@ -68,6 +76,12 @@ public class alkuIkkunaController {
         }
     }
 
+    
+    /** 
+     * Painike asiakas-ikkunan avaamiselle.
+     * 
+     * @param event Tapahtuma jolla metodi suoritetaan.
+     */
     @FXML
     void btAsiakasAction(ActionEvent event) {
         Parent root;
@@ -83,6 +97,12 @@ public class alkuIkkunaController {
         }
     }
 
+    
+    /** 
+     * Painike palvelu-ikkunan avaamiselle.
+     * 
+     * @param event Tapahtuma jolla metodi suoritetaan.
+     */
     @FXML
     void btPalveluAction(ActionEvent event) {
         Parent root;
@@ -98,6 +118,12 @@ public class alkuIkkunaController {
         }
     }
 
+    
+    /** 
+     * Painike varaus-ikkunan.
+     * 
+     * @param event Tapahtuma jolla metodi suoritetaan.
+     */
     @FXML
     void btVarausAction(ActionEvent event) {
         Parent root;
@@ -113,6 +139,12 @@ public class alkuIkkunaController {
         }
     }
 
+    
+    /** 
+     * Painike posti-ikkunan avaamiselle
+     * 
+     * @param event Tapahtuma jolla metodi suoritetaan.
+     */
     @FXML
     void btPostiAction(ActionEvent event){
         Parent root;
@@ -128,6 +160,12 @@ public class alkuIkkunaController {
         }
     }
 
+    
+    /** 
+     * Painike lasku-ikkunan avaamiselle
+     * 
+     * @param event Tapahtuma jolla metodi suoritetaan.
+     */
     @FXML
     void btLaskuAction(ActionEvent event) {
         Parent root;
