@@ -1,7 +1,6 @@
 package org.mokkivaraus;
 
 import java.sql.*;
-import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -12,19 +11,9 @@ import java.util.ArrayList;
 public class Varaus {
 
     /**
-     * Muuttuja tämänhetkistä aikaa varten
-     */
-    LocalDateTime dateTime = LocalDateTime.now();
-
-    /**
      * DateTimeFormatter muuttamaan päivämäärät MySQL:n hyväksymään muotoon
      */
     DateTimeFormatter mysqlFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
-
-    /**
-     * Muuttuja hakemaan päivämäärä seitsemän päivän päästä
-     */
-    LocalDateTime dateTimeEnd = LocalDateTime.now().plusDays(7);
 
     /**
      * Varauksen ID
