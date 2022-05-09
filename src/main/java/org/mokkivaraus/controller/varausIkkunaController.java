@@ -62,6 +62,9 @@ public class varausIkkunaController implements Initializable {
     @FXML
     private TableView<Varaus> tvVaraus;
 
+    @FXML
+    private TextField tfAlue;
+
     DateTimeFormatter mysqlFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
     Varaus valittu;
     Varaus tulostus;
@@ -177,7 +180,13 @@ public class varausIkkunaController implements Initializable {
             Varaus varaus = tvVaraus.getSelectionModel().getSelectedItem();
             try (
                     // SQL komento joka poistaa valitun mökin.
-                    Statement stmt = con.createStatement()) {
+                    Statement stmt2 = con.createStatement()) {
+                    stmt2.executeUpdate("DELETE FROM varauksen_palvelut WHERE varaus_id = " + varaus.getVarausId() + ";");
+                    }
+                    Statement stmt2 = con.createStatement(); {
+                        stmt2.executeUpdate("DELETE FROM lasku WHERE varaus_id = " + varaus.getVarausId() + ";");
+                    }
+                    Statement stmt = con.createStatement(); {
                 stmt.executeUpdate("DELETE FROM varaus WHERE varaus_id = " + varaus.getVarausId() + ";");
             }
         }
