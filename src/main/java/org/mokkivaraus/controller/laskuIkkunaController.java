@@ -62,6 +62,10 @@ public class laskuIkkunaController implements Initializable {
         }
     }
 
+    
+    /** 
+     * @param event
+     */
     @FXML
     void btLisaaAction(ActionEvent event) {
         Parent root;
@@ -83,6 +87,10 @@ public class laskuIkkunaController implements Initializable {
         }
     }
 
+    
+    /** 
+     * @param event
+     */
     @FXML
     void btMuokkaAction(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(Mokinvaraus.class.getResource("muokkaaLaskuIkkuna.fxml"));
@@ -107,11 +115,19 @@ public class laskuIkkunaController implements Initializable {
         });
     }
 
+    
+    /** 
+     * @param event
+     */
     @FXML
     void btPaivitaAction(ActionEvent event) {
         paivitaLista();
     }
 
+    
+    /** 
+     * @param event
+     */
     @FXML
     void btPaluuAction(ActionEvent event) {
         Stage stage = (Stage) btPaluu.getScene().getWindow();
@@ -128,6 +144,11 @@ public class laskuIkkunaController implements Initializable {
         }
     }
 
+    
+    /** 
+     * @param event
+     * @throws SQLException
+     */
     @FXML
     void btPoistaAction(ActionEvent event)  throws SQLException {
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
@@ -150,6 +171,11 @@ public class laskuIkkunaController implements Initializable {
         }
     }
 
+    
+    /** 
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cLaskuId.setCellValueFactory(new PropertyValueFactory<Lasku, Integer>("lasku_id"));
