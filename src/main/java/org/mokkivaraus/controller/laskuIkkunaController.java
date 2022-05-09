@@ -1,6 +1,14 @@
 package org.mokkivaraus.controller;
 
 import org.mokkivaraus.*;
+
+import jakarta.mail.Message;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Session;
+import jakarta.mail.Transport;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
+
 import java.io.*;
 import java.net.*;
 import java.sql.*;
@@ -182,6 +190,7 @@ public class laskuIkkunaController implements Initializable {
                     // TODO: Jostakin syystä valitsee säpon vaikka painaisi ruksia...
                     if (result.orElse(btPrintti) == btSposti) {
                         System.out.println("Säpo");
+                        spostilahettaja();
                         // TODO: Lähetä lasku s-postilla
                     } else if (result.orElse(btSposti) == btPrintti){
                         System.out.println("Printti");
@@ -243,15 +252,15 @@ public class laskuIkkunaController implements Initializable {
         printerJob.endJob();
     }
 
-/*
+
     public void spostilahettaja() {
-        String host = "villagenewbies03@gmail.com"
+        String host = "villagenewbies03@gmail.com";
         
         final String user = "villagenewbies03@gmail.com";
 
-        final String password = "ohjelmistotuotanto"
+        final String password = "ohjelmistotuotanto";
 
-        String to = "jonkunsposti@gmail.com";
+        String to = "heikkinen.toni01@gmail.com";
 
         Properties props = new Properties();
         props.put("mail.smtp.ssl.trust", "*" );
@@ -260,13 +269,13 @@ public class laskuIkkunaController implements Initializable {
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.starttls.enable", "true");
 
-        Session session = Session.getDefaultInstance(props,new javax.mail.Authenticator() {
-            protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
-              return new PasswordAuthentication(user,password);
+        Session session = Session.getDefaultInstance(props,new jakarta.mail.Authenticator() {
+            protected jakarta.mail.PasswordAuthentication getPasswordAuthentication() {
+              return new jakarta.mail.PasswordAuthentication(user,password);
                     }
                 });
         try{
-            Mimemessage message = new MimeMessage(session);
+            MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(user));
             message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));
             message.setSubject("Mökinvaraus lasku");
@@ -275,7 +284,8 @@ public class laskuIkkunaController implements Initializable {
             Transport.send(message);
             System.out.println("viesti lähetetty onnistuneesti!");
 
-        } catch (MessagingException e){ e.printStackTrace}   
+        } catch (MessagingException e){
 }
-*/
+
+}
 }
