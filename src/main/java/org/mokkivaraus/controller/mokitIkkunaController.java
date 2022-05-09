@@ -188,7 +188,6 @@ public class mokitIkkunaController implements Initializable {
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
                     tulostus = row.getItem();
-                    System.out.println(tulostus);
                     Dialog<String> dialog = new Dialog<String>();
                     dialog.setTitle("Mökki");
                     ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
