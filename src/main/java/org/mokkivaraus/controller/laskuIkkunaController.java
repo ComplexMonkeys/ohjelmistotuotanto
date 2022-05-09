@@ -221,7 +221,12 @@ public class laskuIkkunaController implements Initializable {
                     Optional<ButtonType> result = alert.showAndWait();
                     // TODO: Jostakin syystä valitsee säpon vaikka painaisi ruksia...
                     if (result.orElse(btPrintti) == btSposti) {
-                        spostilahettaja();
+                        try {
+                            spostilahettaja();
+                        } catch (SQLException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
                     } else if (result.orElse(btSposti) == btPrintti){
                         tulostus();
                     }
@@ -285,15 +290,35 @@ public class laskuIkkunaController implements Initializable {
     }
 
 
-    public void spostilahettaja() {
+    public void spostilahettaja() throws SQLException{
+
+        String to = "";
+            // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+            try {
+                Statement stmt = con.createStatement();
+                // Määrittää SQL komennon ja lähettää sen tietokannalle.
+                ResultSet rs = stmt.executeQuery("select email from asiakas where asiakas_id = (select asiakas_id from varaus where varaus_id = " + tulostus.getVaraus_id() + " );");
+                // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
+                while (rs.next()) {
+                    to = rs.getString(1);
+                }
+                // Nappaa poikkeukset ja tulostaa ne.
+            } catch (Exception e) {
+                System.out.println(e);
+            } finally {
+                // Yhteys tietokantaan suljetaan.
+                con.close();
+            }
+
+            
         String host = "villagenewbies03@gmail.com";
         
         final String user = "villagenewbies03@gmail.com";
 
         final String password = "ohjelmistotuotanto";
 
-        // Tähän sähköposti, johon viesti lähetetään..
-        String to = "";
+        // Tähän sähköposti, johon viesti lähetetään.
 
 
 
