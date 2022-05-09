@@ -52,6 +52,9 @@ public class alueIkkunaController implements Initializable{
 
     Alue valittu;
 
+    /**
+     * Metodi joka käyttää haeAlueLista metodia asettaakseen päivitetyn listan näkyville.
+     */
     public void paivitaAluelista(){
         try {
             tvAlue.getItems().setAll(haeAluelista());
@@ -60,6 +63,12 @@ public class alueIkkunaController implements Initializable{
         }
     }	
 
+    
+    /** 
+     * Painike joka avaa ikkunan alueen lisäämiselle.
+     * 
+     * @param event Tapahtuma jolla metodi suoritetaan.
+     */
     @FXML
     void btLisaaAction(ActionEvent event) {
         Parent root;
@@ -82,6 +91,12 @@ public class alueIkkunaController implements Initializable{
         }
     }
 
+    
+    /** 
+     * Painike joka avaa ikkunan olemassa olevan alueen muokkaamiselle
+     * 
+     * @param event Tapahtuma jolla metodi suoritetaan.
+     */
     @FXML
     void btMuokkaAction(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(Mokinvaraus.class.getResource("muokkaaAlueIkkuna.fxml"));
@@ -106,13 +121,24 @@ public class alueIkkunaController implements Initializable{
         });
     }
 
+    
+    /** 
+     * Painike suorittaa metodin jolla aluelista päivitetään.
+     * 
+     * @param event Tapahtuma jolla metodi suoritetaan.
+     */
     @FXML
     void btPaivitaAction(ActionEvent event) {
         paivitaAluelista();
     }
 
+    
+    /** 
+     * @param event Tapahtuma jolla metodi suoritetaan.
+     * @throws SQLException Heittää poikkeuksen jos listalta yrittää poistaa alueen, jolla on asetettu mökkejä.
+     */
     @FXML
-    void btPoistaAction(ActionEvent event) throws Exception{
+    void btPoistaAction(ActionEvent event) throws SQLException{
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
         try {
             // Asettaa mokki muuttujaan valitun mökin.
@@ -137,6 +163,9 @@ public class alueIkkunaController implements Initializable{
         }
     }
 
+    /**
+     * Painike joka sulkee nykyisen ikkunan ja avaa edellisen ikkunan.
+     */
     @FXML
     void btPaluuAction(){
         Stage stage = (Stage) btPaluu.getScene().getWindow();
@@ -154,6 +183,11 @@ public class alueIkkunaController implements Initializable{
         }
     }
 
+    
+    /** 
+     * @param url
+     * @param rb
+     */
     @Override
         public void initialize(URL url, ResourceBundle rb) {
             cAlueId.setCellValueFactory(new PropertyValueFactory<Alue, Integer>("alue_id"));
@@ -179,6 +213,11 @@ public class alueIkkunaController implements Initializable{
             });
     }
 
+    
+    /** 
+     * @return Lista alue olioita, jotka ovat haettu tietokannasta.
+     * @throws SQLException Heittää poikkeuksen mikäli tietokannassa ei ole alue taulukkoa tai se on tyhjä.
+     */
     public List<Alue> haeAluelista() throws SQLException{
         List<Alue> lista = new ArrayList<>();
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");

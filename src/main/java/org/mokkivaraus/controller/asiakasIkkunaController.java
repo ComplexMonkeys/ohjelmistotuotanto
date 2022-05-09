@@ -49,6 +49,12 @@ public class asiakasIkkunaController implements Initializable {
     Asiakas valittu;
     Asiakas tulostus;
 
+    
+    /** 
+     * Painike joka hakee asiakkaita tekstikenttään asetetun nimen perusteella.
+     * 
+     * @param event Tapahtuma jolla metodi suoritetaan.
+     */
     @FXML
     void btHaeAction(ActionEvent event) {
         if(tfNimi.getText() != ""){
@@ -62,6 +68,9 @@ public class asiakasIkkunaController implements Initializable {
         }
     }
 
+    /**
+     * Hakee ja asettaa uusimmat asiakastiedot listaan näytettäväksi.
+     */
     public void paivitaLista() {
         try {
             tvAsiakas.getItems().setAll(haeLista());
@@ -70,6 +79,12 @@ public class asiakasIkkunaController implements Initializable {
         }
     }
 
+    
+    /** 
+     * Painike joka avaa ikkun asiakkaan lisäämistä varten.
+     * 
+     * @param event Tapahtuma jolla metodi suoritetaan.
+     */
     @FXML
     void btLisaaAction(ActionEvent event) {
         Parent root;
@@ -91,6 +106,12 @@ public class asiakasIkkunaController implements Initializable {
         }
     }
 
+    
+    /** 
+     * Painike joka avaa ikkunan asiakkaan muokkaamista varten.
+     * 
+     * @param event Tapahtuma jolla metodi suoritetaan.
+     */
     @FXML
     void btMuokkaaAction(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(Mokinvaraus.class.getResource("muokkaaAsiakasIkkuna.fxml"));
@@ -116,11 +137,22 @@ public class asiakasIkkunaController implements Initializable {
         });
     }
 
+    
+    /** 
+     * Painike, joka käyttää paivitaLista() metodia listan päivittämistä varten.
+     * 
+     * @param event Tapahtuma jolla metodi suoritetaan.
+     */
     @FXML
     void btPaivitaAction(ActionEvent event) {
         paivitaLista();
     }
 
+    
+    /** 
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cAsiakasId.setCellValueFactory(new PropertyValueFactory<Asiakas, Integer>("asiakas_id"));
@@ -156,6 +188,12 @@ public class asiakasIkkunaController implements Initializable {
         });
     }
 
+    
+    /** 
+     * Painike, joka sulkee nykyisen ikkunan ja palaa edelliseen.
+     * 
+     * @param event Tapahtuma jolla metodi suoritetaan.
+     */
     @FXML
     void btPaluuAction(ActionEvent event) {
         Stage stage = (Stage) btPaluu.getScene().getWindow();
@@ -172,6 +210,13 @@ public class asiakasIkkunaController implements Initializable {
         }
     }
 
+    
+    /** 
+     * Poistaa listalta valitun asiakkaan tietokannasta.
+     * 
+     * @param event Tapahtuma jolla metodi suoritetaan.
+     * @throws SQLException Heittää poikkeuksia, jos SQL komennoissa on jotain viallista.
+     */
     @FXML
     void btPoistaAction(ActionEvent event) throws SQLException {
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
@@ -194,6 +239,13 @@ public class asiakasIkkunaController implements Initializable {
         }
     }
 
+    
+    /** 
+     * Hakee asiakkaiden tiedot tietokannasta ja palauttaa listan joka voidaan asettaa näkyville.
+     * 
+     * @return Lista asiakas olioista.
+     * @throws SQLException Heittää poikkeuksia, sql komennot ovat viallisia
+     */
     private List<Asiakas> haeLista() throws SQLException {
         List<Asiakas> lista = new ArrayList<>();
         // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
@@ -210,7 +262,7 @@ public class asiakasIkkunaController implements Initializable {
             }
             // Nappaa poikkeukset ja tulostaa ne.
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         } finally {
             // Yhteys tietokantaan suljetaan.
             con.close();
@@ -219,6 +271,13 @@ public class asiakasIkkunaController implements Initializable {
 
     }
 
+    
+    /** 
+     * Hakee tietokannasta listan asiakkaista etunimen tai sukunimen perusteella rajattuna.
+     * 
+     * @return Lista asiakas olioista rajoitteiden perustella.
+     * @throws SQLException Jos annettua etunimeä tai sukunimeä.
+     */
     private List<Asiakas> haeSuodatettuLista() throws SQLException{
         List<Asiakas> lista = new ArrayList<>();
         // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
