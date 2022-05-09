@@ -28,6 +28,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
+
 import java.time.*;
 import javafx.stage.*;
 
@@ -261,12 +263,15 @@ public class laskuIkkunaController implements Initializable {
         return lista;
 
     }
+
+    LocalDate dateTimeEnd = LocalDate.now().plusDays(7);
+
     public void tulostus(){
         VBox vboxi = new VBox(10);
-        Label tulostuslbl = new Label("Lasku ID: "+ valittu.getLasku_id());
-        Label tulostuslbl2 = new Label("Varaus ID: "+ valittu.getVaraus_id());
-        Label tulostuslbl3 = new Label("Varauksen summa on: "+ valittu.getSumma());
-        vboxi.getChildren().addAll(tulostuslbl,tulostuslbl2,tulostuslbl3);
+        Text teksti = new Text("Hyvä asiakas, ohessa on pyydetty sähköpostilasku: " +  "\n Lasku ID: "+ valittu.getLasku_id() +
+        "\n Varaus ID: "+ valittu.getVaraus_id() + "\n Varauksen summa on: "+ valittu.getSumma() 
+        + "\n Eräpäivä " + dateTimeEnd + " \n tilinumero FI13 1194 2948 2394 59 ");
+        vboxi.getChildren().addAll(teksti);
         vboxi.setPrefSize(400,250);
         javafx.print.Printer defaultprinter = javafx.print.Printer.getDefaultPrinter();
         if (defaultprinter != null){
@@ -293,7 +298,6 @@ public class laskuIkkunaController implements Initializable {
         // Tähän sähköposti, johon viesti lähetetään..
         String to = "";
 
-        LocalDate dateTimeEnd = LocalDate.now().plusDays(7);
 
 
 
