@@ -79,36 +79,45 @@ public class varausIkkunaController implements Initializable {
     }
 
     public void paivitaRajattuLista() {
-        try {
-            ArrayList<Varaus> arrayList = haeRajattuVarausLista();
-            if (!arrayList.isEmpty()){
-                try {
-                    tvVaraus.getItems().setAll(arrayList);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            else {
-                try {
-                    tvVaraus.getItems().clear();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        } catch (SQLException e) {
+        String teksti = tfAlue.getText();
+        if (!teksti.isBlank()){
+            try {
+            tvVaraus.getItems().setAll(haeRajattuIdLista());
+        }
+        catch (Exception e){
             e.printStackTrace();
         }
-        
+    }
+        else{
+            try {
+                ArrayList<Varaus> arrayList = haeRajattuVarausLista();
+                if (!arrayList.isEmpty()){
+                    try {
+                        tvVaraus.getItems().setAll(arrayList);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                else {
+                    try {
+                        tvVaraus.getItems().clear();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @FXML
     void btHakuAction(ActionEvent event) {
-        try {
-            paivitaRajattuLista();
-        } catch (NullPointerException e) {
-            System.out.println("Valitse päivämäärät haulle!");
-        }
-        
+            try {
+                paivitaRajattuLista();
+            } catch (NullPointerException e) {
+                System.out.println("Valitse päivämäärät haulle!");
+            }
     }
 
     @FXML
@@ -206,6 +215,60 @@ public class varausIkkunaController implements Initializable {
         }
     }
 
+    private ArrayList<Integer> haeIdLista() throws SQLException{
+        ArrayList<Integer> IdList = new ArrayList<>();
+        String valittuAlue = tfAlue.getText();
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+        try{
+            Statement stmt2 = con.createStatement();
+            ResultSet rs2 = stmt2.executeQuery("SELECT * FROM alue WHERE nimi = '" + valittuAlue + "';");
+            while (rs2.next()){
+                int valittuId = rs2.getInt(1);
+                Statement stmt3 = con.createStatement();
+                ResultSet rs3 = stmt3.executeQuery("SELECT * FROM mokki WHERE alue_id = '" + valittuId +"'");
+                while (rs3.next()){
+                    IdList.add(rs3.getInt(1));
+                }
+            }
+        }
+        catch (SQLException sE){
+            sE.printStackTrace();
+        }
+        return IdList;
+    }
+    private ArrayList<Varaus> haeRajattuIdLista() throws SQLException {
+        LocalDate date = dpAlku.getValue();
+        LocalDateTime startFormatted = date.atTime(12, 0, 0);
+        startFormatted.format(mysqlFormat);
+        LocalDate dateEnd = dpLoppu.getValue();
+        LocalDateTime endFormatted = dateEnd.atTime(12, 0, 0);
+        endFormatted.format(mysqlFormat);
+        ArrayList<Varaus> lista = new ArrayList<>();
+        // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
+        try {
+            Statement stmt = con.createStatement();
+            // Määrittää SQL komennon ja lähettää sen tietokannalle.
+            for (int i = 0; i < haeIdLista().size()-1; i++) {
+                ResultSet rs = stmt.executeQuery("SELECT * FROM varaus WHERE (varattu_alkupvm BETWEEN '" + startFormatted + "' AND '" + endFormatted + "') OR (varattu_loppupvm BETWEEN '" + startFormatted + "' AND '" + endFormatted + "')OR (varattu_alkupvm < '"+ startFormatted +"' AND varattu_loppupvm > '"+ endFormatted +"') AND mokki_mokki_id = '" + haeIdLista().get(i) +"' ;");
+            // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
+            while (rs.next()) {
+                Varaus tempvaraus = new Varaus(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5),
+                rs.getString(6), rs.getString(7));
+                lista.add(tempvaraus);
+            }
+            }
+            // Nappaa poikkeukset ja tulostaa ne.
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Yhteys tietokantaan suljetaan.
+            con.close();
+        }
+        return lista;
+
+    }
+
     private ArrayList<Varaus> haeRajattuVarausLista() throws SQLException {
         LocalDate date = dpAlku.getValue();
         LocalDateTime startFormatted = date.atTime(12, 0, 0);
@@ -219,7 +282,7 @@ public class varausIkkunaController implements Initializable {
         try {
             Statement stmt = con.createStatement();
             // Määrittää SQL komennon ja lähettää sen tietokannalle.
-            ResultSet rs = stmt.executeQuery("SELECT * FROM varaus WHERE (varattu_alkupvm BETWEEN '" + startFormatted + "' AND '" + endFormatted + "') OR (varattu_loppupvm BETWEEN '" + startFormatted + "' AND '" + endFormatted + "')OR varattu_alkupvm < '"+ startFormatted +"' AND varattu_loppupvm > '"+ endFormatted +"' ;");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM varaus WHERE (varattu_alkupvm BETWEEN '" + startFormatted + "' AND '" + endFormatted + "') OR (varattu_loppupvm BETWEEN '" + startFormatted + "' AND '" + endFormatted + "')OR (varattu_alkupvm < '"+ startFormatted +"' AND varattu_loppupvm > '"+ endFormatted +"') ;");
             // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
             while (rs.next()) {
                 Varaus tempvaraus = new Varaus(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5),
