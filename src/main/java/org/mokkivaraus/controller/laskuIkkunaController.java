@@ -24,7 +24,6 @@ import javafx.print.Printer;
 import javafx.print.PrinterJob;
 import javafx.scene.*;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
@@ -334,6 +333,11 @@ public class laskuIkkunaController implements Initializable {
 
     }
 
+    /**
+     * Rakentaa uuden ikkunan, missä näyttää lähetettävän laskun ja kaksi painiketta, joista toisesta lasku tulostetaan paperille ja toisesta lähettää laskun säshköpostilla.
+     * Kun jompaa kumpaa painiketta painaa, ikkuna sulkee itsensä.
+     * @return Broderpane-olio, missä näytetään laskun tiedot ja painikkeet laskun lähettämiselle/tulostamiselle
+     */
     public BorderPane luoPane(){
         // Luo alert-dialogin muokatuilla painikkeilla
         Button btSposti = new Button("Sposti");
@@ -344,9 +348,13 @@ public class laskuIkkunaController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            Stage stage = (Stage) btSposti.getScene().getWindow();
+            stage.close();
         });
         btTulosta.setOnAction(t -> {
             tulostus();
+            Stage stage = (Stage) btTulosta.getScene().getWindow();
+            stage.close();
         });
         BorderPane pane = new BorderPane();
 
@@ -357,8 +365,8 @@ public class laskuIkkunaController implements Initializable {
         Text lasku = new Text(tulostus.toString());
         pane.setBottom(boxi);
         pane.setCenter(lasku);
-        pane.setMargin(boxi, new Insets(5, 5, 5, 5));
-        pane.setMargin(lasku, new Insets(5, 5, 5, 5));
+        BorderPane.setMargin(boxi, new Insets(5, 5, 5, 5));
+        BorderPane.setMargin(lasku, new Insets(5, 5, 5, 5));
 
         return pane;
     }
