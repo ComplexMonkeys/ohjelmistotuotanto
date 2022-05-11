@@ -204,36 +204,10 @@ public class laskuIkkunaController implements Initializable {
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
                     tulostus = row.getItem();
-                    
-                    // Luo alert-dialogin muokatuilla painikkeilla
-                    Button btSposti = new Button("Sposti");
-                    Button btTulosta = new Button("Tulosta");
-                    btSposti.setOnAction(s -> {
-                        try {
-                            spostilahettaja();
-                        } catch (SQLException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
-                    });
-                    btTulosta.setOnAction(t -> {
-                        tulostus();
-                    });
-                    BorderPane pane = new BorderPane();
-
-                    HBox boxi = new HBox(10);
-                    boxi.getChildren().addAll(btSposti, btTulosta);
-                    boxi.setAlignment(Pos.CENTER_RIGHT);
-
-                    Text lasku = new Text(tulostus.toString());
-                    pane.setBottom(boxi);
-                    pane.setCenter(lasku);
-                    pane.setMargin(boxi, new Insets(5, 5, 5, 5));
-                    pane.setMargin(lasku, new Insets(5, 5, 5, 5));
 
                     Stage dialogi = new Stage();
                     dialogi.setTitle("Lähetä lasku");
-                    Scene scene = new Scene(pane, 300, 200);
+                    Scene scene = new Scene(luoPane(), 300, 200);
                     dialogi.setScene(scene);
                     dialogi.show();
                 }
@@ -355,7 +329,37 @@ public class laskuIkkunaController implements Initializable {
             System.out.println("viesti lähetetty onnistuneesti!");
 
         } catch (MessagingException e){
-}
 
-}
+        }
+
+    }
+
+    public BorderPane luoPane(){
+        // Luo alert-dialogin muokatuilla painikkeilla
+        Button btSposti = new Button("Sposti");
+        Button btTulosta = new Button("Tulosta");
+        btSposti.setOnAction(s -> {
+            try {
+                spostilahettaja();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
+        btTulosta.setOnAction(t -> {
+            tulostus();
+        });
+        BorderPane pane = new BorderPane();
+
+        HBox boxi = new HBox(10);
+        boxi.getChildren().addAll(btSposti, btTulosta);
+        boxi.setAlignment(Pos.CENTER_RIGHT);
+
+        Text lasku = new Text(tulostus.toString());
+        pane.setBottom(boxi);
+        pane.setCenter(lasku);
+        pane.setMargin(boxi, new Insets(5, 5, 5, 5));
+        pane.setMargin(lasku, new Insets(5, 5, 5, 5));
+
+        return pane;
+    }
 }
