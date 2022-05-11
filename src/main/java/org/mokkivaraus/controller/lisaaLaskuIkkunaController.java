@@ -20,7 +20,9 @@ public class lisaaLaskuIkkunaController {
 
     @FXML
     private TextField tfVarausId;
-
+   /*
+    * peruuta nappi, joka vie takaisin laskuikkunaan
+    */
     @FXML
     void btPeruutaAction(ActionEvent event) {
         Stage stage = (Stage) btPeruuta.getScene().getWindow();
