@@ -35,13 +35,18 @@ public class lisaaAsiakasIkkunaController {
 
     @FXML
     private TextField tfSukunimi;
-
+    /*
+    * peruuta nappi, joka vie takaisin asiakasikkunaan
+    */
     @FXML
     void btPeruutaAction(ActionEvent event) {
         Stage stage = (Stage) btPeruuta.getScene().getWindow();
         stage.close();
     }
-
+    /*
+    * tallenna nappi, joka tallentaa käyttäjän syöttämät asiakkaan tiedot tietokantaan.
+    ennen kuin ne tallennetaan niin tarkistetaan ovatko tekstikentät tyhjiä
+    */
     @FXML
     void btTallennaAction(ActionEvent event) throws Exception {
         if (tfPostiNro.getText() != "" && tfEtunimi.getText() != "" && tfSukunimi.getText() != ""
@@ -78,6 +83,7 @@ public class lisaaAsiakasIkkunaController {
         // Yhteys tietokantaan suljetaan.
         con.close();
     }
+    // lopuksi suljetaan ikkuna
     Stage stage = (Stage) btTallenna.getScene().getWindow();
     stage.close();
 }
