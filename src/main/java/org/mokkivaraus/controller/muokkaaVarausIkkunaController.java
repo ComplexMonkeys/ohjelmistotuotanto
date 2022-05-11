@@ -52,20 +52,27 @@ public class muokkaaVarausIkkunaController {
 
     @FXML
     void btTallennaAction(ActionEvent event) throws Exception {
+        //Luodaan yhteys tietokantaan
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
         try{
+            // Statement sql-lausetta varten.
             java.sql.Statement stmt = con.createStatement();
+            // Muutetaan labelid textfieldin sisällöstä integer.
             int varauksenid = Integer.parseInt(labelId.getText());
+            // Muutetaan asiakas textfieldin sisällöstä integer.
             int asiakkaanid = Integer.parseInt(tfAsiakas.getText());
+            // Muotoillaan datepickerien päivämäärän tietokannan hyväksymään muotoon string muuttujiin.
             String aloituspvm = dpAloitus.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             String lopetuspvm = Lopetus.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             String vahvistuspvm = dpVahvistus.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             int mokinid = Integer.parseInt(tfMokki.getText());
-
+            // Sql-lause jolla päivitetään varauksen tiedot tietokantaan
             stmt.executeUpdate("UPDATE varaus set asiakas_id = "+ asiakkaanid +", mokki_mokki_id = "+ mokinid +" , vahvistus_pvm = '"+ vahvistuspvm +"' , varattu_alkupvm = '"+ aloituspvm +"' , varattu_loppupvm = '"+ lopetuspvm +"' where varaus_id = "+ varauksenid +";");
         }
         catch(Exception e){
             System.out.println(e);
+
+            // Määritellään virheikkuna ja sen ominaisuudet.
             Alert constraitAlert = new Alert(AlertType.ERROR);
             constraitAlert.setHeaderText("Jotain meni vikaan");
             constraitAlert.setContentText("Tarkista, että asiakas ja mökki ovat olemassa");
@@ -73,11 +80,13 @@ public class muokkaaVarausIkkunaController {
 
         }
         finally{
+            // Suljetaan tietokantayhteys.
             con.close();
         }
         Stage stage = (Stage) btTallenna.getScene().getWindow();
         stage.close();
     }
+    // Initdata metodi välittää edelliset arvot ikkunaan, jotta niitä voidaan muokata
     public void initdata(int varausId, String Varattupvm, int mokkiId, int asiakasId) {
         labelId.setText(Integer.toString(varausId));
         labelPvm.setText(Varattupvm);

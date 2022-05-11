@@ -20,14 +20,18 @@ public class lisaaLaskuIkkunaController {
 
     @FXML
     private TextField tfVarausId;
-
+   /*
+    * peruuta nappi, joka vie takaisin laskuikkunaan
+    */
     @FXML
     void btPeruutaAction(ActionEvent event) {
         Stage stage = (Stage) btPeruuta.getScene().getWindow();
         stage.close();
     }
     
-
+    /*
+    * tässä metodissa voidaan tehdä manuaalisesti lasku varaukselle.
+    */
     @FXML
     void btTallennaAction(ActionEvent event) throws SQLException {
         //if-lauseessa tarkistetaan onko textfieldit tyhjiä ja jos ei ole niin edetään try-lohkoon.

@@ -17,12 +17,17 @@ public class lisaaAlueIkkunaController {
     @FXML
     private TextField tfAlueNimi;
 
+    /*
+    * peruuta nappi, joka vie takaisin alueikkunaan
+    */
     @FXML
     void btPeruutaAction(ActionEvent event) {
         Stage stage = (Stage) btPeruuta.getScene().getWindow();
         stage.close();
     }
-
+    /*
+    * tallenna nappi, joka tallentaa käyttäjän syöttämän alueen tietokantaan.
+    */
     @FXML
     void btTallennaAction(ActionEvent event) throws SQLException {
         if (tfAlueNimi.getText() != "") {

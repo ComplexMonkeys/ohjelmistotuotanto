@@ -24,12 +24,19 @@ public class lisaaPostiIkkunaController {
     @FXML
     private TextField tfToimipaikka;
 
+    /*
+    * peruuta nappi, joka vie takaisin posti-ikkunaan
+    */
     @FXML
     void btPeruutaAction(ActionEvent event) {
         Stage stage = (Stage) btPeruuta.getScene().getWindow();
         stage.close();
     }
 
+    /*
+    * tallenna nappi, joka tallentaa postinumeron ja postitoimipaikan tietokantaan
+    * samalla tarkistetaan ylittäääkö postinumero pituuden ja onko toimipaikka tekstikenttä tyhjä
+    */
     @FXML
     void btTallennaAction(ActionEvent event) {
         if (tfPostinumero.getText().length() >= 5 && tfToimipaikka.getText() != "") {
@@ -48,6 +55,7 @@ public class lisaaPostiIkkunaController {
                 con.close();
                 // Nappaa poikkeukset ja tulostaa ne.
             } catch (DataTruncation liikaapituutta){
+                // jos postinumeron pituus on liian pitkä, niin tulee errori
                 Alert constraitAlert = new Alert(AlertType.ERROR);
                 constraitAlert.setHeaderText("Jotain meni vikaan");
                 constraitAlert.setContentText("Postinumeron pituus ei saa ylittää viittä merkkiä!");
