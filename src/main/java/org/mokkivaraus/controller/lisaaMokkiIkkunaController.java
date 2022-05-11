@@ -38,13 +38,17 @@ public class lisaaMokkiIkkunaController {
 
     @FXML
     private TextArea tfVarustelu;
-
+    /*
+    * peruuta nappi, joka vie takaisin mökki-ikkunaan
+    */
     @FXML
     void btPeruutaAction(ActionEvent event) {
         Stage stage = (Stage) btPeruuta.getScene().getWindow();
         stage.close();
     }
-
+    /*
+    * tallenna nappi, joka lisää mökin tietokantaan.
+    */
     @FXML
     void btTallennaAction(ActionEvent event) throws Exception {
         if (tfAlue.getText() != "" && tfHenkilomaara.getText() != "" && tfHinta.getText() != ""
@@ -74,6 +78,7 @@ public class lisaaMokkiIkkunaController {
                 // Nappaa poikkeukset ja tulostaa ne.
             } catch (Exception e) {
                 System.out.println(e);
+                 // mikäli alue_idtä tai postinumeroa ei ole tietokannassa niin silloin tulee tämä error-ikkuna
                 Alert constraitAlert = new Alert(AlertType.ERROR);
                 constraitAlert.setHeaderText("Jotain meni vikaan");
                 constraitAlert.setContentText("Tarkista, että alue_id on olemassa");
@@ -82,6 +87,7 @@ public class lisaaMokkiIkkunaController {
                 // Yhteys tietokantaan suljetaan.
                 con.close();
             }
+             // lopuksi suljetaan ikkuna
             Stage stage = (Stage) btTallenna.getScene().getWindow();
             stage.close();
         }
