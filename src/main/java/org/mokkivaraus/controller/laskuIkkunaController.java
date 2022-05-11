@@ -291,17 +291,18 @@ public class laskuIkkunaController implements Initializable {
 
 
     public void spostilahettaja() throws SQLException{
-
+        String etunimi = "";
         String to = "";
             // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
             try {
                 Statement stmt = con.createStatement();
                 // Määrittää SQL komennon ja lähettää sen tietokannalle.
-                ResultSet rs = stmt.executeQuery("select email from asiakas where asiakas_id = (select asiakas_id from varaus where varaus_id = " + tulostus.getVaraus_id() + " );");
+                ResultSet rs = stmt.executeQuery("select email, etunimi from asiakas where asiakas_id = (select asiakas_id from varaus where varaus_id = " + tulostus.getVaraus_id() + " );");
                 // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
                 while (rs.next()) {
                     to = rs.getString(1);
+                    etunimi = rs.getString(2);
                 }
                 // Nappaa poikkeukset ja tulostaa ne.
             } catch (Exception e) {
@@ -340,7 +341,7 @@ public class laskuIkkunaController implements Initializable {
             message.setFrom(new InternetAddress(user));
             message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));
             message.setSubject("Mökinvaraus lasku");
-            message.setText("Hyvä asiakas, ohessa on pyydetty sähköpostilasku: " +  "Lasku ID: "+ valittu.getLasku_id() +
+            message.setText("Hei, "+ etunimi + " ohessa on pyytämäsi sähköpostilasku: " +  "Lasku ID: "+ valittu.getLasku_id() +
              "\n Varaus ID: "+ valittu.getVaraus_id() + "\n Varauksen summa on: "+ valittu.getSumma() 
              + "\n Eräpäivä " + dateTimeEnd + " \n tilinumero FI13 1194 2948 2394 59 ");
 
