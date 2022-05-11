@@ -14,8 +14,6 @@ import java.net.*;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.Date;
-
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.print.PageOrientation;
@@ -29,8 +27,6 @@ import javafx.scene.control.cell.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-
-import java.time.*;
 import javafx.stage.*;
 
 public class laskuIkkunaController implements Initializable {
