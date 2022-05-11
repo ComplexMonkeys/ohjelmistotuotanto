@@ -16,6 +16,8 @@ import java.time.LocalDate;
 import java.util.*;
 import javafx.event.*;
 import javafx.fxml.*;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.print.PageOrientation;
 import javafx.print.Paper;
 import javafx.print.Printer;
@@ -202,30 +204,38 @@ public class laskuIkkunaController implements Initializable {
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
                     tulostus = row.getItem();
-                    System.out.println(tulostus);
                     
                     // Luo alert-dialogin muokatuilla painikkeilla
-                    ButtonType btPrintti = new ButtonType("Tulosta", ButtonBar.ButtonData.OK_DONE);
-                    ButtonType btSposti = new ButtonType("Sähköposti", ButtonBar.ButtonData.CANCEL_CLOSE);
-                    Alert alert = new Alert(AlertType.WARNING,
-                            tulostus.toString(),
-                            btPrintti,
-                            btSposti);
-                    alert.setTitle("Lähetä lasku");
-                    alert.setHeaderText("Miten haluat lähettää laskun?");
-                    alert.setResizable(false);
-                    Optional<ButtonType> result = alert.showAndWait();
-                    // TODO: Jostakin syystä valitsee säpon vaikka painaisi ruksia...
-                    if (result.orElse(btPrintti) == btSposti) {
+                    Button btSposti = new Button("Sposti");
+                    Button btTulosta = new Button("Tulosta");
+                    btSposti.setOnAction(s -> {
                         try {
                             spostilahettaja();
                         } catch (SQLException e) {
                             // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
-                    } else if (result.orElse(btSposti) == btPrintti){
+                    });
+                    btTulosta.setOnAction(t -> {
                         tulostus();
-                    }
+                    });
+                    BorderPane pane = new BorderPane();
+
+                    HBox boxi = new HBox(10);
+                    boxi.getChildren().addAll(btSposti, btTulosta);
+                    boxi.setAlignment(Pos.CENTER_RIGHT);
+
+                    Text lasku = new Text(tulostus.toString());
+                    pane.setBottom(boxi);
+                    pane.setCenter(lasku);
+                    pane.setMargin(boxi, new Insets(5, 5, 5, 5));
+                    pane.setMargin(lasku, new Insets(5, 5, 5, 5));
+
+                    Stage dialogi = new Stage();
+                    dialogi.setTitle("Lähetä lasku");
+                    Scene scene = new Scene(pane, 300, 200);
+                    dialogi.setScene(scene);
+                    dialogi.show();
                 }
 
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
