@@ -118,7 +118,7 @@ public class mokitIkkunaController implements Initializable {
 
     
     /** 
-     * Hakee muokkaaMokkiIkkuna.fxml-tiedoston ja avaa sen pohjalta uuden ikkunan mökin lisäämiselle luomalla uuden kontrollerin ja 
+     * Hakee muokkaaMokkiIkkuna.fxml-tiedoston ja avaa sen pohjalta uuden ikkunan mökin muokkaamiselle luomalla uuden kontrollerin ja 
      * viemällä sille valitun Mokki-olion arvot initdata()-metodin avulla. Uudelle avatulle ikkunalle asetetaan myös sulkeutumisen kuuntelija, mikä päivittää
      * tvmokit-taulun tuoreimpiin arvoihin.
      * 
