@@ -55,23 +55,24 @@ public class muokkaaVarausIkkunaController {
         //Luodaan yhteys tietokantaan
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
         try{
-            //statement sql-lausetta varten
+            // Statement sql-lausetta varten.
             java.sql.Statement stmt = con.createStatement();
-            //muutetaan labelid textfieldin sisällöstä integer
+            // Muutetaan labelid textfieldin sisällöstä integer.
             int varauksenid = Integer.parseInt(labelId.getText());
-            //muutetaan asiakas textfieldin sisällöstä integer
+            // Muutetaan asiakas textfieldin sisällöstä integer.
             int asiakkaanid = Integer.parseInt(tfAsiakas.getText());
+            // Muotoillaan datepickerien päivämäärän tietokannan hyväksymään muotoon string muuttujiin.
             String aloituspvm = dpAloitus.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             String lopetuspvm = Lopetus.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             String vahvistuspvm = dpVahvistus.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             int mokinid = Integer.parseInt(tfMokki.getText());
-            //sql-lause jolla päivitetään varauksen tiedot tietokantaan
+            // Sql-lause jolla päivitetään varauksen tiedot tietokantaan
             stmt.executeUpdate("UPDATE varaus set asiakas_id = "+ asiakkaanid +", mokki_mokki_id = "+ mokinid +" , vahvistus_pvm = '"+ vahvistuspvm +"' , varattu_alkupvm = '"+ aloituspvm +"' , varattu_loppupvm = '"+ lopetuspvm +"' where varaus_id = "+ varauksenid +";");
         }
         catch(Exception e){
             System.out.println(e);
 
-            //määritellään virheikkuna ja sen ominaisuudet
+            // Määritellään virheikkuna ja sen ominaisuudet.
             Alert constraitAlert = new Alert(AlertType.ERROR);
             constraitAlert.setHeaderText("Jotain meni vikaan");
             constraitAlert.setContentText("Tarkista, että asiakas ja mökki ovat olemassa");
@@ -79,13 +80,13 @@ public class muokkaaVarausIkkunaController {
 
         }
         finally{
-            //suljetaan tietokantayhteys
+            // Suljetaan tietokantayhteys.
             con.close();
         }
         Stage stage = (Stage) btTallenna.getScene().getWindow();
         stage.close();
     }
-    //initdata metodi välittää edelliset arvot ikkunaan, jotta niitä voidaan muokata
+    // Initdata metodi välittää edelliset arvot ikkunaan, jotta niitä voidaan muokata
     public void initdata(int varausId, String Varattupvm, int mokkiId, int asiakasId) {
         labelId.setText(Integer.toString(varausId));
         labelPvm.setText(Varattupvm);
