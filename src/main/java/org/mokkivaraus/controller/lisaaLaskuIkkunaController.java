@@ -29,7 +29,9 @@ public class lisaaLaskuIkkunaController {
         stage.close();
     }
     
-
+    /*
+    * tässä metodissa voidaan tehdä manuaalisesti lasku varaukselle.
+    */
     @FXML
     void btTallennaAction(ActionEvent event) throws SQLException {
         //if-lauseessa tarkistetaan onko textfieldit tyhjiä ja jos ei ole niin edetään try-lohkoon.
