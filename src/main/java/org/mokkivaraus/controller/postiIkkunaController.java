@@ -58,6 +58,14 @@ public class postiIkkunaController implements Initializable{
 
     Posti valittu;
 
+    
+    /** 
+     * Metodi avaa ikkunan postitoimipaikan lisäämiselle lisaaPostiIkkuna.fxml-tiedostosta. Ikkunan sulkeutuessa päivittää tvPosti-taulukon haeLista()-metodin mukaisesti.
+     * 
+     * @param event Lisää-napin painaminen
+     * @throws SQLException haeLista()-metodin virhe
+     * @throws IOException lisaaPostiIkkuna.fxml-tiedosta ei ole löytynyt, tarkista että tiedosto löytyy oikeasta paikasta
+     */
     @FXML
     void btLisaaAction(ActionEvent event) {
         Parent root;
@@ -80,6 +88,14 @@ public class postiIkkunaController implements Initializable{
         }
     }
 
+    
+    /** 
+     * Hakee muokkaaPostiIkkuna.fxml-tiedoston ja avaa sen pohjalta uuden ikkunan postitoimialueen muokkaamiselle luomalla uuden kontrollerin ja 
+     * viemällä sille valitun Posti-olion arvot initdata()-metodin avulla. Uudelle avatulle ikkunalle asetetaan myös sulkeutumisen kuuntelija, mikä päivittää
+     * tvPosti-taulun tuoreimpiin arvoihin.
+     * 
+     * @param event Muokkaa-painikkeen painaminen
+     */
     @FXML
     void btMuokkaAction(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(Mokinvaraus.class.getResource("muokkaaPostiIkkuna.fxml"));
@@ -104,11 +120,23 @@ public class postiIkkunaController implements Initializable{
         });
     }
 
+    
+    /** 
+     * Kutsuu paivitaLista()-metodia.
+     * 
+     * @param event Päivitä-painikkeen painaminen.
+     */
     @FXML
     void btPaivitaAction(ActionEvent event) {
         paivitaLista();
     }
 
+    
+    /** 
+     * Avaa päävalikon alkuIkkuna.fxml-tiedoston pohjalta ja sulkee nykyisen ikkunan.
+     * 
+     * @param event Paluu-painikkeen painaminen.
+     */
     @FXML
     void btPaluuAction(ActionEvent event) {
         Stage stage = (Stage) btPaluu.getScene().getWindow();
@@ -126,6 +154,14 @@ public class postiIkkunaController implements Initializable{
         }
     }
 
+    
+    /** 
+     * Ottaa yhteyden tietokantaan ja poistaa sieltä taulukosta valittuna olevan Posti-olion. Painiketta ei voi painaa jollei taulukosta ole jotakin valittuna.
+     * Poiston tapahduttua päivittää listan paivitaLista()-metodia kutsumalla.
+     * 
+     * @param event Poista-painikkeen painaminen.
+     * @throws SQLException Tietokantaan ei saada yhteyttä. Tarkista osoita, käyttäjänimi ja salasana.
+     */
     @FXML
     void btPoistaAction(ActionEvent event) throws SQLException{
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
@@ -152,6 +188,9 @@ public class postiIkkunaController implements Initializable{
         }
     }
 
+    /**
+     * Kutsuu haeLista()-metodia hakeakseen listan ja asettaa listan sisällön tvPosti-taulukkon arvoiksi.
+     */
     public void paivitaLista(){
         try {
             tvPosti.getItems().setAll(haeLista());
@@ -160,6 +199,14 @@ public class postiIkkunaController implements Initializable{
         }
     }	
 
+    
+    /** 
+     * Initialize-metodi. Alustaa tvPosti-taulukon sarakkeiden arvotyypit ja asettaa taulukkoon haeLista()-metodista saamansa listan sisällön.
+     * Määrittää myös hiiren kuuntelijan, joka asettaa klikatun rivin olion valittu-muuttuujaan.
+     * 
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cPostinro.setCellValueFactory(new PropertyValueFactory<Posti, String>("postinro"));
@@ -185,6 +232,13 @@ public class postiIkkunaController implements Initializable{
         });
     }
 
+    
+    /** 
+     * Ottaa yhteyden tietokantaan ja hakee sieltä koko posti-taulun sisällön palautettavaan listaan.
+     * 
+     * @return List<Posti> Lista tietokantaan tallennetuista postitoimialueista.
+     * @throws SQLException Tietokantaan ei saada yhteyttä. Tarkista osoita, käyttäjänimi ja salasana.
+     */
     public List<Posti> haeLista() throws SQLException{
         List<Posti> lista = new ArrayList<>();
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");

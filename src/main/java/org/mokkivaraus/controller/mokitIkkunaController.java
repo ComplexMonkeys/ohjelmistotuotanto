@@ -15,6 +15,10 @@ import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 
+
+/**
+ * Controller-luokka mokitIkkuna.fxml-tiedostossa määritellylle ikkunalle. Painikkeiden ja taulukon metodit löytyvät täältä.
+ */
 public class mokitIkkunaController implements Initializable {
 
     @FXML
@@ -59,9 +63,20 @@ public class mokitIkkunaController implements Initializable {
     @FXML
     private TextField tfAlue;
 
+    /**
+     * Valittu mökki, muokkaa- ja poista-napit kykenevät olemaan aktiivisia vasta kuin jokin mökki on valittuna. Saa arvonsa kun taulukon riviä klikataan hiirellä. Kuuntelija löytyy initialize()-metodista.
+     */
     Mokki valittu;
+
+    /**
+     * Tulostettava mökki. Saa arvonsa tuplaklikatusta taulukon oliosta. Kuuntelija löytyy initialize()-metodista.
+     */
     Mokki tulostus;
 
+    /**
+     * Metodi päivittää tvmokit-taulukon haeLista()-metodilla.
+     * @throws SQLException haeLista()-metodin virhe
+     */
     public void paivitaLista(){
         try {
             tvmokit.getItems().setAll(haeLista());
@@ -70,10 +85,14 @@ public class mokitIkkunaController implements Initializable {
         }
     }
 
-    // Painiketta painaessa ohjelma hakee seuraavan ikkunan fxml-tiedoston, avaa
-    // uuden ikkunan sen pohjalta ja piilottaa nykyisen ikkunan
-    // IOException: Jostakin syystä tiedostoa lisaaMokkiIkkuna.fxml ei löydy.
-    // Tarkista tiedostopolut.
+    
+    /** 
+     * Metodi avaa ikkunan mökin lisäämiselle lisaaMokkiIkkuna.fxml-tiedostosta. Ikkunan sulkeutuessa päivittää tvmokit-taulukon haeLista()-metodin mukaisesti.
+     * 
+     * @param event Lisää-napin painaminen
+     * @throws SQLException haeLista()-metodin virhe
+     * @throws IOException lisaaMokkiIkkuna.fxml-tiedosta ei ole löytynyt, tarkista että tiedosto löytyy oikeasta paikasta
+     */
     @FXML
     void btLisaaAction(ActionEvent event) {
         Parent root;
@@ -86,7 +105,8 @@ public class mokitIkkunaController implements Initializable {
             stage.setOnHiding(sulku -> {
                 try {
                     tvmokit.getItems().setAll(haeLista());
-                } catch (SQLException e) {
+                }
+                catch (SQLException e) {
                     e.printStackTrace();
                 }
             });
@@ -96,6 +116,15 @@ public class mokitIkkunaController implements Initializable {
         
     }
 
+    
+    /** 
+     * Hakee muokkaaMokkiIkkuna.fxml-tiedoston ja avaa sen pohjalta uuden ikkunan mökin muokkaamiselle luomalla uuden kontrollerin ja 
+     * viemällä sille valitun Mokki-olion arvot initdata()-metodin avulla. Uudelle avatulle ikkunalle asetetaan myös sulkeutumisen kuuntelija, mikä päivittää
+     * tvmokit-taulun tuoreimpiin arvoihin.
+     * 
+     * @param event Muokkaa-painikkeen painaminen
+     * @throws SQLException haeLista()-metodin virhe
+     */
     @FXML
     void btMuokkaAction(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(Mokinvaraus.class.getResource("muokkaaMokkiIkkuna.fxml"));
@@ -122,13 +151,26 @@ public class mokitIkkunaController implements Initializable {
         });
     }
 
+    
+    /** 
+     * Kutsuu paivitaLista()-metodia.
+     * 
+     * @param event Päivitä-painikkeen painaminen
+     */
     @FXML
     void btPaivitaAction(ActionEvent event) {
         paivitaLista();
     }
 
+    
+    /** 
+     * Ottaa yhteyden tietokantaan ja poistaa sieltä valittuna olevan mökin.
+     * 
+     * @param event Poista-painikkeen painaminen
+     * @throws SQLException Tietokantaan ei saa yhteyttä. Osoite, käyttäjänimi tai salasana ovat mitä todennäköisimmin väärin.
+     */
     @FXML
-    public void btPoistaAction(ActionEvent event) throws Exception {
+    public void btPoistaAction(ActionEvent event) throws SQLException {
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
         try {
             // Asettaa mokki muuttujaan valitun mökin.
@@ -150,8 +192,14 @@ public class mokitIkkunaController implements Initializable {
         }
     }
 
+    /**
+     * Avaa päävalikon alkuIkkuna.fxml-tioedostosta ja sulkee nykyisen ikkunan.
+     * 
+     * @param event Paluu-painikkeen painaminen
+     * @throws IOException Tiedostoa alkuIkkuna.fxml ei löydy, tarkista tiedoston sijainti.
+     */
     @FXML
-    public void btPaluuAction(){
+    public void btPaluuAction(ActionEvent event){
         Stage stage = (Stage) btPaluu.getScene().getWindow();
         stage.close();
         Parent root;
@@ -167,9 +215,17 @@ public class mokitIkkunaController implements Initializable {
         }
     }
 
-    // initialize-metodi, joka suoritetaan kun ikkuna avataan. Alustaa sarakkeet
-    // tableview-taulukolle ja hakee tiedot listasta, joka luodaan
-    // haeLista-metodissa
+    
+    /** 
+     * Initialize-metodi, joka suoritetaan kun ikkuna avataan. Alustaa sarakkeet tableview-taulukolle ja hakee tiedot listasta, joka luodaan
+     * haeLista-metodissa
+     * 
+     * Metodi myös asettaa kuuntelijat hiiren klikkauksille. Jos taulukon riviä klikataan, asetetaan se valittu-muuttujaan Mokki-olioksi ja
+     * jos riviä tuplaklikataan, se asettaa rivin olion tulostus-muuttujaan ja näyttää Olion tiedot avattavassa dialogissa.
+     * 
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cAlue.setCellValueFactory(new PropertyValueFactory<Mokki, String>("alueNimi"));
@@ -207,7 +263,13 @@ public class mokitIkkunaController implements Initializable {
         });
     }
 
-    // haeLista-metodi, joka luo listan olioista näytettäväksi taulukkoon.
+    
+    /** 
+     * Luo yhteyden tietokantaan ja hakee tietokannasta listan sinne tallennetuista mökeistä.
+     * 
+     * @return List<Mokki> Lista tietokantaan tallennetuista mökeistä.
+     * @throws SQLException Tietokantaan ei saada yhteyttä. Osoite, käyttäjänimi tai salasana on väärin.
+     */
     private List<Mokki> haeLista() throws SQLException{
         List<Mokki> lista = new ArrayList<>();
         // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
@@ -234,6 +296,14 @@ public class mokitIkkunaController implements Initializable {
 
     }
 
+    
+    /** 
+     * Tarkistaa onko tfAlue-tekstikentässä tekstiä. Jos hakukenttään ollaan kirjoitettu jotakin, metodi kutsuu haeSuodatettuLista()-metodia ja asettaa listan tvmokit-taulukkoon.
+     * Jos tekstikentässä ei ole tekstiä, päivitetään taulukko paivitaLista()-metodin mukaisesti.
+     * 
+     * @param event Hae-painikkeen painaminen.
+     * @throws SQLException haeSuodatettuLista()-metodin virhe.
+     */
     @FXML
     void btHaeAction(ActionEvent event) {
         if(tfAlue.getText() != ""){
@@ -247,6 +317,12 @@ public class mokitIkkunaController implements Initializable {
         }
     }
 
+    
+    /** 
+     * Ottaa yhteyden tietokantaan ja hakee sieltä listan mökeistä jotka sijaitsevat tfAlue-tekstikentässä määritetyllä alueella. Jos tulostettu lista on tyhjä, haku on mitä luultavimmin epäonnistunut.
+     * @return List<Mokki> Suodatettu lista tietyn alueen mökeistä.
+     * @throws SQLException Yhteys tietokantaan epäonnistunut. Tarkista Osoite, käyttäjänimi tai salasana.
+     */
     private List<Mokki> haeSuodatettuLista() throws SQLException{
         List<Mokki> lista = new ArrayList<>();
         // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.

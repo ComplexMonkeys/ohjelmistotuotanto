@@ -268,7 +268,7 @@ public class laskuIkkunaController implements Initializable {
     public void tulostus(){
         VBox vboxi = new VBox(10);
         Text teksti = new Text("Hyvä asiakas, ohessa on pyydetty sähköpostilasku: " +  "\n Lasku ID: "+ valittu.getLasku_id() +
-        "\n Varaus ID: "+ valittu.getVaraus_id() + "\n Varauksen summa on: "+ valittu.getSumma() 
+        "\n Varaus ID: "+ valittu.getVaraus_id() +  "\n Varauksen summa on: "+ valittu.getSumma() 
         + "\n Eräpäivä " + dateTimeEnd + " \n tilinumero FI13 1194 2948 2394 59 ");
         vboxi.getChildren().addAll(teksti);
         vboxi.setPrefSize(400,250);
@@ -293,16 +293,22 @@ public class laskuIkkunaController implements Initializable {
     public void spostilahettaja() throws SQLException{
         String etunimi = "";
         String to = "";
+        String mokkinimi = "";
             // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
             try {
                 Statement stmt = con.createStatement();
+                Statement stmt2 = con.createStatement();
                 // Määrittää SQL komennon ja lähettää sen tietokannalle.
                 ResultSet rs = stmt.executeQuery("select email, etunimi from asiakas where asiakas_id = (select asiakas_id from varaus where varaus_id = " + tulostus.getVaraus_id() + " );");
+                ResultSet rs2 = stmt2.executeQuery("select mokkinimi from mokki where mokki_id = (select mokki_mokki_id from varaus where varaus_id = " + tulostus.getVaraus_id() + " );");
                 // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
                 while (rs.next()) {
                     to = rs.getString(1);
                     etunimi = rs.getString(2);
+                }
+                while (rs2.next()) {
+                  mokkinimi = rs2.getString(1);
                 }
                 // Nappaa poikkeukset ja tulostaa ne.
             } catch (Exception e) {
@@ -340,7 +346,7 @@ public class laskuIkkunaController implements Initializable {
             message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));
             message.setSubject("Mökinvaraus lasku");
             message.setText("Hei, "+ etunimi + " ohessa on pyytämäsi sähköpostilasku: " +  "Lasku ID: "+ valittu.getLasku_id() +
-             "\n Varaus ID: "+ valittu.getVaraus_id() + "\n Varauksen summa on: "+ valittu.getSumma() 
+             "\n Varaus ID: "+ valittu.getVaraus_id() + " \n Varaamasi mökki: "+ mokkinimi + "\n Varauksen summa on: "+ valittu.getSumma() 
              + "\n Eräpäivä " + dateTimeEnd + " \n tilinumero FI13 1194 2948 2394 59 ");
 
             Transport.send(message);
