@@ -65,6 +65,10 @@ public class laskuIkkunaController implements Initializable {
     Lasku valittu;
     Lasku tulostus;
 
+    /** 
+     * metodi joka päivittää listan, jossa näkyy laskut
+     */
+
     public void paivitaLista() {
         try {
             tvLaskut.getItems().setAll(haeLista());
@@ -75,7 +79,8 @@ public class laskuIkkunaController implements Initializable {
 
     
     /** 
-     * @param event
+     * Painike, joka laittaa näkyviin lisää laskuikkunan
+     * heittää errorin, jos tulee ongelmia. 
      */
     @FXML
     void btLisaaAction(ActionEvent event) {
@@ -83,7 +88,7 @@ public class laskuIkkunaController implements Initializable {
         try {
             root = FXMLLoader.load(Mokinvaraus.class.getResource("lisaaLaskuIkkuna.fxml"));
             Stage stage = new Stage();
-            stage.setTitle("Lisää asiakas");
+            stage.setTitle("Lisää lasku");
             stage.setScene(new Scene(root));
             stage.show();
             stage.setOnHiding(sulku -> {
@@ -100,7 +105,7 @@ public class laskuIkkunaController implements Initializable {
 
     
     /** 
-     * @param event
+     * Painike avaa ikkunan, jossa voidaan muokata laskuja.
      */
     @FXML
     void btMuokkaAction(ActionEvent event) {
@@ -111,7 +116,9 @@ public class laskuIkkunaController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+    /** 
+     * tässä välitetään dataa controlleriin, jotta saamme nykyiset arvot näkymään kentissä
+     */
         muokkaaLaskuIkkunaController controller = loader.getController();
         controller.initdata(valittu.getLasku_id(),valittu.getSumma(),valittu.getVaraus_id());
         stage.setTitle("Muokkaa laskutusta");
@@ -120,6 +127,9 @@ public class laskuIkkunaController implements Initializable {
         stage.setOnHiding(sulku -> {
             try {
                 paivitaLista();
+                    /** 
+                    * jos tulee ongelmia niin heittää errorin.
+                    */
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -128,7 +138,7 @@ public class laskuIkkunaController implements Initializable {
 
     
     /** 
-     * @param event
+     * painike, joka päivitää listan
      */
     @FXML
     void btPaivitaAction(ActionEvent event) {
@@ -137,7 +147,7 @@ public class laskuIkkunaController implements Initializable {
 
     
     /** 
-     * @param event
+     * nappi, josta pääsee takaisin alkuikkunaan
      */
     @FXML
     void btPaluuAction(ActionEvent event) {
@@ -157,8 +167,7 @@ public class laskuIkkunaController implements Initializable {
 
     
     /** 
-     * @param event
-     * @throws SQLException
+     * nappi, joka poistaa valitun laskun 
      */
     @FXML
     void btPoistaAction(ActionEvent event)  throws SQLException {
@@ -184,8 +193,9 @@ public class laskuIkkunaController implements Initializable {
 
     
     /** 
-     * @param url
-     * @param rb
+     * metodi, joka suorittuu, kun ikkuna avataan
+     * asetetaan taulukoihin arvot mitä sinne laitetaan
+     * sitten asetetaan toiminto, että voidaan valita yksi laskuista
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -221,6 +231,9 @@ public class laskuIkkunaController implements Initializable {
             return row;
         });
     }
+/*
+* Tehdään lista, jossa haetaan laskut tietokannasta.
+*/
     private List<Lasku> haeLista() throws SQLException {
         List<Lasku> lista = new ArrayList<>();
         // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
@@ -244,9 +257,14 @@ public class laskuIkkunaController implements Initializable {
         return lista;
 
     }
-
+/*
+* saadaan laskuun eräpäivä
+*/
     LocalDate dateTimeEnd = LocalDate.now().plusDays(7);
 
+/*
+* metodi, jolla voimme tehdä paperilaskun
+*/
     public void tulostus(){
         VBox vboxi = new VBox(10);
         Text teksti = new Text("Hyvä asiakas, ohessa on pyydetty sähköpostilasku: " +  "\n Lasku ID: "+ valittu.getLasku_id() +
@@ -269,6 +287,9 @@ public class laskuIkkunaController implements Initializable {
     }
 
 
+/*
+* metodi, jolla lähetämme sähköpostiin laskun
+*/
     public void spostilahettaja() throws SQLException{
         String etunimi = "";
         String to = "";
@@ -297,8 +318,6 @@ public class laskuIkkunaController implements Initializable {
         final String user = "villagenewbies03@gmail.com";
 
         final String password = "ohjelmistotuotanto";
-
-        // Tähän sähköposti, johon viesti lähetetään.
 
 
 
