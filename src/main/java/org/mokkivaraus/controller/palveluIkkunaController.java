@@ -53,7 +53,9 @@ public class palveluIkkunaController implements Initializable {
     Palvelu valittu;
     Palvelu tulostus;
 
-
+   /** 
+     * metodi, joka päivittää palvelulistan
+     */
 
     public void paivitaPalvelulista(){
         try{
@@ -64,6 +66,10 @@ public class palveluIkkunaController implements Initializable {
         
     }
 
+    
+    /** 
+     * metodi, joka avaa lisää palveluikkunan
+     */
     @FXML
     void btLisaaAction(ActionEvent event) {
         Parent root;
@@ -80,11 +86,18 @@ public class palveluIkkunaController implements Initializable {
                     e.printStackTrace();
                 }
             });
+            /** 
+            * Mikäli ei löydä tiedostoa, niin heittää errorin.
+            */
         } catch(IOException e){
             e.printStackTrace();
         }
     }
 
+    
+    /** 
+    Tämä metodi avaa muokkaa palveluita ikkunan, jossa voi yllätys yllätys, muokata palveluita. :D
+     */
     @FXML
     void btMuokkaAction(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(Mokinvaraus.class.getResource("muokkaaPalveluIkkuna.fxml"));
@@ -107,11 +120,19 @@ public class palveluIkkunaController implements Initializable {
         });
     }
 
+    
+    /** 
+     * nappi, joka päivittää palvelulistan
+     */
     @FXML
     void btPaivitaAction(ActionEvent event) {
         paivitaPalvelulista();
     }
 
+    
+    /** 
+     * nappi, joka vie takaisin alkuikkunaan
+     */
     @FXML
     void btPaluuAction(ActionEvent event) {
         Stage stage = (Stage) btPaluu.getScene().getWindow();
@@ -136,6 +157,11 @@ public class palveluIkkunaController implements Initializable {
         }
     }
 
+    
+    /** 
+     * nappi, joka poistaa valitun palvelun.
+     * jos tulee sql-syntaksi ongelma, niin heittää errorin
+     */
     @FXML
     void btPoistaAction(ActionEvent event) throws Exception {
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
@@ -154,6 +180,10 @@ public class palveluIkkunaController implements Initializable {
                  con.close();
              }
     }
+    
+    /** 
+     * metodi, joka suoritetaan heti, kun ikkuna avataan, ja systeemi, jolla valitaan palvelu, joka voidaan esimerkiksi muokata tai poistaa.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cAlue.setCellValueFactory(new PropertyValueFactory<Palvelu, String>("alueNimi"));
@@ -191,6 +221,10 @@ public class palveluIkkunaController implements Initializable {
             return row;
         });
     }
+    
+    /** 
+     * metodi, joka hakee tietokannasta arvot taulukkoon.
+     */
     private List<Palvelu> haePalvelulista() throws SQLException{
         List<Palvelu> lista = new ArrayList<>();
         // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
