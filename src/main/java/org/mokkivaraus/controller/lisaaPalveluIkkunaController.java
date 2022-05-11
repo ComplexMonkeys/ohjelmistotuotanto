@@ -38,13 +38,18 @@ public class lisaaPalveluIkkunaController {
 
     @FXML
     private TextField tfTyyppi;
-
+   /*
+    * peruuta nappi, joka vie takaisin palvelu-ikkunaan
+    */
     @FXML
     void btPeruutaAction(ActionEvent event) {
         Stage stage = (Stage) btPeruuta.getScene().getWindow();
         stage.close();
     }
-
+    /*
+    * tallenna nappi, joka lisää palvelun tietokantaan
+    * ennen kun ne syötetään tietokantaan, tarkistetaan onko tekstikentät tyhjiä
+    */
     @FXML
     void btTallennaAction(ActionEvent event) throws Exception {
         if (tfAlueId.getText() != "" && tfAlv.getText() != "" && tfHinta.getText() != "" && tfKuvaus.getText() != ""
@@ -68,6 +73,7 @@ public class lisaaPalveluIkkunaController {
                 
                  } catch(Exception e){
                      System.out.println(e);
+                     // mikäli alue_id ei ole tietokannassa niin tulee tämä errori
                      Alert constraitAlert = new Alert(AlertType.ERROR);
                      constraitAlert.setHeaderText("Jotain meni vikaan");
                      constraitAlert.setContentText("Tarkista, että alue_id on olemassa");
