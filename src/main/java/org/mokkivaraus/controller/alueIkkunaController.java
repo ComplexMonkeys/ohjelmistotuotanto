@@ -185,36 +185,43 @@ public class alueIkkunaController implements Initializable{
 
     
     /** 
+     * Initialize-metodin syrjäytys, asettaa tvAlue-taulukon sarakkeiden tietotyypit ja täyttää taulukon Alue-olioilla.
+     * 
      * @param url
      * @param rb
      */
     @Override
-        public void initialize(URL url, ResourceBundle rb) {
-            cAlueId.setCellValueFactory(new PropertyValueFactory<Alue, Integer>("alue_id"));
-            cAlueNimi.setCellValueFactory(new PropertyValueFactory<Alue, String>("nimi"));
+    public void initialize(URL url, ResourceBundle rb) {
+        cAlueId.setCellValueFactory(new PropertyValueFactory<Alue, Integer>("alue_id"));
+        cAlueNimi.setCellValueFactory(new PropertyValueFactory<Alue, String>("nimi"));
     
-            try {
-                tvAlue.getItems().setAll(haeAluelista());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        try {
+            tvAlue.getItems().setAll(haeAluelista());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     
-            tvAlue.setRowFactory(tv -> {
-                TableRow<Alue> row = new TableRow<>();
-                row.setOnMouseClicked(event -> {
-                    if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
-    
-                        valittu = row.getItem();
-                        btMuokkaa.setDisable(false);
-                        btPoista.setDisable(false);
-                    }
-                });
-                return row;
+        tvAlue.setRowFactory(tv -> {
+            TableRow<Alue> row = new TableRow<>();
+
+            /**
+             * Kuuntelija hiiren klikkaukselle. Asettaa klikatun rivin valituksi olioksi.
+            */
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
+                    valittu = row.getItem();
+                    btMuokkaa.setDisable(false);
+                    btPoista.setDisable(false);
+                }
             });
+            return row;
+        });
     }
 
     
     /** 
+     * Hakee ja palauttaa listan tietokantaan tallennetuista alue-olioista.
+     * 
      * @return Lista alue olioita, jotka ovat haettu tietokannasta.
      * @throws SQLException Heittää poikkeuksen mikäli tietokannassa ei ole alue taulukkoa tai se on tyhjä.
      */
