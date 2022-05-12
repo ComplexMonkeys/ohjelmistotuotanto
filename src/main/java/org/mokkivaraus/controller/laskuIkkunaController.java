@@ -266,33 +266,43 @@ public class laskuIkkunaController implements Initializable {
 * metodi, jolla voimme tehdä paperilaskun
 */
     public void tulostus(){
+        //määritellään tulostettavan paperin sisältöä
         VBox vboxi = new VBox(10);
-        Text teksti = new Text("Hyvä asiakas, ohessa on pyydetty sähköpostilasku: " +  "\n Lasku ID: "+ valittu.getLasku_id() +
+        //paperin teksti
+        Text teksti = new Text("Hyvä asiakas, ohessa on pyydetty lasku: " +  "\n Lasku ID: "+ valittu.getLasku_id() +
         "\n Varaus ID: "+ valittu.getVaraus_id() +  "\n Varauksen summa on: "+ valittu.getSumma() 
         + "\n Eräpäivä " + dateTimeEnd + " \n tilinumero FI13 1194 2948 2394 59 ");
+        //lisätään teksti vboxiin
         vboxi.getChildren().addAll(teksti);
+        //määritellään vboxin kokoa
         vboxi.setPrefSize(400,250);
         javafx.print.Printer defaultprinter = javafx.print.Printer.getDefaultPrinter();
+        //if-lause tulostimen olemassaolon tarkistukselle
         if (defaultprinter != null){
             String tulostinNimi = defaultprinter.getName();
             System.out.println("Tulostimen nimi on: " + tulostinNimi);
         } else {
             System.out.println("Tulostimia ei löydetty");
         }
+        //luodaan tulostimelle "toimeksianto"
         PrinterJob printerJob = PrinterJob.createPrinterJob();
         Printer printer = printerJob.getPrinter();
-        // Create the Page Layout of the Printer
+        //Luodaan paperin layout ja tulostetaan se
         printerJob.printPage(printer.createPageLayout(Paper.A4, PageOrientation.PORTRAIT,Printer.MarginType.EQUAL), vboxi);
+        //lopetetaan toimeksianto
         printerJob.endJob();
     }
 
 
 /*
-* metodi, jolla lähetämme sähköpostiin laskun
+* metodi, jolla lähetetään ja haetaan sähköpostin saajan nimi/sposti/mökkinimi
 */
     public void spostilahettaja() throws SQLException{
+        //saajan etunimi
         String etunimi = "";
+        //saajan sähköpostiosoite
         String to = "";
+        //varatun mökin nimi
         String mokkinimi = "";
             // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
@@ -318,7 +328,7 @@ public class laskuIkkunaController implements Initializable {
                 con.close();
             }
 
-            
+            //määritellään lähettävän sähköpostin asetuksia
         String host = "villagenewbies03@gmail.com";
         
         final String user = "villagenewbies03@gmail.com";
@@ -327,7 +337,7 @@ public class laskuIkkunaController implements Initializable {
 
 
 
-
+            //määritellään lisää lähetysasetuksia
         Properties props = new Properties();
         props.put("mail.smtp.ssl.trust", "*" );
         props.put("mail.smtp.auth", "true");
@@ -335,23 +345,31 @@ public class laskuIkkunaController implements Initializable {
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.starttls.enable", "true");
 
+        //luodaan sessio jossa käytetään villagenewbies gmail-tiliä
         Session session = Session.getDefaultInstance(props,new jakarta.mail.Authenticator() {
             protected jakarta.mail.PasswordAuthentication getPasswordAuthentication() {
               return new jakarta.mail.PasswordAuthentication(user,password);
                     }
                 });
         try{
+            //luodaan sähköpostiviesti
             MimeMessage message = new MimeMessage(session);
+            //määritellään sähköpostin lähettäjä
             message.setFrom(new InternetAddress(user));
+            //määritellään sähköpostin saaja
             message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));
+            //asetetaan viestille otsikko
             message.setSubject("Mökinvaraus lasku");
+            //määritellään viestin sisältö
             message.setText("Hei, "+ etunimi + " ohessa on pyytämäsi sähköpostilasku: " +  "Lasku ID: "+ valittu.getLasku_id() +
              "\n Varaus ID: "+ valittu.getVaraus_id() + " \n Varaamasi mökki: "+ mokkinimi + "\n Varauksen summa on: "+ valittu.getSumma() 
              + "\n Eräpäivä " + dateTimeEnd + " \n tilinumero FI13 1194 2948 2394 59 ");
 
-            Transport.send(message);
-            System.out.println("viesti lähetetty onnistuneesti!");
-
+            //lähetetään viesti
+             Transport.send(message);
+            //ilmoitetaan käyttäjälle onnistuneesta lähetyksestä
+             System.out.println("viesti lähetetty onnistuneesti!");
+            //tämän poikkeuksen ei pitäisi tapahtua (ainoastaan jos asiakkaan spostiosoite ei sisällä "@" tietokannassa)
         } catch (MessagingException e){
 
         }
@@ -367,6 +385,7 @@ public class laskuIkkunaController implements Initializable {
         // Luo alert-dialogin muokatuilla painikkeilla
         Button btSposti = new Button("Sposti");
         Button btTulosta = new Button("Tulosta");
+        //sähköpostinapin toiminnallisuus
         btSposti.setOnAction(s -> {
             try {
                 spostilahettaja();
@@ -376,6 +395,7 @@ public class laskuIkkunaController implements Initializable {
             Stage stage = (Stage) btSposti.getScene().getWindow();
             stage.close();
         });
+        //tulostanapin toiminnallisuus
         btTulosta.setOnAction(t -> {
             tulostus();
             Stage stage = (Stage) btTulosta.getScene().getWindow();

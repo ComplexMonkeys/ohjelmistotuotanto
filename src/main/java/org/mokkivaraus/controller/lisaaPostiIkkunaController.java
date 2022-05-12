@@ -25,8 +25,8 @@ public class lisaaPostiIkkunaController {
     private TextField tfToimipaikka;
 
     /*
-    * peruuta nappi, joka vie takaisin posti-ikkunaan
-    */
+     * peruuta nappi, joka vie takaisin posti-ikkunaan
+     */
     @FXML
     void btPeruutaAction(ActionEvent event) {
         Stage stage = (Stage) btPeruuta.getScene().getWindow();
@@ -34,38 +34,40 @@ public class lisaaPostiIkkunaController {
     }
 
     /*
-    * tallenna nappi, joka tallentaa postinumeron ja postitoimipaikan tietokantaan
-    * samalla tarkistetaan ylittäääkö postinumero pituuden ja onko toimipaikka tekstikenttä tyhjä
-    */
+     * tallenna nappi, joka tallentaa postinumeron ja postitoimipaikan tietokantaan
+     * samalla tarkistetaan ylittäääkö postinumero pituuden ja onko toimipaikka
+     * tekstikenttä tyhjä
+     */
     @FXML
-    void btTallennaAction(ActionEvent event) {
+    void btTallennaAction(ActionEvent event) throws SQLException {
         if (tfPostinumero.getText().length() >= 5 && tfToimipaikka.getText() != "") {
-
+            // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
             try {
-                Connection con = DriverManager.getConnection(
-                        // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
-                        "jdbc:mysql://localhost:3306/vn", "employee", "password");
                 Statement stmt = con.createStatement();
                 String postinumero = tfPostinumero.getText();
                 String toimipaikka = tfToimipaikka.getText();
 
                 // Määrittää SQL komennon ja lähettää sen tietokannalle.
-                stmt.executeUpdate("INSERT INTO posti (postinro, toimipaikka) VALUE ('" + postinumero + "', '" + toimipaikka +"');");
-                // Yhteys tietokantaan suljetaan komennon jälkeen.
-                con.close();
+                stmt.executeUpdate("INSERT INTO posti (postinro, toimipaikka) VALUE ('" + postinumero + "', '"
+                        + toimipaikka + "');");
                 // Nappaa poikkeukset ja tulostaa ne.
-            } catch (DataTruncation liikaapituutta){
+            } catch (DataTruncation liikaapituutta) {
                 // jos postinumeron pituus on liian pitkä, niin tulee errori
                 Alert constraitAlert = new Alert(AlertType.ERROR);
                 constraitAlert.setHeaderText("Jotain meni vikaan");
                 constraitAlert.setContentText("Postinumeron pituus ei saa ylittää viittä merkkiä!");
                 constraitAlert.showAndWait();
             } catch (Exception e) {
-                System.out.println(e);
+                e.printStackTrace();
+            }
+            finally {
+                // Yhteys tietokantaan suljetaan
+                con.close();
             }
             Stage stage = (Stage) btTallenna.getScene().getWindow();
             stage.close();
-        } else{
+        } else {
             Alert constraitAlert = new Alert(AlertType.ERROR);
             constraitAlert.setHeaderText("Jotain meni vikaan");
             constraitAlert.setContentText("Syötä postinumero ja toimipaikka.");
