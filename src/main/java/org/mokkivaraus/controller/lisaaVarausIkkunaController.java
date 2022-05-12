@@ -129,8 +129,8 @@ public class lisaaVarausIkkunaController implements Initializable {
     }
     
     /** 
-     * @return Rajattu lista
-     * @throws SQLException
+     * @return Lista tietyn aikavälin sisällä olevien mökkien id:istä
+     * @throws SQLException Heittää poikkeuksen mikäli SQL komennollle annetut päivämäärät eivät ole oikeassa muodossa.
      */
     private List<Integer> haeSuodatettuLista() throws SQLException{
         // Pyöritellään datepickereiden tiedot oikeisiin muotoihin
@@ -252,17 +252,17 @@ String sqlKomento(){
 
     
     /** 
-     * @param event
+     * Päivitä napin toiminnallisuus. Päivittää listan sen nykyiseen tilaan
      */
     @FXML
-    void btPaivitaAction(ActionEvent event) {
+    void btPaivitaAction() {
         paivitaLista();
     }
 
     
     /** 
-     * @return List<Mokki>
-     * @throws SQLException
+     * @return List<Mokki>, lista mökeistä listaan asettamista varten.
+     * @throws SQLException Heittää poikkeuksen mikäöi tietokannan mokki osio on tyhjä, tai SQL komento on virheellinen.
      */
     private List<Mokki> haeMokkiLista() throws SQLException {
         List<Mokki> lista = new ArrayList<>();
