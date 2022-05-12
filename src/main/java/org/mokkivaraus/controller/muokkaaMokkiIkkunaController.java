@@ -92,7 +92,7 @@ public class muokkaaMokkiIkkunaController {
         stage.close();
     }
     }
-
+    // Initdata metodi välittää edelliset arvot ikkunaan, jotta niitä voidaan muokata
     public void initdata(int mokki_id, int alueenid, String kuvaus, String varustelu, String nimi, String postinro, String osoite, int henkilomaara, double hinta) {
         labelId.setText(Integer.toString(mokki_id));
         tfNimi.setText(nimi);

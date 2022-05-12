@@ -81,6 +81,7 @@ public class muokkaaPalveluIkkunaController {
         Stage stage = (Stage) btTallenna.getScene().getWindow();
         stage.close();
     }
+    // Initdata metodi välittää edelliset arvot ikkunaan, jotta niitä voidaan muokata
     public void initdata(int palvelu_id, int alue_id, double alv, double hinta, String kuvaus, String nimi, int tyyppi) {
         labelId.setText(Integer.toString(palvelu_id));
         tfAlueId.setText(Integer.toString(alue_id));
