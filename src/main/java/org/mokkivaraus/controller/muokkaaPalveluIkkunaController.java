@@ -40,12 +40,21 @@ public class muokkaaPalveluIkkunaController {
     @FXML
     private TextField tfTyyppi;
 
+    
+    /** 
+     * Peruuta painikkeen toiminnallisuus.
+     */
     @FXML
-    void btPeruutaAction(ActionEvent event) {
+    void btPeruutaAction() {
         Stage stage = (Stage) btPeruuta.getScene().getWindow();
         stage.close();
     }
 
+    
+    /** 
+     * @param event
+     * @throws Exception
+     */
     @FXML
     void btTallennaAction(ActionEvent event) throws Exception {
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
@@ -75,6 +84,16 @@ public class muokkaaPalveluIkkunaController {
         Stage stage = (Stage) btTallenna.getScene().getWindow();
         stage.close();
     }
+    
+    /** 
+     * @param palvelu_id
+     * @param alue_id
+     * @param alv
+     * @param hinta
+     * @param kuvaus
+     * @param nimi
+     * @param tyyppi
+     */
     public void initdata(int palvelu_id, int alue_id, double alv, double hinta, String kuvaus, String nimi, int tyyppi) {
         labelId.setText(Integer.toString(palvelu_id));
         tfAlueId.setText(Integer.toString(alue_id));
