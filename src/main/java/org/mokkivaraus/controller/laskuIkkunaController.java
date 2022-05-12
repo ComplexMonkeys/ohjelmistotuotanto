@@ -329,7 +329,6 @@ public class laskuIkkunaController implements Initializable {
             }
 
             //määritellään lähettävän sähköpostin asetuksia
-        String host = "villagenewbies03@gmail.com";
         
         final String user = "villagenewbies03@gmail.com";
 
