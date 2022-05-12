@@ -6,7 +6,6 @@ import java.sql.Statement;
 
 import org.mokkivaraus.Asiakas;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -48,14 +47,23 @@ public class muokkaaAsiakasIkkunaController {
     @FXML
     private TextField tfSukunimi;
 
+    
+    /** 
+     * Toiminnallisuus peruuta napille. Sulkee nykyisen ikkunan.
+     */
     @FXML
-    void btPeruutaAction(ActionEvent event) {
+    void btPeruutaAction() {
     Stage stage = (Stage) btPeruuta.getScene().getWindow();
     stage.close();
     }
 
+    
+    /** 
+     * Päiviä painikkeen toiminnallisuus. Päivittää asiakkaan tiedot tietokannassa.
+     * @throws Exception Mikäli jotain tietoa ei anneta, tulee ongelmia.
+     */
     @FXML
-    void btTallennaAction(ActionEvent event) throws Exception { 
+    void btTallennaAction() throws Exception { 
         if (tfEmail.getText() != "" && tfEtunimi.getText() != "" && tfSukunimi.getText() != ""
         && tfOsoite.getText() != "" && tfPostiNro.getText() != "" && tfPuhNro.getText() != "") {
     Connection con = DriverManager.getConnection(
@@ -89,6 +97,17 @@ public class muokkaaAsiakasIkkunaController {
     stage.close();
 }
 }
+    
+    /** 
+     * Saa halutut kentät edellisestä ikkunasta ja asettaa ne oikeisiin kenttiin.
+     * @param Asiakas_id Asiakkaan id
+     * @param Email Asiakkaan sähköpostiosoite
+     * @param Etunimi Asiakkaan etunimi
+     * @param Sukunimi Asiakkaan sukunimi
+     * @param Lahiosoite Asiakkaan osoite
+     * @param Postinro Asiakkaan postinumero
+     * @param Puhelinnro Asiakkaan puhelinnumero 
+     */
     public void initdata(int Asiakas_id, String Email, String Etunimi, String Sukunimi, String Lahiosoite, String Postinro, String Puhelinnro) {
     labelId.setText(Integer.toString(Asiakas_id));
     tfEmail.setText(Email);
