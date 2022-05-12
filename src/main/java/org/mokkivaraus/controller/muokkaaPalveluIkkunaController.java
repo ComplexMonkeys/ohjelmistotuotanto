@@ -57,9 +57,12 @@ public class muokkaaPalveluIkkunaController {
      */
     @FXML
     void btTallennaAction(ActionEvent event) throws Exception {
+        //luodaan tietokantaan yhteys
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
         try{
+            //luodaan statement sql-lausetta varten
             java.sql.Statement stmt = con.createStatement();
+            //haetaan textfieldien arvot ja parsetetaan ne jos eivät ole merkkijonoja
             int palvelunid = Integer.parseInt(labelId.getText());
             int alue_id = Integer.parseInt(tfAlueId.getText());
             double alv = Double.parseDouble(tfAlv.getText());
@@ -68,12 +71,15 @@ public class muokkaaPalveluIkkunaController {
             String nimi = tfNimi.getText();
             int tyyppi = Integer.parseInt(tfTyyppi.getText());
 
-
+            //sql-lause joka lisää palvelupöytään uuden alkion textfieldin arvoilla
             stmt.executeUpdate("UPDATE palvelu set palvelu_id = "+ palvelunid + ", alue_id = "+alue_id+", nimi = '"+nimi+"', alv = "+ alv +" , hinta = "+ hinta +" , tyyppi = "+ tyyppi +" , kuvaus = '"+kuvaus+"' WHERE palvelu_id = "+palvelunid+" ;");
         }
+        //poikkeuksenhallinnan käsittelyä jos annettu alue_id ei ole olemassa
         catch(Exception e){
             System.out.println(e);
+            //alertin määrittely
             Alert constraitAlert = new Alert(AlertType.ERROR);
+            //määritellään alertin sisältö ja otsikko
             constraitAlert.setHeaderText("Jotain meni vikaan");
             constraitAlert.setContentText("Tarkista, että alue_id on olemassa");
             constraitAlert.showAndWait();
@@ -86,6 +92,7 @@ public class muokkaaPalveluIkkunaController {
     }
     
     /** 
+     * Initdata metodi välittää edelliset arvot ikkunaan, jotta niitä voidaan muokata
      * @param palvelu_id
      * @param alue_id
      * @param alv
