@@ -169,10 +169,14 @@ public class lisaaVarausPalveluIkkunaController {
      */
     public void initdata(int a, LocalDateTime b, LocalDateTime c) {
         listPalvelu.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
+            public void handle(MouseEvent event) throws NullPointerException {
+                try {
                 selected = Integer.toString(listPalvelu.getSelectionModel().getSelectedItem().getPalvelu_id());
+                } catch (NullPointerException e) {
+                    // Hiljentää NullPointerExceptionin
+                    //e.printStackTrace();
             }
-        });
+            }});
         // Määrittelee spinnerin ominaisuudet kuten pienimmän ja suurimman arvon.
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 99);
         // Spinnerin oletusarvo.
