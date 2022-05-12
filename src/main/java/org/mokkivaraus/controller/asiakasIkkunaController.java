@@ -273,20 +273,20 @@ public class asiakasIkkunaController implements Initializable {
 
     
     /** 
-     * Hakee tietokannasta listan asiakkaista etunimen tai sukunimen perusteella rajattuna.
+     * Hakee tietokannasta listan asiakkaista ja suodattaa listan tfNimi-kentän syötteen perusteella. Jos asiakkaan nimessä ei ole tekstikenttään kirjoitettua merkkijonoa, asiakas poistetaan listasta.
      * 
      * @return Lista asiakas olioista rajoitteiden perustella.
      * @throws SQLException Jos annettua etunimeä tai sukunimeä.
      */
     private List<Asiakas> haeSuodatettuLista() throws SQLException{
         List<Asiakas> lista = new ArrayList<>();
+        String nimi = tfNimi.getText().toLowerCase();
         // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
         try {
             Statement stmt = con.createStatement();
             // Määrittää SQL komennon ja lähettää sen tietokannalle.
-            // TODO: Ongelma: voi hakea vain joko etu- tai sukunimellä, ei voi kirjoittaa molempia hakukenttään samaan aikaan
-            ResultSet rs = stmt.executeQuery("SELECT * FROM asiakas WHERE etunimi LIKE '%" + tfNimi.getText() + "%' OR sukunimi LIKE '%" + tfNimi.getText() + "%';");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM asiakas;");
             // Lisää kaikki taulukossa olevien alkioiden tiedot listaan.
             while (rs.next()) {
                 Asiakas temp = new Asiakas(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
@@ -300,6 +300,15 @@ public class asiakasIkkunaController implements Initializable {
         finally{
             // Yhteys tietokantaan suljetaan.
             con.close();
+        }
+
+        //Iteroidaan haettu lista
+        Iterator<Asiakas> itr = lista.iterator();
+        while (itr.hasNext()) {
+            Asiakas a = itr.next();
+            if (!a.getNimi().toLowerCase().contains(nimi)){
+                itr.remove();
+            }
         }
         return lista;
     }

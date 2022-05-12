@@ -37,18 +37,26 @@ public class muokkaaLaskuIkkunaController {
 
     @FXML
     void btTallennaAction(ActionEvent event) throws Exception {
+        //määritellään tietokantaan yhteys ja yhdistetään
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
         try{
+            //luodaan statement sql-lausetta varten
             java.sql.Statement stmt = con.createStatement();
+            //muutetaan laskuid textfieldin arvo integeriksi
             int laskuid = Integer.parseInt(labelId.getText());
+            //muutetaan varausid textfieldin arvo integeriksi
             int varaus_id = Integer.parseInt(tfVarausId.getText());
+            //muutetaan summa textfieldin arvo doubleksi
             double summa = Double.parseDouble(tfHinta.getText());
 
-
+            //sql-lause päivittää tietokannan laskupöytään uuden varausidn ja summan
             stmt.executeUpdate("UPDATE lasku set varaus_id = "+varaus_id+", summa = "+summa+" WHERE lasku_id = "+laskuid+" ;");
         }
+        //poikkeuksenkäsittelyä
         catch(Exception e){
+            //tulostetaan error
             System.out.println(e);
+            //luodaan alertbox errorille
             Alert constraitAlert = new Alert(AlertType.ERROR);
             constraitAlert.setHeaderText("Jotain meni vikaan");
             constraitAlert.setContentText("Tarkista, että varaus_id on olemassa");
@@ -60,7 +68,7 @@ public class muokkaaLaskuIkkunaController {
         Stage stage = (Stage) btTallenna.getScene().getWindow();
         stage.close();
     }
-
+    // Initdata metodi välittää edelliset arvot ikkunaan, jotta niitä voidaan muokata
     public void initdata(int lasku_id, double summa, int varaus_id) {
        labelId.setText(Integer.toString(lasku_id));
        tfHinta.setText(Double.toString(summa));
