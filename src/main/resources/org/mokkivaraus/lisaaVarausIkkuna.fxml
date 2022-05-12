@@ -22,8 +22,8 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <DatePicker fx:id="dpAloitus" onAction="#dpAloitusAction" GridPane.columnIndex="1" />
-            <DatePicker fx:id="dpLopetus" onAction="#dpLopetusAction" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <DatePicker fx:id="dpAloitus" GridPane.columnIndex="1" />
+            <DatePicker fx:id="dpLopetus" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Varauksen aloitus:" />
             <Label text="Varauksen lopetus:" GridPane.rowIndex="1" />
          </children>
