@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.stage.*;
+import javafx.scene.control.ButtonBar.ButtonData;
 
 public class lisaaVarausIkkunaController implements Initializable {
 
@@ -48,6 +49,7 @@ public class lisaaVarausIkkunaController implements Initializable {
     private DatePicker dpLopetus;
 
     Mokki valittu;
+    Mokki tulostus;
     DateTimeFormatter mysqlFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
 
     
@@ -74,6 +76,16 @@ public class lisaaVarausIkkunaController implements Initializable {
         tvMokit.setRowFactory(tv -> {
             TableRow<Mokki> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                    tulostus = row.getItem();
+                    Dialog<String> dialog = new Dialog<String>();
+                    dialog.setTitle("Mökki");
+                    ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
+                    dialog.setContentText(tulostus.toString());
+                    dialog.getDialogPane().getButtonTypes().add(type);
+                    dialog.showAndWait();
+                }
+
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
                     valittu = row.getItem();
                 }
