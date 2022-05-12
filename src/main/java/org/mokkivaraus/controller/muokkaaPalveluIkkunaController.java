@@ -2,7 +2,7 @@ package org.mokkivaraus.controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import javafx.event.ActionEvent;
+import java.sql.SQLException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -52,11 +52,11 @@ public class muokkaaPalveluIkkunaController {
 
     
     /** 
-     * @param event
-     * @throws Exception
+     * Tallenna painikkeen toiminnallisuus, tallentaa tietokantaan palvelun uudet tiedot
+     * @throws Exception Heitää poikkeuksen, jos jokin kentistä on tyhjä.
      */
     @FXML
-    void btTallennaAction(ActionEvent event) throws Exception {
+    void btTallennaAction() throws SQLException {
         //luodaan tietokantaan yhteys
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
         try{
@@ -76,7 +76,7 @@ public class muokkaaPalveluIkkunaController {
         }
         //poikkeuksenhallinnan käsittelyä jos annettu alue_id ei ole olemassa
         catch(Exception e){
-            System.out.println(e);
+            e.printStackTrace();
             //alertin määrittely
             Alert constraitAlert = new Alert(AlertType.ERROR);
             //määritellään alertin sisältö ja otsikko
@@ -93,13 +93,13 @@ public class muokkaaPalveluIkkunaController {
     
     /** 
      * Initdata metodi välittää edelliset arvot ikkunaan, jotta niitä voidaan muokata
-     * @param palvelu_id
-     * @param alue_id
-     * @param alv
-     * @param hinta
-     * @param kuvaus
-     * @param nimi
-     * @param tyyppi
+     * @param palvelu_id palvelun id
+     * @param alue_id alue id
+     * @param alv palvelun alv
+     * @param hinta palvelun hinta
+     * @param kuvaus palvelun kuvaus
+     * @param nimi palvelun nimi
+     * @param tyyppi palvelun tyyppi
      */
     public void initdata(int palvelu_id, int alue_id, double alv, double hinta, String kuvaus, String nimi, int tyyppi) {
         labelId.setText(Integer.toString(palvelu_id));
