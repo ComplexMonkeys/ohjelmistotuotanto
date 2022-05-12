@@ -2,7 +2,6 @@ package org.mokkivaraus.controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -42,7 +41,7 @@ public class lisaaPalveluIkkunaController {
     * peruuta nappi, joka vie takaisin palvelu-ikkunaan
     */
     @FXML
-    void btPeruutaAction(ActionEvent event) {
+    void btPeruutaAction() {
         Stage stage = (Stage) btPeruuta.getScene().getWindow();
         stage.close();
     }
@@ -51,13 +50,12 @@ public class lisaaPalveluIkkunaController {
     * ennen kun ne syötetään tietokantaan, tarkistetaan onko tekstikentät tyhjiä
     */
     @FXML
-    void btTallennaAction(ActionEvent event) throws Exception {
+    void btTallennaAction() throws Exception {
         if (tfAlueId.getText() != "" && tfAlv.getText() != "" && tfHinta.getText() != "" && tfKuvaus.getText() != ""
         && tfNimi.getText() != "" && tfTyyppi.getText() != ""){
 
-            Connection con = DriverManager.getConnection(
-                // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
-                "jdbc:mysql://localhost:3306/vn", "employee", "password");
+            // Tässä asetetaan tietokannan tiedot, osoite, käyttäjätunnus, salasana.
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "employee", "password");
             try{
                 java.sql.Statement stmt = con.createStatement();
                 int palvelunid = Integer.parseInt(tfPalveluId.getText());
