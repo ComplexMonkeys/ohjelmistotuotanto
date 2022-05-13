@@ -7,10 +7,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
+/**
+* Dymaaninen kommentti sovelluksen käynnistävästä luokasta.
+*/
 public class Mokinvaraus extends Application {
     private static Scene scene;
 
+    
     @Override
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("alkuIkkuna"), 640, 480);
